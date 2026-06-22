@@ -23,17 +23,14 @@
             overflow: hidden;
         }
 
-        /* Full Page Scroll Snapping */
+        /* Scroll Container (Locked overflow-y to hidden for perfect snap transitions) */
         .scroll-container {
-            scroll-snap-type: y mandatory;
-            overflow-y: scroll;
+            overflow: hidden;
             height: calc(100vh - 4rem);
             scroll-behavior: smooth;
         }
 
         .section-snap {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
             min-height: calc(100vh - 4rem);
             display: flex;
             flex-direction: column;
@@ -98,7 +95,6 @@
         <span class="text-xl font-bold tracking-tight text-slate-800">AgentDesk <span class="text-blue-600 font-normal">v3.1</span></span>
     </div>
     <div class="flex items-center space-x-4">
-        <span class="text-xs text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full hidden sm:inline-block">💡 모바일: 스크롤하면 자동으로 탭이 전환됩니다</span>
         <button onclick="scrollToSection('onboarding')" class="bg-blue-600 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-blue-700 transition-all">신규 AI 직원 채용</button>
     </div>
 </header>
@@ -134,7 +130,7 @@
                 <span class="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1.5 rounded-full">Fixed-Price AI Infrastructure</span>
                 <h1 class="text-4xl md:text-5xl font-black text-slate-900 mt-6 mb-8 leading-tight">
                     "클로드랑 뭐가 달라요?<br>
-                    <span class="text-blue-600 underline decoration-wavy decoration-2">더 싸고, 더 쉽고, 일관되니까요.</span>"
+                    <span class="text-blue-600">더 싸고, 더 쉽고, 일관되니까요.</span>"
                 </h1>
                 <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-12">
                     단순한 대화형 AI는 매번 맥락을 다시 설명해야 하고 사용량에 따라 비용이 폭증합니다. AgentDesk는 전 세계의 <strong>유휴 맥 미니 자원</strong>을 하나로 묶어, 당신만을 위해 24시간 깨어있는 전용 직원을 고정가에 제공합니다.
@@ -158,7 +154,7 @@
         </section>
 
         <!-- SECTION 2: Workflow -->
-        <section id="tab-workflow" class="section-snap p-6 md:p-12 bg-slate-50/50 border-t">
+        <section id="tab-workflow" class="section-snap p-4 md:p-12 bg-slate-50/50 border-t">
             <div class="max-w-5xl mx-auto w-full">
                 <div class="mb-6">
                     <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">Interactive Workspace</span>
@@ -185,29 +181,29 @@
                         </div>
                         <div class="text-[10px] text-gray-500 p-2 border-t border-gray-800">
                             현재 매칭 사양:<br>
-                            <span id="matched-spec-text" class="text-blue-400">Junior (M1, 16GB)</span>
+                            <span id="matched-spec-text" class="text-blue-400">주니어 리서처 (M1, 16GB)</span>
                         </div>
                     </div>
                     
-                    <!-- Chat Window Area (Fixed alignment by adding flex-1 and min-w-0) -->
+                    <!-- Chat Window Area -->
                     <div class="messenger-content flex-1 min-w-0 flex flex-col h-full overflow-hidden">
-                        <div class="h-14 border-b flex items-center px-6 justify-between flex-shrink-0 bg-white">
-                            <div class="flex flex-col">
-                                <span class="font-bold text-slate-800 text-sm" id="active-scenario-title"># general (대기 중)</span>
-                                <span class="text-[10px] text-gray-400" id="active-scenario-desc">임무를 먼저 지정해 주세요.</span>
+                        <div class="h-16 md:h-14 border-b flex items-center px-4 md:px-6 justify-between flex-shrink-0 bg-white">
+                            <div class="flex flex-col min-w-0 mr-2">
+                                <span class="font-bold text-slate-800 text-xs md:text-sm truncate" id="active-scenario-title"># general (대기 중)</span>
+                                <span class="text-[9px] md:text-[10px] text-gray-400 truncate" id="active-scenario-desc">임무를 먼저 지정해 주세요.</span>
                             </div>
-                            <button onclick="startSimulation()" class="px-4 py-1.5 bg-blue-600 text-white rounded-md text-xs font-bold hover:bg-blue-800 transition-all shadow-md">시뮬레이션 가동</button>
+                            <button onclick="startSimulation()" class="flex-shrink-0 px-3 md:px-4 py-1.5 bg-blue-600 text-white rounded-md text-[10px] md:text-xs font-bold hover:bg-blue-800 transition-all shadow-md">시뮬레이션 가동</button>
                         </div>
                         
                         <!-- Chat Feed -->
-                        <div id="chat-window" class="flex-1 overflow-y-auto p-6 flex flex-col space-y-4">
+                        <div id="chat-window" class="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col space-y-4">
                             <div class="text-center py-4 text-[10px] text-gray-400 uppercase tracking-widest border-b mb-4">시뮬레이션 대기 중</div>
-                            <p class="text-center text-sm text-gray-400 py-8">상단의 [시뮬레이션 가동] 버튼을 누르거나,<br><strong>[AI 직원 온보딩]</strong> 탭에서 신규 직원을 출근시키면 시나리오가 실시간 시작됩니다.</p>
+                            <p class="text-center text-xs md:text-sm text-gray-400 py-8 px-4">상단의 [시뮬레이션 가동] 버튼을 누르거나,<br><strong>[AI 직원 온보딩]</strong> 탭에서 신규 직원을 출근시키면 시나리오가 실시간 시작됩니다.</p>
                         </div>
                         
                         <!-- User Choice Box (Appears on User Turn) -->
-                        <div id="user-interaction-panel" class="p-4 border-t bg-slate-50 flex-col space-y-2 hidden">
-                            <span class="text-xs font-bold text-blue-600 block mb-2">💡 팀장님의 피드백을 전달해주세요</span>
+                        <div id="user-interaction-panel" class="p-3 md:p-4 border-t bg-slate-50 flex-col space-y-2 hidden">
+                            <span class="text-[10px] md:text-xs font-bold text-blue-600 block mb-1">💡 팀장님의 피드백을 전달해주세요</span>
                             <div id="interactive-options" class="flex flex-col sm:flex-row gap-2">
                                 <!-- Dynamic buttons will inject here -->
                             </div>
@@ -247,15 +243,15 @@
         </section>
 
         <!-- SECTION 4: Onboarding (Wizard) -->
-        <section id="tab-onboarding" class="section-snap p-6 md:p-12 bg-slate-50/50 border-t">
+        <section id="tab-onboarding" class="section-snap p-4 md:p-12 bg-slate-50/50 border-t">
             <div class="max-w-3xl mx-auto text-center mb-8">
                 <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">Onboarding Wizard</span>
-                <h2 class="text-3xl font-black mt-3 mb-2 text-slate-900">AI 직원 온보딩 마법사</h2>
-                <p class="text-gray-500 text-sm">직무를 선택하고 전용 맥 미니 노드를 즉시 할당받으세요.</p>
+                <h2 class="text-2xl md:text-3xl font-black mt-3 mb-2 text-slate-900">AI 직원 온보딩 마법사</h2>
+                <p class="text-gray-500 text-xs md:text-sm">직무를 선택하고 전용 맥 미니 노드를 즉시 할당받으세요.</p>
             </div>
             
-            <div class="max-w-2xl mx-auto bg-white rounded-[32px] shadow-2xl border overflow-hidden">
-                <div class="p-8 md:p-10">
+            <div class="max-w-2xl mx-auto bg-white rounded-[24px] md:rounded-[32px] shadow-2xl border overflow-hidden">
+                <div class="p-6 md:p-10">
                     <!-- Stepper Bar (Fixed Wrapping) -->
                     <div class="mb-10 flex justify-between relative px-2">
                         <div class="absolute top-4 left-10 right-10 h-px bg-gray-100 -z-10"></div>
@@ -298,7 +294,7 @@
         <p class="text-sm text-gray-500 text-center mb-6">고용하신 AI 직원이 전용 맥 미니 인프라에서 배포를 완료하고 대기 중입니다.</p>
         
         <div class="bg-slate-50 p-4 rounded-2xl space-y-3 text-xs text-slate-600 mb-8">
-            <div class="flex justify-between border-b pb-2"><span class="font-medium text-gray-400">할당 노드</span><span class="font-bold text-slate-800" id="modal-node">Junior Node</span></div>
+            <div class="flex justify-between border-b pb-2"><span class="font-medium text-gray-400">채용 직급</span><span class="font-bold text-slate-800" id="modal-node">주니어 가상 연구원</span></div>
             <div class="flex justify-between border-b pb-2"><span class="font-medium text-gray-400">지정 임무</span><span class="font-bold text-slate-800 text-right max-w-[200px]" id="modal-task">글로벌 테크 브리핑</span></div>
             <div class="flex justify-between"><span class="font-medium text-gray-400">연동 채널</span><span class="font-bold text-slate-800" id="modal-channel">Slack Intranet</span></div>
         </div>
@@ -321,8 +317,8 @@
     // --- Chat Simulation Scenarios Database ---
     const scenarios = {
         news: {
-            title: "📰 테크 뉴스 브리핑팀 (#tech-briefing)",
-            desc: "매일 전 세계 해외 테크 미디어를 분석해 중요한 동향을 정리해 기획팀에 전달합니다.",
+            title: "📰 테크 뉴스 브리팅 (#tech-briefing)",
+            desc: "매일 전 세계 해외 테크 미디어를 분석해 동향을 요약 보고합니다.",
             flow: [
                 { sender: '최 매니저 (Research AI)', role: 'bot', text: '📢 박 팀장님, 오늘 오전 해외 주요 헤드라인입니다. Apple이 독립 전용 실리콘 기반 AI 인프라 확장을 공식화했습니다. 클라우드 비용을 최소화하려는 행보로 보입니다.', delay: 1000 },
                 { sender: '김 파트너 (Planning AI)', role: 'bot', text: '💡 아주 시의적절한 뉴스네요! 마침 우리 AgentDesk도 유휴 맥 미니 대여 인프라 기반인 만큼, 이 Apple 뉴스를 인용해 "클라우드 탈출과 고정비 AI 인프라"라는 대대적인 기획 프로모션을 추진해 볼 수 있겠습니다.', delay: 2500 },
@@ -335,9 +331,9 @@
         },
         cs: {
             title: "🎧 CS 감정 분류 및 대응팀 (#cs-intelligence)",
-            desc: "유입되는 고객 불만을 인공지능이 자동 파악하고 가이드를 구성합니다.",
+            desc: "고객 불만을 자동으로 분류하여 적절한 회신 초안을 구성합니다.",
             flow: [
-                { sender: '최 매니저 (Research AI)', role: 'bot', text: '🚨 알림: 금일 오전 접수된 고객 메일에서 [환불 문의 및 장비 미작동 오류] 컴플레인이 감지되었습니다. 감정 분석 결과: "매우 불만족(Angry)" 입니다.', delay: 1000 },
+                { sender: '최 매니저 (Research AI)', role: 'bot', text: '🚨 알림: 금일 오전 접수된 고객 메일에서 [환불 문의 및 장비 미작동 오류] 컴간되었습니다. 감정 분석 결과: "매우 불만족(Angry)" 입니다.', delay: 1000 },
                 { sender: '김 파트너 (Planning AI)', role: 'bot', text: '📝 규정상 7일 이내 반품이므로 빠른 수락이 필요합니다. "불편을 드려 죄송하며, 지연 시간 보상을 포함한 즉각 환불 수용 절차 안내" 메일 답변 초안을 가상 에디터에 작성했습니다.', delay: 2500 },
                 { sender: '김 파트너 (Planning AI)', role: 'bot', text: '🙋‍♂️ 박 팀장님, 이 환불 대응 초안 메일을 즉시 고객에게 발송 승인할까요? 아니면 내용을 추가 보정할까요?', delay: 4000, isQuestion: true }
             ],
@@ -348,7 +344,7 @@
         },
         competitor: {
             title: "🎯 경쟁 신기능 추적팀 (#competitor-watch)",
-            desc: "경쟁사들의 업데이트 동향을 감지하여 전략적 홍보 포인트를 뽑아냅니다.",
+            desc: "경쟁사 업데이트를 감지하여 마케팅 요소를 조율합니다.",
             flow: [
                 { sender: '최 매니저 (Research AI)', role: 'bot', text: '🔍 오늘 아침 경쟁사 "A社"가 에이전트 다자간 워크플로우 대시보드 신기능을 기습 출시한 것으로 조사되었습니다. API 호출을 기반으로 동기화된다고 합니다.', delay: 1000 },
                 { sender: '김 파트너 (Planning AI)', role: 'bot', text: '⚡ 기습 출시군요! 하지만 그들의 서비스는 호출당 API 수수료가 비싸다는 약점이 있습니다. 우리의 강점인 "DePIN 맥 미니 기반 월 고정 정액제"와 바로 비교되는 맞불 보도자료나 공식 마케팅 글을 배포하는 게 좋겠습니다.', delay: 2500 },
@@ -392,11 +388,140 @@
 
     sections.forEach(section => observer.observe(section));
 
-    // --- Programmatic Smooth Scrolling to Target Section ---
+    // --- Programmatic Buffered Mouse Wheel Scrolling with Snapping ---
+    const mainScroll = document.getElementById('main-scroll-container');
+    const sectionsArray = Array.from(sections);
+    let currentSectionIndex = 0;
+    let wheelAccumulator = 0;
+    const WHEEL_BUFFER_LIMIT = 300; // 3~4 gentle wheel ticks to break threshold
+    let isScrollAnimating = false;
+
+    // Wheel listener for Desktop Snapping with Buffer (Excluded interactive elements to avoid click suppression)
+    mainScroll.addEventListener('wheel', function(e) {
+        // Allow native scroll/click inside scrollable UI elements and interactive elements
+        if (
+            e.target.closest('#chat-window') || 
+            e.target.closest('#step-content') ||
+            e.target.closest('button') ||
+            e.target.closest('a') ||
+            e.target.closest('.sidebar-item') ||
+            e.target.closest('[onclick]')
+        ) {
+            return;
+        }
+        
+        e.preventDefault(); // Lock default non-snapped continuous scroll
+        if (isScrollAnimating) return;
+
+        wheelAccumulator += e.deltaY;
+
+        if (Math.abs(wheelAccumulator) >= WHEEL_BUFFER_LIMIT) {
+            if (wheelAccumulator > 0) {
+                if (currentSectionIndex < sectionsArray.length - 1) {
+                    currentSectionIndex++;
+                    triggerProgrammaticScroll(currentSectionIndex);
+                }
+            } else {
+                if (currentSectionIndex > 0) {
+                    currentSectionIndex--;
+                    triggerProgrammaticScroll(currentSectionIndex);
+                }
+            }
+            wheelAccumulator = 0; // Clear buffer
+        }
+    }, { passive: false });
+
+    // Touch Swiping for Mobile Snapping (Prevents continuous half-scrolling)
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    mainScroll.addEventListener('touchstart', function(e) {
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    mainScroll.addEventListener('touchend', function(e) {
+        // Ignore if swiping inside scrollable elements or clicking buttons
+        if (
+            e.target.closest('#chat-window') || 
+            e.target.closest('#step-content') ||
+            e.target.closest('button') ||
+            e.target.closest('a') ||
+            e.target.closest('.sidebar-item') ||
+            e.target.closest('[onclick]')
+        ) {
+            return;
+        }
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }, { passive: true });
+
+    mainScroll.addEventListener('touchmove', function(e) {
+        if (
+            e.target.closest('#chat-window') || 
+            e.target.closest('#step-content') ||
+            e.target.closest('button') ||
+            e.target.closest('a') ||
+            e.target.closest('.sidebar-item') ||
+            e.target.closest('[onclick]')
+        ) {
+            return;
+        }
+        e.preventDefault(); // Lock free-scroll dragging to guarantee snapping
+    }, { passive: false });
+
+    function handleSwipe() {
+        if (isScrollAnimating) return;
+        const swipeDistance = touchEndY - touchStartY;
+        const threshold = 50; // Minimum drag px to trigger snap
+
+        if (Math.abs(swipeDistance) >= threshold) {
+            if (swipeDistance < 0) {
+                if (currentSectionIndex < sectionsArray.length - 1) {
+                    currentSectionIndex++;
+                    triggerProgrammaticScroll(currentSectionIndex);
+                }
+            } else {
+                if (currentSectionIndex > 0) {
+                    currentSectionIndex--;
+                    triggerProgrammaticScroll(currentSectionIndex);
+                }
+            }
+        }
+    }
+
+    function triggerProgrammaticScroll(index) {
+        isScrollAnimating = true;
+        const targetSection = sectionsArray[index];
+        if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Sync Left Sidebar Item Active State
+            const id = targetSection.id.replace('tab-', '');
+            sidebarItems.forEach(item => item.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${id}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            activeTab = id;
+
+            // Load analysis chart if applicable
+            if (id === 'analysis') {
+                setTimeout(initChartV3, 100);
+            }
+        }
+        // Lock wheel during transition to prevent rapid snapping bypass
+        setTimeout(() => {
+            isScrollAnimating = false;
+        }, 800);
+    }
+
+    // --- Programmatic Smooth Scrolling via Sidebar Clicking ---
     function scrollToSection(tabId) {
         const targetSection = document.getElementById(`tab-${tabId}`);
         if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
+            const index = sectionsArray.indexOf(targetSection);
+            if (index !== -1) {
+                currentSectionIndex = index;
+                triggerProgrammaticScroll(currentSectionIndex);
+            }
         }
     }
 
@@ -425,54 +550,66 @@
             prevBtn.classList.add('hidden');
         }
 
-        // STEP 1: Node Selection
+        // STEP 1: Node Selection (Recruitment Cards with corrected unescaped dollar signs)
         if (currentOnboardingStep === 1) {
             nextBtn.innerText = "다음 단계로 이동";
             container.innerHTML = `
                 <div class="fade-in space-y-4">
-                    <h3 class="font-bold text-base text-slate-800 mb-4 text-center">전용 하드웨어 연산 노드 등급 선택</h3>
-                    <div id="card-node-junior" onclick="selectNode('Junior')" class="border-2 p-5 rounded-2xl cursor-pointer hover:shadow-md transition-all flex justify-between items-center ${onboardingData.node === 'Junior' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}">
-                        <div>
-                            <h4 class="font-bold text-sm text-slate-800">Junior Research Node</h4>
-                            <p class="text-xs text-gray-400 mt-1">M1 Mac Mini (16GB RAM) - 소형 모델(7B~8B) 최적화</p>
+                    <h3 class="font-bold text-sm md:text-base text-slate-800 mb-4 text-center font-semibold">함께 일할 가상 사원 등급(직급) 선택</h3>
+                    
+                    <div id="card-node-junior" onclick="selectNode('Junior')" class="border-2 p-4 md:p-5 rounded-2xl cursor-pointer hover:shadow-md transition-all flex justify-between items-center ${onboardingData.node === 'Junior' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}">
+                        <div class="min-w-0 pr-2 font-sans">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">신입사원</span>
+                                <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate">주니어 가상 연구원 (Junior AI Researcher)</h4>
+                            </div>
+                            <p class="text-[10px] md:text-xs text-gray-500 mt-1.5 leading-relaxed">성실하고 정확도가 뛰어난 정보 수집가. 해외 미디어 모니터링, 데이터 조사, 일일 업무 파싱 전담 (M1 Mac Mini 전용 할당)</p>
                         </div>
-                        <span class="text-base font-bold text-blue-700">₩ 30,000<small class="text-xs font-normal text-gray-500">/월</small></span>
+                        <div class="flex-shrink-0 text-right whitespace-nowrap pl-2">
+                            <span class="text-xs md:text-base font-bold text-blue-700">₩ 30,000<span class="text-[9px] md:text-xs font-normal text-gray-500">/월</span></span>
+                        </div>
                     </div>
-                    <div id="card-node-senior" onclick="selectNode('Senior')" class="border p-5 rounded-2xl cursor-pointer hover:shadow-md transition-all flex justify-between items-center ${onboardingData.node === 'Senior' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}">
-                        <div>
-                            <h4 class="font-bold text-sm text-slate-800">Senior Strategic Node</h4>
-                            <p class="text-xs text-gray-400 mt-1">M2 Pro Mac Mini (32GB RAM) - 고추론 추론 모델(32B~) 탑재</p>
+                    
+                    <div id="card-node-senior" onclick="selectNode('Senior')" class="border p-4 md:p-5 rounded-2xl cursor-pointer hover:shadow-md transition-all flex justify-between items-center ${onboardingData.node === 'Senior' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}">
+                        <div class="min-w-0 pr-2 font-sans">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">팀장급</span>
+                                <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate">시니어 가상 기획팀장 (Senior Strategic Planner)</h4>
+                            </div>
+                            <p class="text-[10px] md:text-xs text-gray-500 mt-1.5 leading-relaxed">다차원 추론 및 종합적 기획력 보유. 전략적 기획서 마련, 고객 감정 분석 대응, 마케팅 초안 완성 전담 (M2 Pro Mac Mini 전용 할당)</p>
                         </div>
-                        <span class="text-base font-bold text-slate-800">₩ 60,000<small class="text-xs font-normal text-gray-500">/월</small></span>
+                        <div class="flex-shrink-0 text-right whitespace-nowrap pl-2">
+                            <span class="text-xs md:text-base font-bold text-slate-800">₩ 60,000<span class="text-[9px] md:text-xs font-normal text-gray-500">/월</span></span>
+                        </div>
                     </div>
                 </div>
             `;
         } 
-        // STEP 2: Task Assignment (Scenarios)
+        // STEP 2: Task Assignment
         else if (currentOnboardingStep === 2) {
             nextBtn.innerText = "업무 설정 완료";
             container.innerHTML = `
                 <div class="fade-in space-y-3">
-                    <h3 class="font-bold text-base text-slate-800 mb-2 text-center">AI 직원이 상주하며 처리할 현실적 임무 할당</h3>
-                    <div onclick="selectTask('news')" class="p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'news' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
+                    <h3 class="font-bold text-sm md:text-base text-slate-800 mb-2 text-center">AI 직원이 상주하며 처리할 현실적 임무 할당</h3>
+                    <div onclick="selectTask('news')" class="p-3 md:p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'news' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
                         <div class="text-xl mt-1">📰</div>
                         <div>
-                            <h4 class="font-bold text-sm text-slate-800">글로벌 테크 뉴스 데일리 브리핑</h4>
-                            <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">외신 및 신규 기술 소식을 종합해 사내 기획팀을 위해 핵심 3줄로 가공하고 피드백을 요구합니다.</p>
+                            <h4 class="font-bold text-xs md:text-sm text-slate-800">글로벌 테크 뉴스 데일리 브리핑</h4>
+                            <p class="text-[10px] md:text-[11px] text-gray-500 mt-1 leading-relaxed">외신 및 신규 기술 소식을 종합해 사내 기획팀을 위해 핵심 3줄로 가공하고 피드백을 요구합니다.</p>
                         </div>
                     </div>
-                    <div onclick="selectTask('cs')" class="p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'cs' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
+                    <div onclick="selectTask('cs')" class="p-3 md:p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'cs' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
                         <div class="text-xl mt-1">🎧</div>
                         <div>
-                            <h4 class="font-bold text-sm text-slate-800">지능형 고객 문의 자동 분류 및 대응</h4>
-                            <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">인입되는 메일의 고객 감정 온도를 진단하여 최선의 답장 초안을 마련 후 관리자 승인을 받습니다.</p>
+                            <h4 class="font-bold text-xs md:text-sm text-slate-800">지능형 고객 문의 자동 분류 및 대응</h4>
+                            <p class="text-[10px] md:text-[11px] text-gray-500 mt-1 leading-relaxed">인입되는 메일의 고객 감정 온도를 진단하여 최선의 답장 초안을 마련 후 관리자 승인을 받습니다.</p>
                         </div>
                     </div>
-                    <div onclick="selectTask('competitor')" class="p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'competitor' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
+                    <div onclick="selectTask('competitor')" class="p-3 md:p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'competitor' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
                         <div class="text-xl mt-1">🎯</div>
                         <div>
-                            <h4 class="font-bold text-sm text-slate-800">경쟁 서비스 신기능 추적 리서치</h4>
-                            <p class="text-[11px] text-gray-500 mt-1 leading-relaxed">경쟁사의 신기능 릴리즈 뉴스를 즉시 포착하여 이에 맞서는 맞춤 대조 마케팅 초안 작성을 협의합니다.</p>
+                            <h4 class="font-bold text-xs md:text-sm text-slate-800">경쟁 서비스 신기능 추적 리서치</h4>
+                            <p class="text-[10px] md:text-[11px] text-gray-500 mt-1 leading-relaxed">경쟁사의 신기능 릴리즈 뉴스를 즉시 포착하여 이에 맞서는 맞춤 대조 마케팅 초안 작성을 협의합니다.</p>
                         </div>
                     </div>
                 </div>
@@ -483,17 +620,17 @@
             nextBtn.innerText = "직원 출근 등록하기 (구독 시작)";
             container.innerHTML = `
                 <div class="fade-in text-center py-2">
-                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">⚡</div>
-                    <h3 class="font-bold text-base text-slate-900 mb-1">업무 가상 공간 연동</h3>
-                    <p class="text-xs text-gray-500 mb-6">직원들이 원활히 협업할 메신저 채널을 정하세요.</p>
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">⚡</div>
+                    <h3 class="font-bold text-sm md:text-base text-slate-900 mb-1">업무 가상 공간 연동</h3>
+                    <p class="text-[10px] md:text-xs text-gray-500 mb-6">직원들이 원활히 협업할 메신저 채널을 정하세요.</p>
                     <div class="flex justify-center space-x-4">
-                        <button onclick="selectChannel('Slack')" class="p-4 border-2 rounded-2xl flex flex-col items-center w-28 transition-all ${onboardingData.channel === 'Slack' ? 'border-blue-600 bg-blue-50' : 'border-gray-200'}">
-                            <span class="text-xl mb-1">💬</span>
-                            <span class="text-xs font-bold">Slack</span>
+                        <button onclick="selectChannel('Slack')" class="p-3 md:p-4 border-2 rounded-2xl flex flex-col items-center w-24 md:w-28 transition-all ${onboardingData.channel === 'Slack' ? 'border-blue-600 bg-blue-50' : 'border-gray-200'}">
+                            <span class="text-lg md:text-xl mb-1">💬</span>
+                            <span class="text-[11px] md:text-xs font-bold">Slack</span>
                         </button>
-                        <button onclick="selectChannel('Discord')" class="p-4 border rounded-2xl flex flex-col items-center w-28 transition-all ${onboardingData.channel === 'Discord' ? 'border-blue-600 bg-blue-50' : 'border-gray-200'}">
-                            <span class="text-xl mb-1">👾</span>
-                            <span class="text-xs font-bold">Discord</span>
+                        <button onclick="selectChannel('Discord')" class="p-3 md:p-4 border rounded-2xl flex flex-col items-center w-24 md:w-28 transition-all ${onboardingData.channel === 'Discord' ? 'border-blue-600 bg-blue-50' : 'border-gray-200'}">
+                            <span class="text-lg md:text-xl mb-1">👾</span>
+                            <span class="text-[11px] md:text-xs font-bold">Discord</span>
                         </button>
                     </div>
                 </div>
@@ -501,6 +638,13 @@
         }
     }
 
+    // --- Onboarding Selection Helpers (Restored) ---
+    function selectNode(nodeType) {
+        onboardingData.node = nodeType;
+        renderOnboardingStep();
+    }
+
+    // --- Onboarding Selection Helpers (Restored) ---
     function selectNode(nodeType) {
         onboardingData.node = nodeType;
         renderOnboardingStep();
@@ -516,6 +660,7 @@
         renderOnboardingStep();
     }
 
+    // --- Navigation Flow Controller (Fixed transition block bug) ---
     function nextOnboardingStep() {
         if (currentOnboardingStep < 3) {
             currentOnboardingStep++;
@@ -534,7 +679,7 @@
 
     // --- Subscription Modal Flow ---
     function openSubscriptionModal() {
-        document.getElementById('modal-node').innerText = onboardingData.node === 'Junior' ? 'Junior Node (M1, ₩30,000/월)' : 'Senior Node (M2 Pro, ₩60,000/월)';
+        document.getElementById('modal-node').innerText = onboardingData.node === 'Junior' ? '주니어 가상 연구원 (₩30,000/월)' : '시니어 가상 기획팀장 (₩60,000/월)';
         
         let taskName = "글로벌 테크 브리핑";
         if (onboardingData.task === 'cs') taskName = "고객 문의 자동 분석";
@@ -552,16 +697,30 @@
         const modal = document.getElementById('subscription-modal');
         modal.classList.add('hidden');
         
-        // 1. Sync matching spec text on Sidebar UI
-        document.getElementById('matched-spec-text').innerText = onboardingData.node === 'Junior' ? 'Junior (M1, 16GB)' : 'Senior (M2 Pro, 32GB)';
+        // Sync matching spec text on Sidebar UI
+        document.getElementById('matched-spec-text').innerText = onboardingData.node === 'Junior' ? '주니어 리서처 (M1, 16GB)' : '시니어 기획팀장 (M2 Pro, 32GB)';
         
-        // 2. Scroll to section 2 (Workflow Simulator)
-        scrollToSection('workflow');
+        // Scroll to workflow section (Index 1)
+        currentSectionIndex = 1;
+        triggerProgrammaticScroll(currentSectionIndex);
         
-        // 3. Auto start simulation based on the newly customized task
+        // Auto start simulation based on the newly customized task
         setTimeout(() => {
             startSimulation(onboardingData.task);
         }, 800);
+    }
+
+    // --- Dynamic Chat Scroller Helper ---
+    function scrollChatToBottom() {
+        const chatWindow = document.getElementById('chat-window');
+        if (chatWindow) {
+            setTimeout(() => {
+                chatWindow.scrollTo({
+                    top: chatWindow.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
     }
 
     // --- Interactive Chat Simulation ---
@@ -581,6 +740,7 @@
         document.getElementById('active-scenario-desc').innerText = scenario.desc;
         
         chatWindow.innerHTML = `<div class="text-center py-2 text-[10px] text-gray-400 uppercase tracking-widest border-b mb-4">시뮬레이터 로딩 및 직원 배포 완료</div>`;
+        scrollChatToBottom();
         
         // Loop through flow
         scenario.flow.forEach((msg, idx) => {
@@ -600,7 +760,7 @@
                     <p class="text-xs md:text-sm leading-relaxed text-slate-700">${msg.text}</p>
                 `;
                 chatWindow.appendChild(bubble);
-                chatWindow.scrollTop = chatWindow.scrollHeight;
+                scrollChatToBottom();
 
                 // Check if this message was a question requiring user intervention
                 if (msg.isQuestion) {
@@ -625,11 +785,10 @@
             </div>
         `;
         chatWindow.appendChild(typingBlock);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        scrollChatToBottom();
     }
 
     function showUserOptions(options) {
-        // Remove typing if any
         const prevTyping = document.getElementById('temp-typing');
         if (prevTyping) prevTyping.remove();
 
@@ -646,6 +805,7 @@
             btn.onclick = () => handleUserSelection(opt);
             optContainer.appendChild(btn);
         });
+        scrollChatToBottom();
     }
 
     function handleUserSelection(option) {
@@ -663,7 +823,7 @@
             <p class="text-xs md:text-sm leading-relaxed text-slate-800">${option.text}</p>
         `;
         chatWindow.appendChild(userBubble);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        scrollChatToBottom();
 
         // Simulate AI answering back to the user decision
         showTypingIndicator("사내 메신저 가동");
@@ -681,7 +841,7 @@
                 <div class="text-[10px] text-emerald-500 mt-2 font-medium">✓ 가상 맥 미니 서버 연산 종결 - 대기모드 진입</div>
             `;
             chatWindow.appendChild(finalBubble);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
+            scrollChatToBottom();
         }, 1500);
     }
 
