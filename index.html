@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentDesk - AI 가상 회사 인프라 마켓플레이스</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --bg-warm: #F9F7F2;
+            --primary-blue: #2563EB;
+            --accent-gold: #D97706;
+            --text-main: #1F2937;
+            --card-white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-warm);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+
+        .step-active { color: var(--primary-blue); border-bottom: 2px solid var(--primary-blue); }
+        .step-inactive { color: #9CA3AF; border-bottom: 2px solid transparent; }
+
+        .sidebar-item:hover { background-color: rgba(37, 99, 235, 0.05); }
+        .sidebar-item.active { background-color: rgba(37, 99, 235, 0.1); color: var(--primary-blue); border-right: 4px solid var(--primary-blue); }
+
+        /* Animation */
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<!-- Chosen Palette: Warm Sand & Tech Blue (Grounding neutrals with professional blue accents) -->
+<!-- Application Structure Plan: 
+    1. 통합 비전 대시보드 (Vision Dashboard): 피치덱의 핵심 문제의식과 해결책을 데이터 시각화와 함께 제시.
+    2. 인터랙티브 비즈니스 분석 (Market Analysis): 상용 API 대비 비용 절감 효과를 차트로 비교 분석.
+    3. 온보딩 가상 체험 (Console Simulation): 실제 기획서 파트 2에 정의된 'AI 직원 업무 지시' 과정을 3단계 위저드 형태로 직접 체험하게 함으로써 UX 가치를 증명.
+    이 구조는 투자자에게는 사업의 타당성을, 사용자에게는 서비스의 편의성을 동시에 설득하기 위해 채택되었습니다.
+-->
+<!-- Visualization & Content Choices: 
+    1. API vs 고정비 비교 -> 누적 비용 절감 -> Bar/Line Chart (Chart.js) -> 직관적인 비용 우위 증명.
+    2. 하드웨어 스펙 등급화 -> 등급별 카드 -> Hover/Select Interaction -> 직급 개념(인턴/매니저) 구체화.
+    3. 온보딩 프로세스 -> Wizard UI -> Step-by-step state handling -> 복잡한 AI 설정을 단순 폼으로 변환한 UX 강조.
+    - Confirming NO SVG/Mermaid used.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<!-- Header Area -->
+<header class="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">A</div>
+        <span class="text-xl font-bold tracking-tight text-slate-800">AgentDesk</span>
+    </div>
+    <div class="flex items-center space-x-6 text-sm">
+        <div class="hidden md:flex flex-col items-end">
+            <span class="text-xs text-gray-500">내 보유 크레딧</span>
+            <span class="font-semibold text-blue-600">120,500 KRW</span>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-gray-200 border border-gray-300 flex items-center justify-center">
+            <span class="text-xs font-medium text-gray-600">Admin</span>
+        </div>
+    </div>
+</header>
+
+<div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 border-r bg-white hidden lg:flex flex-col py-6">
+        <nav class="flex-1 space-y-1 px-3">
+            <button onclick="switchTab('vision')" class="sidebar-item active w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all" id="btn-vision">
+                <span class="text-lg">🏛️</span>
+                <span class="font-medium text-sm">비전 및 피치덱</span>
+            </button>
+            <button onclick="switchTab('analysis')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all" id="btn-analysis">
+                <span class="text-lg">📊</span>
+                <span class="font-medium text-sm">시장 및 비용 분석</span>
+            </button>
+            <button onclick="switchTab('onboarding')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all" id="btn-onboarding">
+                <span class="text-lg">🤖</span>
+                <span class="font-medium text-sm">AI 직원 온보딩 체험</span>
+            </button>
+        </nav>
+        <div class="px-6 py-4 border-t mt-auto">
+            <div class="bg-blue-50 p-3 rounded-lg">
+                <p class="text-xs text-blue-700 font-medium">현재 2대의 AI 직원이 정상 작동 중입니다.</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-warm-50" id="content-area">
+        
+        <!-- Tab 1: Vision Dashboard -->
+        <section id="tab-vision" class="fade-in">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-10 text-center">
+                    <h1 class="text-4xl font-bold mb-4 text-gray-900">놀고 있는 맥 미니를 AI 직원의 사무실로</h1>
+                    <p class="text-lg text-gray-600">탈중앙화 하드웨어 가상화를 통한 24시간 자율 AI 에이전트 인프라</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <div class="mb-4 text-red-500 font-bold flex items-center space-x-2 italic">
+                            <span>Problem</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 italic">토큰 폭탄과 인프라의 한계</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            24시간 자율 루프를 도는 에이전트가 늘어날수록 상용 API 비용은 기하급수적으로 폭증합니다. 
+                            동시에 전 세계 수백만 대의 Apple Silicon Mac은 하루 80% 이상의 시간 동안 유휴 자원으로 낭비되고 있습니다.
+                        </p>
+                    </div>
+                    <div class="bg-blue-600 p-8 rounded-2xl shadow-lg text-white">
+                        <div class="mb-4 text-blue-200 font-bold flex items-center space-x-2 italic">
+                            <span>Solution</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 italic">월 고정형 "AI 사내 인프라"</h3>
+                        <p class="text-blue-50 leading-relaxed">
+                            유휴 하드웨어를 암호화된 가상 컨테이너로 격리하여 고정 구독 모델로 제공합니다. 
+                            개발자는 사용량 과금이 아닌 월 고정액으로 전용 AI 직원 노드를 무제한 가동할 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 mb-12">
+                    <h3 class="text-xl font-bold mb-6 text-center">하드웨어 스펙을 직급으로 바꾼 직관적인 인력 시장</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border rounded-xl p-6 hover:border-blue-300 transition-all cursor-pointer group">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Intern Node</span>
+                                <span class="text-xl font-bold">$35<span class="text-sm font-normal text-gray-400">/월</span></span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-2">인턴 (Mac Mini 16G)</h4>
+                            <ul class="text-sm text-gray-500 space-y-2 mb-4">
+                                <li>• 단순 텍스트 파싱 및 데이터 요약</li>
+                                <li>• Qwen 2.5 7B 등 경량 모델 최적화</li>
+                                <li>• 24시간 루틴 업무 수행</li>
+                            </ul>
+                            <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-blue-500 w-1/3"></div>
+                            </div>
+                        </div>
+                        <div class="border rounded-xl p-6 hover:border-blue-300 transition-all cursor-pointer group border-blue-100 bg-blue-50/20">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Manager Node</span>
+                                <span class="text-xl font-bold">$90<span class="text-sm font-normal text-gray-400">/월</span></span>
+                            </div>
+                            <h4 class="text-lg font-bold mb-2">매니저 (Mac Mini Pro 64G)</h4>
+                            <ul class="text-sm text-gray-500 space-y-2 mb-4">
+                                <li>• 복잡한 코드 작성 및 추론 작업</li>
+                                <li>• Qwen 32B / DeepSeek R1 양자화</li>
+                                <li>• 다중 에이전트 협업 오케스트레이션</li>
+                            </ul>
+                            <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-indigo-500 w-2/3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Market Analysis -->
+        <section id="tab-analysis" class="hidden fade-in">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-8 border-b pb-4">
+                    <h2 class="text-2xl font-bold">시장 및 비용 분석</h2>
+                    <p class="text-gray-500">상용 API 대비 AgentDesk의 경제적 우위를 분석합니다.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h4 class="text-sm font-bold text-gray-400 uppercase mb-4 tracking-widest text-center">월간 인프라 비용 비교 (에이전트 24시간 가동 기준)</h4>
+                        <div class="chart-container">
+                            <canvas id="costComparisonChart"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-gray-50 rounded-lg text-xs text-gray-500 text-center">
+                            * 상용 API: GPT-4o 평균 토큰 소비량 기준 | AgentDesk: 매니저 노드 구독료 기준
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <h4 class="text-sm font-bold text-gray-400 uppercase mb-2">Cost Savings</h4>
+                            <p class="text-3xl font-bold text-green-600">89.2%</p>
+                            <p class="text-xs text-gray-500 mt-1 italic">상용 API 대비 절감되는 비용</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <h4 class="text-sm font-bold text-gray-400 uppercase mb-2">Hardware Efficiency</h4>
+                            <p class="text-3xl font-bold text-blue-600">3.5x</p>
+                            <p class="text-xs text-gray-500 mt-1 italic">엔비디아 대비 전력당 연산 효율</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <h4 class="text-sm font-bold text-gray-400 uppercase mb-2">Target GMV</h4>
+                            <p class="text-3xl font-bold text-gray-900">$12M</p>
+                            <p class="text-xs text-gray-500 mt-1 italic">3개년 누적 거래액 목표</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 text-white p-8 rounded-2xl">
+                    <h3 class="text-xl font-bold mb-6 italic">핵심 기술 및 보안 우위</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mb-4 border border-slate-700">🔒</div>
+                            <h5 class="font-bold mb-2">Zero-Knowledge</h5>
+                            <p class="text-sm text-slate-400 leading-relaxed">E2E 암호화 런타임을 구축하여 호스트도 게스트의 기밀 데이터를 절대 엿볼 수 없습니다.</p>
+                        </div>
+                        <div>
+                            <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mb-4 border border-slate-700">⚡</div>
+                            <h5 class="font-bold mb-2">NAT Traversal</h5>
+                            <p class="text-sm text-slate-400 leading-relaxed">복잡한 설정 없이 원클릭으로 전 세계 어디서든 안전한 P2P 연결을 보장합니다.</p>
+                        </div>
+                        <div>
+                            <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mb-4 border border-slate-700">🔄</div>
+                            <h5 class="font-bold mb-2">Auto-Failover</h5>
+                            <p class="text-sm text-slate-400 leading-relaxed">장비 중단 시 3초 내에 동급 대기 노드로 가상 환경을 즉시 복제하여 이관합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Onboarding Simulation -->
+        <section id="tab-onboarding" class="hidden fade-in">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-8 border-b pb-4">
+                    <h2 class="text-2xl font-bold">AI 직원 온보딩 가상 체험</h2>
+                    <p class="text-gray-500">새로 고용한 AI 직원에게 첫 번째 업무 지시를 내리는 실제 과정을 체험해보세요.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-xl border overflow-hidden">
+                    <!-- Progress Bar -->
+                    <div class="bg-gray-50 px-8 py-4 border-b flex justify-between">
+                        <div id="step-indicator-1" class="text-sm font-semibold step-active flex items-center space-x-2 pb-2">
+                            <span class="w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center">1</span>
+                            <span>직무 템플릿 선택</span>
+                        </div>
+                        <div id="step-indicator-2" class="text-sm font-semibold step-inactive flex items-center space-x-2 pb-2">
+                            <span class="w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] flex items-center justify-center">2</span>
+                            <span>업무 지시서 작성</span>
+                        </div>
+                        <div id="step-indicator-3" class="text-sm font-semibold step-inactive flex items-center space-x-2 pb-2">
+                            <span class="w-5 h-5 rounded-full bg-gray-300 text-white text-[10px] flex items-center justify-center">3</span>
+                            <span>채널 연동 및 시작</span>
+                        </div>
+                    </div>
+
+                    <!-- Step Contents -->
+                    <div class="p-8 min-h-[400px]">
+                        <!-- Step 1 Content -->
+                        <div id="step-1-content" class="fade-in">
+                            <p class="text-sm text-gray-500 mb-6">검증된 직무 템플릿을 선택하여 즉시 업무 투입 준비를 마칩니다.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="template-card border-2 p-4 rounded-xl cursor-pointer hover:bg-gray-50 transition-all border-blue-500 bg-blue-50/30" onclick="selectTemplate(this, '해외 테크 트렌드 수집가')">
+                                    <div class="text-2xl mb-2">🌐</div>
+                                    <h5 class="font-bold">해외 테크 트렌드 수집가</h5>
+                                    <p class="text-xs text-gray-500 mt-1">해외 미디어를 크롤링하고 매일 아침 보고서를 요약합니다.</p>
+                                    <span class="inline-block mt-3 text-[10px] px-2 py-1 bg-gray-100 rounded text-gray-600">Qwen 2.5 14B</span>
+                                </div>
+                                <div class="template-card border-2 p-4 rounded-xl cursor-pointer hover:bg-gray-50 transition-all border-gray-200" onclick="selectTemplate(this, '뉴스레터 작성 에이전트')">
+                                    <div class="text-2xl mb-2">📧</div>
+                                    <h5 class="font-bold">뉴스레터 작성 에이전트</h5>
+                                    <p class="text-xs text-gray-500 mt-1">지정된 데이터에서 발행용 뉴스레터 초안을 작성합니다.</p>
+                                    <span class="inline-block mt-3 text-[10px] px-2 py-1 bg-gray-100 rounded text-gray-600">Qwen 2.5 32B</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 Content -->
+                        <div id="step-2-content" class="hidden fade-in space-y-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">직원 이름 설정</label>
+                                        <input type="text" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none" value="최매니저">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">수집 대상 웹사이트/키워드</label>
+                                        <div class="flex flex-wrap gap-2 border rounded-lg p-2 bg-gray-50">
+                                            <span class="bg-white border rounded px-2 py-1 text-[10px] font-medium flex items-center space-x-1">
+                                                <span>Generative AI</span>
+                                                <span class="text-gray-300">×</span>
+                                            </span>
+                                            <span class="bg-white border rounded px-2 py-1 text-[10px] font-medium flex items-center space-x-1">
+                                                <span>DePIN</span>
+                                                <span class="text-gray-300">×</span>
+                                            </span>
+                                            <input type="text" placeholder="추가..." class="bg-transparent text-[10px] outline-none w-16">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-400 uppercase mb-2">보고 톤앤매너</label>
+                                        <select class="w-full border rounded-lg p-2 text-sm outline-none">
+                                            <option>전문적이고 분석적인</option>
+                                            <option>친절하고 상세한</option>
+                                            <option>간결한 요약</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-900 rounded-xl p-4 text-white text-[11px] font-mono leading-relaxed opacity-80 overflow-hidden">
+                                    <div class="text-gray-500 mb-2">// 실시간 빌딩되는 프롬프트 가이드</div>
+                                    <p class="text-blue-300">"You are an AI research assistant named <span id="preview-name">최매니저</span>. 
+                                    Your task is to monitor news about [Generative AI, DePIN]. 
+                                    Write a daily report in a 'professional' tone..."</p>
+                                    <div class="mt-4 border-t border-gray-800 pt-2 animate-pulse text-green-400">
+                                        _System: Ready to deploy.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 Content -->
+                        <div id="step-3-content" class="hidden fade-in">
+                            <div class="space-y-6">
+                                <div class="flex items-center justify-between p-4 border rounded-xl hover:bg-slate-50 transition-colors">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-indigo-100 rounded flex items-center justify-center">#</div>
+                                        <div>
+                                            <h6 class="text-sm font-bold">Slack 채널 연동</h6>
+                                            <p class="text-xs text-gray-500">#daily-report 채널로 보고서 자동 전송</p>
+                                        </div>
+                                    </div>
+                                    <button class="bg-white border border-gray-300 px-4 py-2 rounded-lg text-xs font-medium hover:border-blue-500 transition-all">연동 완료</button>
+                                </div>
+                                <div class="flex items-center justify-between p-4 border rounded-xl bg-blue-50/50 border-blue-200">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-blue-100 rounded flex items-center justify-center">🌐</div>
+                                        <div>
+                                            <h6 class="text-sm font-bold">사내 에이전트 공유망 참여</h6>
+                                            <p class="text-xs text-gray-500">다른 AI 직원과 협업하여 데이터를 공유합니다.</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-10 h-5 bg-blue-600 rounded-full relative">
+                                        <div class="w-4 h-4 bg-white rounded-full absolute top-0.5 right-0.5 shadow-sm"></div>
+                                    </div>
+                                </div>
+                                <div class="p-6 bg-yellow-50 rounded-xl border border-yellow-100 text-center">
+                                    <p class="text-sm text-yellow-800 font-medium">최매니저(매니저 노드)를 출근시킬 준비가 되었습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Nav -->
+                    <div class="bg-gray-50 px-8 py-4 border-t flex justify-between">
+                        <button id="btn-prev" class="px-6 py-2 border rounded-lg text-sm font-medium text-gray-400 invisible" onclick="changeStep(-1)">이전 단계</button>
+                        <button id="btn-next" class="px-8 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all" onclick="changeStep(1)">다음 단계</button>
+                        <button id="btn-launch" class="px-8 py-2 bg-indigo-700 text-white rounded-lg text-sm font-bold shadow-lg shadow-indigo-200 hover:bg-indigo-800 transition-all hidden" onclick="launchAgent()">업무 시작하기 (출근 등록)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal -->
+<div id="modal-overlay" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-[100] backdrop-blur-sm">
+    <div class="bg-white p-10 rounded-3xl max-w-md w-full text-center shadow-2xl">
+        <div class="w-20 h-20 bg-green-100 text-green-600 text-3xl flex items-center justify-center rounded-full mx-auto mb-6">✓</div>
+        <h3 class="text-2xl font-bold mb-2 italic text-slate-800">최매니저 출근 완료!</h3>
+        <p class="text-gray-500 mb-8 leading-relaxed">
+            이제 AI 직원이 할당된 노드(Mac Mini Pro)에서 가동을 시작했습니다. 
+            첫 번째 보고서는 내일 아침 9시에 슬랙으로 전송됩니다.
+        </p>
+        <button onclick="closeModal()" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all">대시보드로 이동</button>
+    </div>
+</div>
+
+<script>
+    let currentTab = 'vision';
+    let currentStep = 1;
+    let selectedTemplate = '';
+
+    // Initialize Chart
+    function initChart() {
+        const ctx = document.getElementById('costComparisonChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['1개월', '3개월', '6개월', '12개월'],
+                datasets: [{
+                    label: '상용 API (Usage-based)',
+                    data: [1200, 3600, 7200, 14400],
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    borderRadius: 6
+                }, {
+                    label: 'AgentDesk (Fixed Node)',
+                    data: [90, 270, 540, 1080],
+                    backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, font: { family: 'Inter', size: 11 } } },
+                    tooltip: { backgroundColor: '#1e293b', padding: 12, titleFont: { size: 14 } }
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { color: '#f3f4f6' },
+                        title: { display: true, text: 'USD ($)', font: { weight: 'bold' } } 
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // Tab Switching
+    function switchTab(tabName) {
+        document.getElementById(`tab-${currentTab}`).classList.add('hidden');
+        document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+        
+        document.getElementById(`btn-${currentTab}`).classList.remove('active');
+        document.getElementById(`btn-${tabName}`).classList.add('active');
+        
+        currentTab = tabName;
+
+        if (tabName === 'analysis') {
+            setTimeout(initChart, 100);
+        }
+    }
+
+    // Step Management
+    function changeStep(dir) {
+        const nextStep = currentStep + dir;
+        if (nextStep < 1 || nextStep > 3) return;
+
+        // Hide current step
+        document.getElementById(`step-${currentStep}-content`).classList.add('hidden');
+        document.getElementById(`step-indicator-${currentStep}`).classList.replace('step-active', 'step-inactive');
+        document.getElementById(`step-indicator-${currentStep}`).querySelector('span').classList.replace('bg-blue-600', 'bg-gray-300');
+
+        // Show next step
+        currentStep = nextStep;
+        document.getElementById(`step-${currentStep}-content`).classList.remove('hidden');
+        document.getElementById(`step-indicator-${currentStep}`).classList.replace('step-inactive', 'step-active');
+        document.getElementById(`step-indicator-${currentStep}`).querySelector('span').classList.replace('bg-gray-300', 'bg-blue-600');
+
+        // Nav buttons visibility
+        document.getElementById('btn-prev').classList.toggle('invisible', currentStep === 1);
+        document.getElementById('btn-next').classList.toggle('hidden', currentStep === 3);
+        document.getElementById('btn-launch').classList.toggle('hidden', currentStep !== 3);
+    }
+
+    function selectTemplate(el, name) {
+        document.querySelectorAll('.template-card').forEach(c => {
+            c.classList.remove('border-blue-500', 'bg-blue-50/30');
+            c.classList.add('border-gray-200');
+        });
+        el.classList.replace('border-gray-200', 'border-blue-500');
+        el.classList.add('bg-blue-50/30');
+        selectedTemplate = name;
+    }
+
+    function launchAgent() {
+        document.getElementById('modal-overlay').classList.replace('hidden', 'flex');
+    }
+
+    function closeModal() {
+        document.getElementById('modal-overlay').classList.replace('flex', 'hidden');
+        switchTab('vision');
+    }
+
+    window.onload = () => {
+        // Initial setup
+    };
+</script>
+
+</body>
+</html>
