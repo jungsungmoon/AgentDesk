@@ -3,77 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentDesk - AI 가상 회사 인프라</title>
+    <title>AgentDesk - DePIN 고정가 AI 에이전트 인프라 마켓플레이스</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
         
         :root {
-            --bg-warm: #FDFCFB;
-            --primary-blue: #1D4ED8;
-            --slack-sidebar: #19171D;
-            --text-main: #111827;
+            --color-bg-dark: #030712;
+            --color-panel-dark: #0b0f19;
+            --color-neon-blue: #3b82f6;
+            --color-neon-purple: #8b5cf6;
+            --color-neon-emerald: #10b981;
         }
 
         body {
-            font-family: 'Inter', 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-warm);
-            color: var(--text-main);
-            overflow: hidden;
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            background-color: var(--color-bg-dark);
+            color: #f1f5f9;
         }
 
-        /* Scroll Container (Locked overflow-y to hidden for perfect snap transitions) */
-        .scroll-container {
-            overflow: hidden;
-            height: calc(100vh - 4rem);
+        /* Custom Scroll Snap */
+        .snap-container {
+            scroll-snap-type: y proximity;
+            overflow-y: auto;
+            height: calc(100vh - 4.5rem);
             scroll-behavior: smooth;
         }
 
-        .section-snap {
-            min-height: calc(100vh - 4rem);
+        .snap-section {
+            scroll-snap-align: start;
+            min-height: calc(100vh - 4.5rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-
-        .chart-container {
             position: relative;
-            width: 100%;
-            max-width: 650px;
-            margin: auto;
-            height: 300px;
         }
 
-        .sidebar-item.active { 
-            background-color: rgba(29, 78, 216, 0.1); 
-            color: var(--primary-blue); 
-            border-right: 4px solid var(--primary-blue); 
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
 
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .glass-panel-glow-blue {
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.15);
         }
 
-        .messenger-bg { background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; display: flex; height: 500px; }
-        .messenger-sidebar { background-color: var(--slack-sidebar); width: 200px; flex-shrink: 0; color: #BCBBBD; }
-        .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 12px; margin-bottom: 8px; position: relative; }
-        .bot-message { background-color: #F8FAFC; border: 1px solid #F1F5F9; }
-        .user-message { background-color: #DBEAFE; border: 1px solid #BFDBFE; align-self: flex-end; }
-        
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }
+        .glass-panel-glow-purple {
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.15);
+        }
 
-        .step-circle.active { background-color: #1D4ED8; color: white; border-color: #1D4ED8; }
-        .step-circle.completed { background-color: #10B981; color: white; border-color: #10B981; }
+        /* Neon Glow Utility */
+        .text-glow-blue {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
 
-        /* Typing Indicator Effect */
+        .text-glow-purple {
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Active Navigation Line */
+        .nav-link.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+
+        /* Gradient Borders */
+        .gradient-border-blue {
+            position: relative;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 1.5rem;
+            z-index: 1;
+        }
+        .gradient-border-blue::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px; right: -1px; bottom: -1px;
+            background: linear-gradient(135deg, #3b82f6, transparent, #8b5cf6);
+            border-radius: 1.5rem;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0.6;
+        }
+        .gradient-border-blue:hover::before {
+            opacity: 1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+
+        /* Animations */
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 8px rgba(16, 185, 129, 0.6); }
+            50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 18px rgba(16, 185, 129, 0.9); }
+        }
+        .pulse-glow-node {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 4s infinite ease-in-out;
+        }
+
         .typing-dots span {
-            width: 6px;
-            height: 6px;
-            background-color: #94A3B8;
+            width: 5px;
+            height: 5px;
+            background-color: #94a3b8;
             border-radius: 50%;
             display: inline-block;
             animation: bounce 1.4s infinite ease-in-out both;
@@ -82,781 +140,1279 @@
         .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
         @keyframes bounce {
             0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
+            40% { transform: scale(1); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="h-screen flex flex-col overflow-hidden">
 
-<!-- HEADER -->
-<header class="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-50 shadow-sm">
+<!-- HEADER (Sticky Glassmorphic) -->
+<header class="h-18 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md flex items-center justify-between px-6 md:px-12 sticky top-0 z-50">
     <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center font-bold text-white text-sm">AD</div>
-        <span class="text-xl font-bold tracking-tight text-slate-800">AgentDesk <span class="text-blue-600 font-normal">v3.1</span></span>
+        <div class="w-9 h-9 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-xl flex items-center justify-center font-black text-white text-base shadow-lg shadow-blue-500/20">AD</div>
+        <div class="flex flex-col">
+            <span class="text-lg font-bold tracking-tight text-white flex items-center">
+                AgentDesk
+                <span class="ml-2 px-2 py-0.5 text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md">DePIN MVP v2.0</span>
+            </span>
+        </div>
     </div>
+    
+    <!-- Navigation Links -->
+    <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
+        <button onclick="scrollToTab('hero')" class="nav-link active py-2 hover:text-white transition-all" id="nav-hero">서비스 홈</button>
+        <button onclick="scrollToTab('depin')" class="nav-link py-2 hover:text-white transition-all" id="nav-depin">DePIN 노드 & 수익 계산</button>
+        <button onclick="scrollToTab('onboarding')" class="nav-link py-2 hover:text-white transition-all" id="nav-onboarding">직원 채용 마법사</button>
+        <button onclick="scrollToTab('intranet')" class="nav-link py-2 hover:text-white transition-all" id="nav-intranet">실시간 협업 시뮬레이터</button>
+        <button onclick="scrollToTab('inquiry')" class="nav-link py-2 hover:text-white transition-all" id="nav-inquiry">도입 문의 & FAQ</button>
+    </nav>
+
     <div class="flex items-center space-x-4">
-        <button onclick="scrollToSection('onboarding')" class="bg-blue-600 text-white px-5 py-2 rounded-full text-xs font-bold hover:bg-blue-700 transition-all">신규 AI 직원 채용</button>
+        <!-- Live Badge -->
+        <div class="hidden lg:flex items-center space-x-2 bg-slate-900 border border-slate-800 rounded-full py-1.5 px-3">
+            <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full pulse-glow-node"></span>
+            <span class="text-xs text-slate-300 font-medium">DePIN Network Online</span>
+        </div>
+        <button onclick="scrollToTab('onboarding')" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-lg shadow-blue-600/25">신규 에이전트 채용</button>
     </div>
 </header>
 
-<div class="flex flex-1 overflow-hidden">
-    <!-- LEFT SIDEBAR (Desktop) -->
-    <aside class="w-64 border-r bg-white hidden lg:flex flex-col py-8 flex-shrink-0">
-        <nav class="flex-1 space-y-1 px-4 text-gray-500">
-            <button onclick="scrollToSection('vision')" class="sidebar-item active w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all" id="btn-vision">
-                <span class="flex-shrink-0">🏠</span><span class="font-semibold text-sm whitespace-nowrap">서비스 비전</span>
-            </button>
-            <button onclick="scrollToSection('workflow')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all" id="btn-workflow">
-                <span class="flex-shrink-0">💬</span><span class="font-semibold text-sm whitespace-nowrap">실시간 협업 시뮬레이션</span>
-            </button>
-            <button onclick="scrollToSection('analysis')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all" id="btn-analysis">
-                <span class="flex-shrink-0">📊</span><span class="font-semibold text-sm whitespace-nowrap">경제성 분석</span>
-            </button>
-            <button onclick="scrollToSection('onboarding')" class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all" id="btn-onboarding">
-                <span class="flex-shrink-0">🤖</span><span class="font-semibold text-sm whitespace-nowrap">AI 직원 온보딩</span>
-            </button>
-        </nav>
-        <div class="px-6 py-4 border-t text-xs text-gray-400 font-medium">
-            POWERED BY APPLE SILICON
-        </div>
-    </aside>
-
-    <!-- MAIN SCROLL CONTAINER -->
-    <main class="flex-1 scroll-container" id="main-scroll-container">
+<!-- Main Snap Scroll Container -->
+<main class="flex-1 snap-container relative" id="snap-scroll-wrapper">
+    
+    <!-- SECTION 1: HERO & NETWORK METRICS -->
+    <section id="sec-hero" class="snap-section p-6 md:p-12">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,92,246,0.06),transparent_40%)] pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.06),transparent_40%)] pointer-events-none"></div>
         
-        <!-- SECTION 1: Vision -->
-        <section id="tab-vision" class="section-snap p-8 md:p-16">
-            <div class="max-w-4xl mx-auto w-full">
-                <span class="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1.5 rounded-full">Fixed-Price AI Infrastructure</span>
-                <h1 class="text-4xl md:text-5xl font-black text-slate-900 mt-6 mb-8 leading-tight">
-                    "클로드랑 뭐가 달라요?<br>
-                    <span class="text-blue-600">더 싸고, 더 쉽고, 일관되니까요.</span>"
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+            <!-- Left: Catchy Copy -->
+            <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                <span class="px-3.5 py-1.5 text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full tracking-widest uppercase">Decentralized AI Infrastructure</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+                    놀고 있는 고사양 맥을<br>
+                    <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">24시간 AI 직원의 사무실로.</span>
                 </h1>
-                <p class="text-lg md:text-xl text-gray-600 leading-relaxed mb-12">
-                    단순한 대화형 AI는 매번 맥락을 다시 설명해야 하고 사용량에 따라 비용이 폭증합니다. AgentDesk는 전 세계의 <strong>유휴 맥 미니 자원</strong>을 하나로 묶어, 당신만을 위해 24시간 깨어있는 전용 직원을 고정가에 제공합니다.
+                <p class="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl">
+                    상용 AI API의 비용 폭증과 고성능 하드웨어 유휴 문제를 DePIN(탈중앙화 물리 인프라) 개념으로 완전히 해결합니다. 
+                    개인 Host의 Apple Silicon 자원을 묶어, Guest에게 고정 월 요금제로 안전하게 격리된 가상 사원 런타임을 제공합니다.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-8 bg-white border rounded-3xl shadow-sm hover:shadow-md transition-all">
-                        <div class="text-3xl mb-4">📉</div>
-                        <h4 class="font-bold text-lg mb-2 text-slate-800">90% 저렴한 비용 보장</h4>
-                        <p class="text-gray-500 text-sm leading-relaxed">토큰당 무제한 청구서 대신, 호스트의 남는 맥 미니 자원을 월 고정 가격에 독점 사용하세요.</p>
-                    </div>
-                    <div class="p-8 bg-white border rounded-3xl shadow-sm hover:shadow-md transition-all">
-                        <div class="text-3xl mb-4">🔐</div>
-                        <h4 class="font-bold text-lg mb-2 text-slate-800">휘발되지 않는 영구 메모리</h4>
-                        <p class="text-gray-500 text-sm leading-relaxed">대화할 때마다 초기화되지 않습니다. 지정된 역할과 과거 작업 히스토리를 호스트 인프라에 보존하여 일관되게 일합니다.</p>
-                    </div>
-                </div>
-                <div class="mt-8 text-center text-gray-400 text-sm animate-bounce">
-                    ▼ 아래로 스크롤하여 실제 협업을 확인하세요
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <button onclick="scrollToTab('onboarding')" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/10 hover:shadow-blue-500/25 transition-all text-sm">
+                        가상 AI 직원 고용하기 (Guest)
+                    </button>
+                    <button onclick="scrollToTab('depin')" class="w-full sm:w-auto px-8 py-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold rounded-2xl transition-all text-sm">
+                        내 맥 대여하고 수익 얻기 (Host)
+                    </button>
                 </div>
             </div>
-        </section>
 
-        <!-- SECTION 2: Workflow -->
-        <section id="tab-workflow" class="section-snap p-4 md:p-12 bg-slate-50/50 border-t">
-            <div class="max-w-5xl mx-auto w-full">
-                <div class="mb-6">
-                    <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">Interactive Workspace</span>
-                    <h2 class="text-2xl md:text-3xl font-black mt-3 mb-2 text-slate-900">실시간 사내 메신저 시뮬레이션</h2>
-                    <p class="text-gray-500 text-sm">온보딩에서 임무를 주면 해당 시나리오에 맞는 직원들의 업무 교류가 즉시 가동됩니다.</p>
+            <!-- Right: Real-time Stats Grid Dashboard -->
+            <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 0s;">
+                    <div class="text-slate-500 text-xs font-semibold mb-2">활성 분산 노드</div>
+                    <div class="flex items-baseline space-x-1.5">
+                        <span class="text-3xl font-black text-white" id="stat-active-nodes">1,482</span>
+                        <span class="text-xs font-bold text-emerald-400 flex items-center">
+                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1 inline-block animate-ping"></span> Live
+                        </span>
+                    </div>
+                    <div class="text-[10px] text-slate-500 mt-2">M1/M2/M3 Mac Mini & Mac Studio</div>
                 </div>
-                
-                <div class="messenger-bg shadow-2xl">
-                    <!-- Messenger Sidebar -->
-                    <div class="messenger-sidebar p-4 hidden md:flex flex-col justify-between">
+
+                <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 0.5s;">
+                    <div class="text-slate-500 text-xs font-semibold mb-2">전체 연산 코어</div>
+                    <div class="text-3xl font-black text-white" id="stat-cores">11,856</div>
+                    <div class="text-[10px] text-slate-500 mt-2">Apple GPU 가속 통합 자원</div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 1s;">
+                    <div class="text-slate-500 text-xs font-semibold mb-2">평균 네트워크 대역폭</div>
+                    <div class="text-3xl font-black text-blue-400">4.8 <span class="text-xs text-slate-500 font-medium">Gbps</span></div>
+                    <div class="text-[10px] text-slate-500 mt-2">Tailscale P2P 보안 메시 네크워크</div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 1.5s;">
+                    <div class="text-slate-500 text-xs font-semibold mb-2">평균 비용 절감율</div>
+                    <div class="text-3xl font-black text-purple-400">89.2%</div>
+                    <div class="text-[10px] text-slate-500 mt-2">상용 API 무제한 호출 대비</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer text-slate-500 hover:text-white transition-all text-xs" onclick="scrollToTab('depin')">
+            <span class="mb-1 font-semibold uppercase tracking-widest text-[9px]">Scroll Down</span>
+            <span>▼</span>
+        </div>
+    </section>
+
+    <!-- SECTION 2: DEPIN NODE MAP & HOST CALCULATOR -->
+    <section id="sec-depin" class="snap-section p-6 md:p-12 border-t border-slate-900/80 bg-slate-950/20">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.03),transparent_50%)] pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto w-full space-y-8 z-10">
+            
+            <div class="text-center md:text-left">
+                <span class="px-3 py-1 text-[10px] font-bold text-purple-400 bg-purple-500/10 border border-purple-500/20 rounded-full tracking-widest uppercase">Host Economic System</span>
+                <h2 class="text-2xl md:text-3xl font-black text-white mt-3">글로벌 DePIN 맵 & 호스트 수익 모델</h2>
+                <p class="text-slate-500 text-xs md:text-sm mt-1">맥의 자원을 빌려주고 실시간 크레딧을 채굴하세요. 사양이 고성능일수록 고등급 가상 직원이 매칭됩니다.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Left: Interactive World Map Node Visualizer (SVG) -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-3xl flex flex-col justify-between min-h-[380px] relative">
+                    <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span class="text-xs font-bold text-slate-300">실시간 글로벌 노드 분포</span>
+                        </div>
+                        <span class="text-[10px] text-slate-500 font-mono" id="map-hover-hint">노드 위에 마우스를 올리세요</span>
+                    </div>
+
+                    <!-- SVG World Map Graphic -->
+                    <div class="flex-1 flex items-center justify-center relative bg-slate-950/40 rounded-2xl overflow-hidden py-4 border border-slate-900">
+                        <svg viewBox="0 0 1000 500" class="w-full h-full opacity-60 text-slate-800" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- Grid lines -->
+                            <path d="M0 100h1000M0 200h1000M0 300h1000M0 400h1000 M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500M800 0v500M900 0v500" stroke-width="0.5" stroke="rgba(255,255,255,0.03)" />
+                            
+                            <!-- Stylized Continent Outlines (Abstracted map paths) -->
+                            <!-- Asia & Korea/Japan area -->
+                            <path d="M720 120 c20-10, 40,5, 60,0 c30-10, 50-30, 80-20 c15 5, 20,20, 20,40 c0 30-10,50-30,70 c-10 10-25 15-40 20 c-20 5-40-5-50-20 c-10-15-20-40-40-90 Z" fill="rgba(30,41,59,0.15)" stroke="rgba(255,255,255,0.05)" />
+                            <path d="M780 200 c10 10, 30,30, 20,50 c-10 10-30 0-40-10 c-20-20-10-30 20-40 Z" fill="rgba(30,41,59,0.15)" stroke="rgba(255,255,255,0.05)" />
+                            <!-- America -->
+                            <path d="M120 80 c40-10, 80-20, 120-10 c30 5, 60,20, 70,40 c10 20-10,40-20,60 c-20 40-50,60-60,90 c-10 30-20,60-10,90 c10 20, 30,30, 40,50 c5 15-10,30-30,30 c-30 0-50-30-70-50 c-20-20-35-50-40-80 c-5-30 5-60-5-90 c-10-30-30-50-25-80 c5-20, 10-40, 30-50 Z" fill="rgba(30,41,59,0.15)" stroke="rgba(255,255,255,0.05)" />
+                            
+                            <!-- Pulsing Nodes -->
+                            <!-- Seoul -->
+                            <circle cx="760" cy="160" r="7" class="fill-blue-500/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('seoul')" onmouseover="triggerNodeHover('seoul')" onmouseout="clearNodeHover()" />
+                            <!-- Tokyo -->
+                            <circle cx="790" cy="165" r="7" class="fill-purple-500/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('tokyo')" onmouseover="triggerNodeHover('tokyo')" onmouseout="clearNodeHover()" />
+                            <!-- Silicon Valley -->
+                            <circle cx="210" cy="150" r="7" class="fill-emerald-500/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('sv')" onmouseover="triggerNodeHover('sv')" onmouseout="clearNodeHover()" />
+                            <!-- Singapore -->
+                            <circle cx="710" cy="270" r="7" class="fill-blue-400/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('singapore')" onmouseover="triggerNodeHover('singapore')" onmouseout="clearNodeHover()" />
+                        </svg>
+
+                        <!-- Dynamic Map Tooltip Overlay -->
+                        <div id="map-tooltip" class="absolute bg-slate-900/95 border border-slate-800 text-xs rounded-xl p-3.5 shadow-2xl backdrop-blur-md hidden max-w-[240px]">
+                            <!-- Content injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Host Earnings Calculator -->
+                <div class="lg:col-span-5 glass-panel p-6 rounded-3xl flex flex-col justify-between glass-panel-glow-purple">
+                    <div class="border-b border-slate-800 pb-3 mb-4">
+                        <h4 class="text-sm font-bold text-purple-400 flex items-center">
+                            💰 호스트 예상 월 수익 모의 계산기
+                        </h4>
+                    </div>
+
+                    <!-- Calculator Inputs -->
+                    <div class="space-y-4 flex-1">
+                        <!-- Chipset Selector -->
                         <div>
-                            <div class="flex items-center space-x-2 mb-8 px-2">
-                                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                <span class="text-white font-bold text-xs whitespace-nowrap">Agent Intranet</span>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">1. Apple Silicon 칩셋 선택</label>
+                            <select id="calc-chip" onchange="calculateEarnings()" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-purple-500">
+                                <option value="m1" selected>Apple M1</option>
+                                <option value="m1pro">Apple M1 Pro</option>
+                                <option value="m1max">Apple M1 Max</option>
+                                <option value="m1ultra">Apple M1 Ultra</option>
+                                <option value="m2">Apple M2</option>
+                                <option value="m2pro">Apple M2 Pro</option>
+                                <option value="m2max">Apple M2 Max</option>
+                                <option value="m2ultra">Apple M2 Ultra</option>
+                                <option value="m3">Apple M3</option>
+                                <option value="m3pro">Apple M3 Pro</option>
+                                <option value="m3max">Apple M3 Max</option>
+                                <option value="m4">Apple M4</option>
+                            </select>
+                        </div>
+
+                        <!-- RAM size Selector -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">2. 통합 메모리(RAM) 용량</label>
+                            <div class="grid grid-cols-4 gap-2" id="calc-ram-container">
+                                <button onclick="selectCalcRam(8)" class="calc-ram-btn border border-slate-800 bg-slate-900 text-xs py-2 rounded-xl text-slate-300 font-semibold focus:outline-none" id="ram-8">8GB</button>
+                                <button onclick="selectCalcRam(16)" class="calc-ram-btn border border-purple-500/40 bg-purple-500/10 text-xs py-2 rounded-xl text-white font-semibold focus:outline-none active" id="ram-16">16GB</button>
+                                <button onclick="selectCalcRam(32)" class="calc-ram-btn border border-slate-800 bg-slate-900 text-xs py-2 rounded-xl text-slate-300 font-semibold focus:outline-none" id="ram-32">32GB</button>
+                                <button onclick="selectCalcRam(64)" class="calc-ram-btn border border-slate-800 bg-slate-900 text-xs py-2 rounded-xl text-slate-300 font-semibold focus:outline-none" id="ram-64">64GB</button>
                             </div>
-                            <div>
-                                <h5 class="text-[10px] font-bold uppercase tracking-widest text-gray-500 px-2 mb-2">채널 목록</h5>
-                                <div class="space-y-1">
-                                    <div class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-md cursor-pointer"># general</div>
-                                    <div class="text-xs px-3 py-1.5 hover:bg-white/5 rounded-md cursor-pointer text-gray-400"># task-report</div>
-                                    <div class="text-xs px-3 py-1.5 hover:bg-white/5 rounded-md cursor-pointer text-gray-400"># archive</div>
+                        </div>
+
+                        <!-- Hours active Slider -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500">3. 하루 대여 가동시간</label>
+                                <span class="text-xs font-mono font-bold text-purple-400" id="calc-hours-txt">24 시간</span>
+                            </div>
+                            <input type="range" min="1" max="24" value="24" id="calc-hours" oninput="calculateEarnings()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                            <div class="flex justify-between text-[9px] text-slate-600 mt-1">
+                                <span>1시간</span>
+                                <span>12시간</span>
+                                <span>24시간</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculator Output Card -->
+                    <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4 mt-4 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-400 font-medium">노드 매칭 등급</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20" id="calc-grade">주니어 연구원</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-slate-900 pt-3">
+                            <span class="text-xs text-slate-400 font-medium">예상 월간 수입</span>
+                            <div class="text-right">
+                                <span class="text-xl font-black text-purple-400 text-glow-purple" id="calc-result">₩ 30,000</span>
+                                <span class="text-[10px] text-slate-500 block">또는 동등 크레딧 적립</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="w-full mt-4 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-purple-500/10 hover:shadow-purple-500/25">
+                        공급자용 클라이언트 다운로드 (.dmg)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: ONBOARDING WIZARD & ECONOMIC CHART -->
+    <section id="sec-onboarding" class="snap-section p-6 md:p-12">
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
+            <!-- Left: High-Fidelity Onboarding Wizard (Guest Platform) -->
+            <div class="lg:col-span-6 flex flex-col justify-center">
+                <div class="mb-4 text-center lg:text-left">
+                    <span class="px-3 py-1 text-[10px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full tracking-widest uppercase">Guest Hiring Onboarding</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white mt-3">업무 지시서 온보딩 마법사</h2>
+                    <p class="text-slate-500 text-xs mt-1">몇 번의 클릭으로 맥 미니 노드를 배포받고 업무 시나리오를 구성하세요.</p>
+                </div>
+
+                <!-- Glassmorphic Stepper Card -->
+                <div class="glass-panel p-6 rounded-[28px] glass-panel-glow-blue">
+                    <!-- Progress Stepper -->
+                    <div class="mb-8 flex justify-between relative px-4">
+                        <div class="absolute top-4 left-10 right-10 h-0.5 bg-slate-800 -z-10" id="stepper-line"></div>
+                        <div class="flex flex-col items-center w-20">
+                            <div id="step-1-c" class="step-circle active w-8 h-8 rounded-full border border-blue-500 bg-blue-600 flex items-center justify-center font-bold text-xs text-white transition-colors duration-300">1</div>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1 whitespace-nowrap">1. 노드 선택</span>
+                        </div>
+                        <div class="flex flex-col items-center w-20">
+                            <div id="step-2-c" class="step-circle w-8 h-8 rounded-full border border-slate-700 bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-400 transition-colors duration-300">2</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-1 whitespace-nowrap">2. 임무 부여</span>
+                        </div>
+                        <div class="flex flex-col items-center w-20">
+                            <div id="step-3-c" class="step-circle w-8 h-8 rounded-full border border-slate-700 bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-400 transition-colors duration-300">3</div>
+                            <span class="text-[9px] font-bold text-slate-500 mt-1 whitespace-nowrap">3. 최종 확인</span>
+                        </div>
+                    </div>
+
+                    <!-- Wizard Page Holder -->
+                    <div id="wizard-page-holder" class="min-h-[220px]">
+                        <!-- Dynamic Content Inject -->
+                    </div>
+
+                    <!-- Navigator buttons -->
+                    <div class="mt-6 flex space-x-3">
+                        <button id="wiz-prev-btn" onclick="prevWiz()" class="hidden flex-1 py-3.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-xl font-bold transition-all text-xs">이전 단계</button>
+                        <button id="wiz-next-btn" onclick="nextWiz()" class="flex-[2] py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-bold transition-all text-xs shadow-lg shadow-blue-500/10">다음 단계로 이동</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Economic Analysis Chart & Benefits -->
+            <div class="lg:col-span-6 space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">월간 에이전트 인프라 비용 비교 (KRW)</h4>
+                    <div class="h-[220px] relative">
+                        <canvas id="costComparisonChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800/80">
+                        <span class="text-xl">🔐</span>
+                        <h5 class="text-xs font-bold text-white mt-2 mb-1">제로 놀리지 데이터 격리</h5>
+                        <p class="text-[10px] text-slate-500 leading-relaxed">APFS 암호화 스파스디스크 가상 마운트 및 메모리 접근 보호 조치를 통해 호스트 소유자가 원격 게스트 비즈니스 데이터를 탈취하는 것을 차단합니다.</p>
+                    </div>
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800/80">
+                        <span class="text-xl">🔄</span>
+                        <h5 class="text-xs font-bold text-white mt-2 mb-1">하트비트 Failover 보장</h5>
+                        <p class="text-[10px] text-slate-500 leading-relaxed">특정 호스트 컴퓨터가 꺼지거나 회선이 끊어지면, 대기 노드가 15초 내에 컨테이너와 컨텍스트 백업본을 이관받아 업무를 연속 재개합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: LIVE MESSENGER SIMULATOR & TELEMETRY -->
+    <section id="sec-intranet" class="snap-section p-4 md:p-12 border-t border-slate-900 bg-slate-950/20">
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch z-10">
+            <!-- Left: Workspace Simulator (Slack Cloned Dashboard) -->
+            <div class="lg:col-span-8 glass-panel rounded-[24px] border border-slate-800 overflow-hidden flex flex-col h-[520px] shadow-2xl">
+                <!-- Channel Header Bar -->
+                <div class="h-14 border-b border-slate-800/80 bg-slate-950/80 px-6 flex items-center justify-between flex-shrink-0">
+                    <div class="flex flex-col min-w-0 mr-4">
+                        <span class="font-bold text-white text-xs md:text-sm truncate" id="active-sim-title"># general (대기 중)</span>
+                        <span class="text-[10px] text-slate-500 truncate" id="active-sim-desc">임무를 설정하고 출근시키면 시뮬레이션이 활성화됩니다.</span>
+                    </div>
+                    <button onclick="triggerSimStart()" class="flex-shrink-0 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-md">
+                        업무 시뮬레이션 가동
+                    </button>
+                </div>
+
+                <!-- Split Content: Channel list & Chat feed -->
+                <div class="flex-1 flex overflow-hidden">
+                    <!-- Left Mini Sidebar (Channels) -->
+                    <div class="w-44 bg-slate-950/60 border-r border-slate-800/60 p-3 hidden sm:flex flex-col justify-between flex-shrink-0">
+                        <div>
+                            <div class="flex items-center space-x-1.5 px-2 mb-6">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                <span class="text-[10px] font-bold text-slate-300">Intranet Active</span>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h5 class="text-[9px] font-bold uppercase tracking-wider text-slate-600 px-2 mb-2">채널 목록</h5>
+                                    <div class="space-y-1">
+                                        <div class="bg-blue-600/10 border border-blue-500/20 text-blue-400 text-xs px-2.5 py-1.5 rounded-lg font-medium cursor-pointer" id="ch-general"># general</div>
+                                        <div class="text-xs px-2.5 py-1.5 hover:bg-white/5 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer" id="ch-report"># task-report</div>
+                                        <div class="text-xs px-2.5 py-1.5 hover:bg-white/5 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer" id="ch-archive"># archive</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="text-[9px] font-bold uppercase tracking-wider text-slate-600 px-2 mb-2">배포 에이전트</h5>
+                                    <div class="space-y-1.5 px-2">
+                                        <div class="flex items-center space-x-2 text-[11px] text-slate-400">
+                                            <span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
+                                            <span>최 매니저 (Res)</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2 text-[11px] text-slate-400">
+                                            <span class="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
+                                            <span>김 파트너 (Plan)</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-[10px] text-gray-500 p-2 border-t border-gray-800">
-                            현재 매칭 사양:<br>
-                            <span id="matched-spec-text" class="text-blue-400">주니어 리서처 (M1, 16GB)</span>
+                        <div class="text-[9px] text-slate-600 p-2 border-t border-slate-900">
+                            매칭 노드 하드웨어:<br>
+                            <span id="sidebar-hardware-badge" class="text-blue-500 font-semibold">주니어 (M1 Mac Mini)</span>
                         </div>
                     </div>
-                    
-                    <!-- Chat Window Area -->
-                    <div class="messenger-content flex-1 min-w-0 flex flex-col h-full overflow-hidden">
-                        <div class="h-16 md:h-14 border-b flex items-center px-4 md:px-6 justify-between flex-shrink-0 bg-white">
-                            <div class="flex flex-col min-w-0 mr-2">
-                                <span class="font-bold text-slate-800 text-xs md:text-sm truncate" id="active-scenario-title"># general (대기 중)</span>
-                                <span class="text-[9px] md:text-[10px] text-gray-400 truncate" id="active-scenario-desc">임무를 먼저 지정해 주세요.</span>
-                            </div>
-                            <button onclick="startSimulation()" class="flex-shrink-0 px-3 md:px-4 py-1.5 bg-blue-600 text-white rounded-md text-[10px] md:text-xs font-bold hover:bg-blue-800 transition-all shadow-md">시뮬레이션 가동</button>
+
+                    <!-- Chat Feed Area -->
+                    <div class="flex-1 flex flex-col justify-between overflow-hidden bg-slate-950/20">
+                        <div id="sim-chat-window" class="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col space-y-4">
+                            <div class="text-center py-6 text-[10px] text-slate-600 uppercase tracking-widest border-b border-slate-900 mb-4">시뮬레이터 대기 모드</div>
+                            <p class="text-center text-xs text-slate-500 py-12 px-6">
+                                [AI 직원 온보딩] 탭에서 신규 직원을 배포하거나,<br>
+                                상단의 <strong>[업무 시뮬레이션 가동]</strong> 버튼을 누르면 실시간 대화 교류 및 하드웨어 텔레메트리 연동이 활성화됩니다.
+                            </p>
                         </div>
-                        
-                        <!-- Chat Feed -->
-                        <div id="chat-window" class="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col space-y-4">
-                            <div class="text-center py-4 text-[10px] text-gray-400 uppercase tracking-widest border-b mb-4">시뮬레이션 대기 중</div>
-                            <p class="text-center text-xs md:text-sm text-gray-400 py-8 px-4">상단의 [시뮬레이션 가동] 버튼을 누르거나,<br><strong>[AI 직원 온보딩]</strong> 탭에서 신규 직원을 출근시키면 시나리오가 실시간 시작됩니다.</p>
-                        </div>
-                        
-                        <!-- User Choice Box (Appears on User Turn) -->
-                        <div id="user-interaction-panel" class="p-3 md:p-4 border-t bg-slate-50 flex-col space-y-2 hidden">
-                            <span class="text-[10px] md:text-xs font-bold text-blue-600 block mb-1">💡 팀장님의 피드백을 전달해주세요</span>
-                            <div id="interactive-options" class="flex flex-col sm:flex-row gap-2">
-                                <!-- Dynamic buttons will inject here -->
+
+                        <!-- Interactive User Prompt Feedback Panel -->
+                        <div id="sim-feedback-panel" class="p-4 border-t border-slate-800/80 bg-slate-950/50 flex-col space-y-2 hidden">
+                            <span class="text-[10px] font-bold text-blue-400 block">💡 관리팀장으로서 피드백을 결정해주세요:</span>
+                            <div id="sim-feedback-options" class="flex flex-col sm:flex-row gap-2">
+                                <!-- Option buttons will be dynamically injected -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- SECTION 3: Analysis -->
-        <section id="tab-analysis" class="section-snap p-6 md:p-12 border-t">
-            <div class="max-w-4xl mx-auto w-full">
-                <div class="mb-10 text-center md:text-left">
-                    <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-3 py-1.5 rounded-full">Cost Effectiveness</span>
-                    <h2 class="text-3xl font-black mt-4 mb-2">클라우드 API 대비 압도적 경제성</h2>
-                    <p class="text-gray-500 text-sm leading-relaxed">24시간 연속 가동 기준, 에이전트데스크 고정형 노드는 상용 API 비용의 <strong>1.6%</strong> 수준에 불과합니다.</p>
+            <!-- Right: Node Telemetry Dashboard (Shows Real-time Hardware Load) -->
+            <div class="lg:col-span-4 glass-panel rounded-[24px] border border-slate-800 p-6 flex flex-col justify-between h-[520px]">
+                <div class="border-b border-slate-800 pb-3">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between">
+                        <span>📡 원격 노드 텔레메트리</span>
+                        <span id="tele-status-badge" class="px-2 py-0.5 bg-slate-900 border border-slate-800 rounded text-[9px] font-semibold text-slate-500">IDLE</span>
+                    </h4>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border">
-                        <h4 class="text-xs font-bold text-gray-400 uppercase mb-4">월간 에이전트 인프라 비용 비교 (KRW)</h4>
-                        <div class="chart-container"><canvas id="costChartV3"></canvas></div>
-                    </div>
-                    <div class="flex flex-col space-y-4">
-                        <div class="bg-blue-600 text-white p-6 rounded-3xl shadow-lg">
-                            <span class="text-[10px] text-blue-100 font-bold uppercase tracking-wider">Estimated Cost Saving</span>
-                            <p class="text-3xl font-black mt-2">89.2%</p>
-                            <p class="text-[11px] text-blue-100 mt-2 leading-relaxed">자체 구축 서버 비용과 비교 시 하드웨어 감가상각 및 회선 전기료까지 완벽 절감</p>
+
+                <!-- Telemetry Metrics -->
+                <div class="flex-1 flex flex-col justify-center space-y-5 py-4">
+                    <!-- Metric: CPU Load -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-1.5">
+                            <span class="text-[11px] font-bold text-slate-400">Node CPU Load</span>
+                            <span class="text-xs font-mono font-bold text-slate-300" id="tele-cpu-txt">2%</span>
                         </div>
-                        <div class="bg-slate-900 text-white p-6 rounded-3xl">
-                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Host Reward Share</span>
-                            <p class="text-3xl font-black mt-2">70%</p>
-                            <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">유휴 자원을 대여해 준 공급자에게 투명하게 지급되는 보상 비율</p>
+                        <div class="h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                            <div id="tele-cpu-bar" class="h-full bg-blue-500 w-[2%] transition-all duration-500"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric: GPU Load -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-1.5">
+                            <span class="text-[11px] font-bold text-slate-400">Apple Silicon GPU Load</span>
+                            <span class="text-xs font-mono font-bold text-slate-300" id="tele-gpu-txt">0%</span>
+                        </div>
+                        <div class="h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                            <div id="tele-gpu-bar" class="h-full bg-purple-500 w-[0%] transition-all duration-500"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric: Unified Memory Allocation -->
+                    <div>
+                        <div class="flex justify-between items-baseline mb-1.5">
+                            <span class="text-[11px] font-bold text-slate-400">Unified Memory (RAM)</span>
+                            <span class="text-xs font-mono font-bold text-slate-300" id="tele-ram-txt">8.1 GB / 16.0 GB</span>
+                        </div>
+                        <div class="h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                            <div id="tele-ram-bar" class="h-full bg-emerald-500 w-[50.6%] transition-all duration-500"></div>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry Details Grid -->
+                    <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-900">
+                        <div class="bg-slate-950/40 border border-slate-900 p-3 rounded-xl">
+                            <span class="text-[9px] text-slate-600 block uppercase font-bold">Token Output</span>
+                            <span class="text-xs font-mono font-bold text-slate-300" id="tele-token-speed">0 t/s</span>
+                        </div>
+                        <div class="bg-slate-950/40 border border-slate-900 p-3 rounded-xl">
+                            <span class="text-[9px] text-slate-600 block uppercase font-bold">P2P Latency</span>
+                            <span class="text-xs font-mono font-bold text-slate-300" id="tele-latency">-- ms</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- SECTION 4: Onboarding (Wizard) -->
-        <section id="tab-onboarding" class="section-snap p-4 md:p-12 bg-slate-50/50 border-t">
-            <div class="max-w-3xl mx-auto text-center mb-8">
-                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest bg-blue-100 px-3 py-1 rounded-full">Onboarding Wizard</span>
-                <h2 class="text-2xl md:text-3xl font-black mt-3 mb-2 text-slate-900">AI 직원 온보딩 마법사</h2>
-                <p class="text-gray-500 text-xs md:text-sm">직무를 선택하고 전용 맥 미니 노드를 즉시 할당받으세요.</p>
-            </div>
-            
-            <div class="max-w-2xl mx-auto bg-white rounded-[24px] md:rounded-[32px] shadow-2xl border overflow-hidden">
-                <div class="p-6 md:p-10">
-                    <!-- Stepper Bar (Fixed Wrapping) -->
-                    <div class="mb-10 flex justify-between relative px-2">
-                        <div class="absolute top-4 left-10 right-10 h-px bg-gray-100 -z-10"></div>
-                        <div class="flex flex-col items-center w-24">
-                            <div id="step-1-circle" class="step-circle active w-8 h-8 rounded-full border bg-white flex items-center justify-center font-bold mb-2 text-xs transition-colors">1</div>
-                            <span class="text-[10px] font-bold text-slate-700 whitespace-nowrap">노드 선택</span>
-                        </div>
-                        <div class="flex flex-col items-center w-24">
-                            <div id="step-2-circle" class="step-circle w-8 h-8 rounded-full border bg-white flex items-center justify-center font-bold mb-2 text-xs transition-colors text-gray-400">2</div>
-                            <span class="text-[10px] font-bold text-slate-400 whitespace-nowrap">임무 부여</span>
-                        </div>
-                        <div class="flex flex-col items-center w-24">
-                            <div id="step-3-circle" class="step-circle w-8 h-8 rounded-full border bg-white flex items-center justify-center font-bold mb-2 text-xs transition-colors text-gray-400">3</div>
-                            <span class="text-[10px] font-bold text-slate-400 whitespace-nowrap">채널 연동</span>
-                        </div>
-                    </div>
-
-                    <!-- Step Content Container -->
-                    <div id="step-content" class="min-h-[280px]">
-                        <!-- Loaded Dynamically -->
-                    </div>
-
-                    <!-- Navigation Buttons -->
-                    <div class="mt-8 flex space-x-4">
-                        <button id="prev-btn" onclick="prevOnboardingStep()" class="hidden flex-1 py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold hover:bg-gray-200 transition-all text-sm">이전 단계</button>
-                        <button id="next-btn" onclick="nextOnboardingStep()" class="flex-[2] py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all text-sm">다음 단계로 이동</button>
+                <!-- Hardware Spec Summary Card -->
+                <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-4 mt-2">
+                    <div class="text-[10px] text-slate-500 uppercase font-bold mb-2">원격 인프라 물리 정보</div>
+                    <div class="space-y-1.5 text-xs">
+                        <div class="flex justify-between"><span class="text-slate-500">호스트 장비</span><span class="text-slate-300 font-mono" id="tele-phys-host">Host #0294</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">Apple Silicon</span><span class="text-slate-300 font-mono" id="tele-phys-chip">Apple M1 Mac Mini</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">대여 상태</span><span class="text-emerald-400 font-bold" id="tele-phys-status">격리 구동 중</span></div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
-</div>
-
-<!-- CUSTOM MODAL: SUBSCRIPTION COMPLETE -->
-<div id="subscription-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 hidden px-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl transform scale-95 transition-transform duration-300">
-        <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">🎉</div>
-        <h3 class="text-xl font-bold text-center text-slate-900 mb-2">출근 등록이 완료되었습니다!</h3>
-        <p class="text-sm text-gray-500 text-center mb-6">고용하신 AI 직원이 전용 맥 미니 인프라에서 배포를 완료하고 대기 중입니다.</p>
+    <!-- SECTION 5: FAQ & ENTERPRISE INQUIRY -->
+    <section id="sec-inquiry" class="snap-section p-6 md:p-12 border-t border-slate-900 bg-slate-950/40 flex flex-col justify-between">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.04),transparent_40%)] pointer-events-none"></div>
         
-        <div class="bg-slate-50 p-4 rounded-2xl space-y-3 text-xs text-slate-600 mb-8">
-            <div class="flex justify-between border-b pb-2"><span class="font-medium text-gray-400">채용 직급</span><span class="font-bold text-slate-800" id="modal-node">주니어 가상 연구원</span></div>
-            <div class="flex justify-between border-b pb-2"><span class="font-medium text-gray-400">지정 임무</span><span class="font-bold text-slate-800 text-right max-w-[200px]" id="modal-task">글로벌 테크 브리핑</span></div>
-            <div class="flex justify-between"><span class="font-medium text-gray-400">연동 채널</span><span class="font-bold text-slate-800" id="modal-channel">Slack Intranet</span></div>
+        <!-- Interactive Service Stats & Partners for Realism -->
+        <div class="max-w-6xl mx-auto w-full mb-4 hidden md:block">
+            <div class="flex items-center justify-between border-y border-slate-900 py-3 bg-slate-900/10 rounded-2xl px-6">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Early Adopting Partners</span>
+                <div class="flex items-center space-x-8 text-xs font-semibold text-slate-400 font-mono">
+                    <span class="hover:text-white transition-colors cursor-default">⚡ CoreAI Solutions</span>
+                    <span class="hover:text-white transition-colors cursor-default">🤖 ByteForge Networks</span>
+                    <span class="hover:text-white transition-colors cursor-default">🧬 GeneStream Lab</span>
+                    <span class="hover:text-white transition-colors cursor-default">🪐 Aether Ventures</span>
+                </div>
+                <div class="text-[10px] text-slate-500 font-mono">24/7 SLA Guarantee</div>
+            </div>
         </div>
 
-        <button onclick="confirmOnboardingCompletion()" class="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg hover:bg-blue-700 transition-all text-sm">협업 공간(메신저)으로 가기</button>
+        <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
+            <!-- Left Side: FAQ (Interactive Accordion) & DePIN Status Widget -->
+            <div class="lg:col-span-6 space-y-6">
+                <div>
+                    <span class="px-3 py-1 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full tracking-widest uppercase">Frequently Asked Questions</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white mt-3">자주 묻는 질문 (FAQ)</h2>
+                    <p class="text-slate-500 text-xs mt-1">자원 공급과 기업용 고정가 도입에 대해 궁금한 점을 해결해 드립니다.</p>
+                </div>
+
+                <!-- FAQ Accordion Container -->
+                <div class="space-y-3 text-left">
+                    <!-- Q1 -->
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(1)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
+                            <span>Q. 공급자(Host)로 참여할 때 제 맥을 일상 작업에 계속 사용할 수 있나요?</span>
+                            <span id="faq-icon-1" class="text-[9px] text-slate-500 transition-transform">▼</span>
+                        </button>
+                        <div id="faq-body-1" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
+                            네, 물론입니다. AgentDesk 호스트 클라이언트는 가상화 환경(Docker) 및 Ollama 백그라운드 프로세스의 CPU 코어 및 메모리 점유율을 최대 50% 수준으로 자동 제한하는 <strong class="text-white font-bold">자원 캡핑(Resource Capping) 기술</strong>이 기본 내장되어 있습니다. 일상적인 사무 작업, 웹 서핑은 물론 가벼운 그래픽 작업까지 맥의 성능 저하 없이 부수입을 동시에 채굴하실 수 있습니다.
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(2)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
+                            <span>Q. 기업용 기밀 데이터나 개인의 프롬프트 정보가 호스트에게 유출되진 않나요?</span>
+                            <span id="faq-icon-2" class="text-[9px] text-slate-500 transition-transform">▼</span>
+                        </button>
+                        <div id="faq-body-2" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
+                            AgentDesk는 <strong class="text-white font-bold">제로 놀리지 격리 가상화(Zero-Knowledge Isolation)</strong> 시스템을 채택하고 있습니다. 
+                            호스트 로컬 디스크에 게스트의 데이터가 평문 저장되지 않도록 APFS 가상 암호화 이미지 디스크를 마운트하여 컨테이너 볼륨을 적재하며, 복호화 키는 메모리(RAM) 상에만 실시간 보안 터널을 통해 전달됩니다. 또한 커널 분리 샌드박스 기술(gVisor)을 통해 호스트 단에서의 비정상적인 메모리 덤프나 파일 탈취를 차단합니다.
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(3)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
+                            <span>Q. Tailscale P2P VPN 방식이 왜 전통적인 포트포워딩보다 안전한가요?</span>
+                            <span id="faq-icon-3" class="text-[9px] text-slate-500 transition-transform">▼</span>
+                        </button>
+                        <div id="faq-body-3" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
+                            기존 포트포워딩은 외부 포트를 공유기 방화벽 외부로 열어두어 해커들의 IP 스캔 공격에 무방비 노출됩니다. 반면 Tailscale P2P는 WireGuard 기반의 양방향 종단간 암호화 터널을 사용하여 외부 포트를 개방하지 않고 중앙의 신뢰 토큰 교환을 거쳐 오직 매칭된 게스트-호스트 프로세스끼리만 다이렉트 가상 네트워크망을 형성합니다. 외부로부터의 무단 접근이 100% 차단됩니다.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Network Operational Status -->
+                <div class="bg-slate-900/40 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </div>
+                        <span class="text-xs text-slate-300 font-semibold">인프라 실시간 Uptime: <span class="text-emerald-400 font-mono">99.98%</span></span>
+                    </div>
+                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest bg-slate-950 px-2.5 py-1 border border-slate-900 rounded-lg">Operational SLA</span>
+                </div>
+            </div>
+
+            <!-- Right Side: Interactive Enterprise Inquiry Form -->
+            <div class="lg:col-span-6 glass-panel p-6 rounded-[28px] glass-panel-glow-blue w-full">
+                <div class="border-b border-slate-800 pb-3 mb-4">
+                    <h4 class="text-sm font-bold text-blue-400 flex items-center">
+                        📧 엔터프라이즈 도입 및 대여 파트너십 문의
+                    </h4>
+                </div>
+
+                <form id="inquiry-form" onsubmit="submitInquiry(event)" class="space-y-4 text-left">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">1. 이름 / 직책</label>
+                            <input type="text" id="inq-name" required placeholder="홍길동 팀장" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">2. 소속 기업 / 단체</label>
+                            <input type="text" id="inq-org" placeholder="에이전트스타트업" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">3. 이메일 주소</label>
+                        <input type="email" id="inq-email" required placeholder="contact@company.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">4. 예상 필요 가상 사원 규모</label>
+                        <select id="inq-scale" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 focus:outline-none focus:border-blue-500">
+                            <option value="single">주니어 연구원 1~3대 소규모 도입</option>
+                            <option value="mid">시니어 기획팀장 포함 5~10대 팀빌딩</option>
+                            <option value="enterprise">30대 이상 대규모 에이전트 인프라 오케스트레이션</option>
+                            <option value="host">20대 이상 맥 미니 자원 호스트 공급 문의</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">5. 도입 희망 요건 및 문의내용</label>
+                        <textarea id="inq-message" rows="3" placeholder="예: 특정 오픈소스 LLM(DeepSeek R1 등) 커스텀 서빙 및 슬랙 웹훅 다자 연동이 필요한 상황입니다. 텔레메트리 대시보드 API 연동 건도 함께 문의합니다." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" id="inq-submit-btn" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-blue-500/10 hover:shadow-blue-500/25">
+                        도입 제안서 분석 및 제출하기
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- FOOTER: Virtual Company Info -->
+        <footer class="w-full border-t border-slate-900 bg-slate-950/90 pt-6 pb-2 text-slate-500 z-10 text-[10px] md:text-xs">
+            <div class="max-w-6xl mx-auto w-full px-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                <!-- Company Info -->
+                <div class="md:col-span-8 space-y-1 text-left font-sans">
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-slate-400">에이전트데스크 네트워크 (AgentDesk Networks)</span>
+                        <span class="text-slate-700">|</span>
+                        <span>대표이사: 정성문</span>
+                        <span class="text-slate-700">|</span>
+                        <span>이메일: support@agentdesk.io</span>
+                    </div>
+                    <p class="text-slate-600 mt-1">© 2026 AgentDesk Networks. All rights reserved. 본 서비스는 가상의 DePIN MVP 데모 프로젝트입니다.</p>
+                </div>
+                <!-- Network Stats -->
+                <div class="md:col-span-4 text-left md:text-right font-mono text-[9px] text-slate-600">
+                    STATUS: SECURE P2P MESH NETWORKS RUNNING
+                </div>
+            </div>
+        </footer>
+    </section>
+</main>
+
+<!-- SUBSCRIPTION SUCCESS MODAL (Onboarding Completed) -->
+<div id="subscription-success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 hidden px-4 backdrop-blur-sm">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-8 shadow-2xl transform scale-95 transition-transform duration-300 glass-panel">
+        <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">🎉</div>
+        <h3 class="text-xl font-bold text-center text-white mb-2">가상 사원 출근 완료!</h3>
+        <p class="text-xs text-slate-400 text-center mb-6">고용하신 AI 직원이 분산 DePIN 네트워크 상의 최적 노드 할당 및 배포를 성공적으로 완료했습니다.</p>
+        
+        <div class="bg-slate-950/60 border border-slate-800/60 p-4 rounded-2xl space-y-3 text-xs text-slate-400 mb-8 font-sans">
+            <div class="flex justify-between border-b border-slate-900 pb-2"><span class="text-slate-500">채용 직무</span><span class="font-bold text-white" id="success-node-type">주니어 연구원 (₩30,000/월)</span></div>
+            <div class="flex justify-between border-b border-slate-900 pb-2"><span class="text-slate-500">지정 임무</span><span class="font-bold text-white text-right max-w-[200px]" id="success-task-type">뉴스 모니터링 브리핑</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">연동 업무망</span><span class="font-bold text-white" id="success-channel-type">Slack Intranet</span></div>
+        </div>
+
+        <button onclick="completeOnboardingFlow()" class="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-bold shadow-lg transition-all text-xs">
+            사내 협업 메신저 확인하기
+        </button>
     </div>
 </div>
 
 <script>
-    let activeTab = 'vision';
-    let currentOnboardingStep = 1;
+    // --- Global Tab & Scrolling State ---
+    let activeTabId = 'hero';
+    const wrapper = document.getElementById('snap-scroll-wrapper');
+    const sections = ['hero', 'depin', 'onboarding', 'intranet', 'inquiry'];
 
-    // --- Onboarding Data State ---
-    const onboardingData = {
-        node: 'Junior',
+    // Update active navbar item on scrollspy
+    wrapper.addEventListener('scroll', () => {
+        const wrapperRect = wrapper.getBoundingClientRect();
+        if (wrapperRect.height === 0) return;
+        
+        let minDistance = Infinity;
+        let activeSectionId = 'hero';
+        
+        sections.forEach(id => {
+            const sec = document.getElementById(`sec-${id}`);
+            if (sec) {
+                const rect = sec.getBoundingClientRect();
+                const distance = Math.abs(rect.top - wrapperRect.top);
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    activeSectionId = id;
+                }
+            }
+        });
+        
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        const activeNav = document.getElementById(`nav-${activeSectionId}`);
+        if (activeNav) activeNav.classList.add('active');
+        activeTabId = activeSectionId;
+    });
+
+    // Run once on load to establish initial active tab
+    setTimeout(() => {
+        wrapper.dispatchEvent(new Event('scroll'));
+    }, 150);
+
+    function scrollToTab(tabId) {
+        const sec = document.getElementById(`sec-${tabId}`);
+        if (sec) {
+            wrapper.style.scrollSnapType = 'none'; // Temporarily disable snapping to avoid browser scroll conflicts
+            sec.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                wrapper.style.scrollSnapType = 'y proximity'; // Restore snapping after smooth scrolling finishes
+            }, 800);
+        }
+    }
+
+    // --- FAQ Accordion Toggle ---
+    function toggleFaq(index) {
+        const body = document.getElementById(`faq-body-${index}`);
+        const icon = document.getElementById(`faq-icon-${index}`);
+        if (body.classList.contains('hidden')) {
+            body.classList.remove('hidden');
+            icon.innerText = '▲';
+            icon.classList.add('text-blue-400');
+        } else {
+            body.classList.add('hidden');
+            icon.innerText = '▼';
+            icon.classList.remove('text-blue-400');
+        }
+    }
+
+    // --- Enterprise Inquiry Submission ---
+    function submitInquiry(event) {
+        event.preventDefault();
+        const form = document.getElementById('inquiry-form');
+        const name = document.getElementById('inq-name').value;
+        const email = document.getElementById('inq-email').value;
+
+        if (!name || !email) {
+            alert('이름과 이메일을 기재해주십시오.');
+            return;
+        }
+
+        const btn = document.getElementById('inq-submit-btn');
+        btn.disabled = true;
+        btn.innerHTML = `<span class="inline-block animate-spin mr-2">🌀</span> 노드 가용성 체크 및 컨텍스트 제안 리포트 분석 중...`;
+
+        setTimeout(() => {
+            form.innerHTML = `
+                <div class="text-center py-10 fade-in space-y-4">
+                    <div class="w-14 h-14 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full flex items-center justify-center text-2xl mx-auto shadow-lg shadow-emerald-500/5">✓</div>
+                    <h4 class="font-bold text-white text-base">도입 문의가 성공적으로 전달되었습니다!</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto">
+                        감사합니다, <strong>${name}</strong>님. 기재하신 주소(<strong>${email}</strong>)로 DePIN 에이전트 오케스트레이션 세부 견적 및 SLA 가용성 매치 보고서가 2시간 이내에 발송됩니다.
+                    </p>
+                    <div class="text-[9px] text-emerald-500 font-mono mt-2 uppercase tracking-widest">SLA Priority Response Triggered</div>
+                </div>
+            `;
+        }, 1800);
+    }
+
+    // --- DePIN Live Map Tooltips Data & Hover Logic ---
+    const mapNodes = {
+        seoul: { title: "Seoul Node #201", spec: "M2 Ultra (128GB RAM)", load: "CPU Load: 12%", state: "ACTIVE / SUBSCRIBED", color: "text-blue-400" },
+        tokyo: { title: "Tokyo Node #089", spec: "M1 Mac Mini (16GB RAM)", load: "CPU Load: 5%", state: "ACTIVE / SUBSCRIBED", color: "text-purple-400" },
+        sv: { title: "Silicon Valley Node #114", spec: "M2 Pro (32GB RAM)", load: "CPU Load: 2%", state: "STANDBY / ACTIVE", color: "text-emerald-400" },
+        singapore: { title: "Singapore Node #302", spec: "M3 Max (64GB RAM)", load: "CPU Load: 65%", state: "ACTIVE / SUBSCRIBED", color: "text-blue-300" }
+    };
+
+    function triggerNodeHover(nodeId) {
+        const node = mapNodes[nodeId];
+        const tooltip = document.getElementById('map-tooltip');
+        tooltip.innerHTML = `
+            <h5 class="font-bold text-white mb-1">${node.title}</h5>
+            <p class="text-slate-400 font-mono text-[10px] mb-1.5">${node.spec}</p>
+            <div class="flex justify-between text-[9px] font-semibold border-t border-slate-800 pt-1.5">
+                <span class="${node.color}">${node.state}</span>
+                <span class="text-slate-500">${node.load}</span>
+            </div>
+        `;
+        tooltip.classList.remove('hidden');
+
+        // Locate coordinates based on cursor positioning roughly around the map
+        document.addEventListener('mousemove', moveTooltip);
+        document.getElementById('map-hover-hint').innerText = `${node.title} 선택됨`;
+    }
+
+    function clearNodeHover() {
+        const tooltip = document.getElementById('map-tooltip');
+        tooltip.classList.add('hidden');
+        document.removeEventListener('mousemove', moveTooltip);
+        document.getElementById('map-hover-hint').innerText = '노드 위에 마우스를 올리세요';
+    }
+
+    function moveTooltip(e) {
+        const tooltip = document.getElementById('map-tooltip');
+        const containerRect = tooltip.parentElement.getBoundingClientRect();
+        const top = e.clientY - containerRect.top + 15;
+        const left = e.clientX - containerRect.left + 15;
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+    }
+
+    function showNodeTooltip(nodeId) {
+        // Fallback for click events on map circles
+        triggerNodeHover(nodeId);
+    }
+
+    // --- Host Earnings Calculator Logic ---
+    let selectedRam = 16;
+    const chipMultipliers = {
+        m1: { name: "Apple M1", mult: 1.0, base: "junior" },
+        m1pro: { name: "Apple M1 Pro", mult: 1.3, base: "senior-capable" },
+        m1max: { name: "Apple M1 Max", mult: 1.5, base: "senior" },
+        m1ultra: { name: "Apple M1 Ultra", mult: 2.0, base: "senior" },
+        m2: { name: "Apple M2", mult: 1.2, base: "junior" },
+        m2pro: { name: "Apple M2 Pro", mult: 1.5, base: "senior" },
+        m2max: { name: "Apple M2 Max", mult: 1.8, base: "senior" },
+        m2ultra: { name: "Apple M2 Ultra", mult: 2.4, base: "senior" },
+        m3: { name: "Apple M3", mult: 1.4, base: "junior" },
+        m3pro: { name: "Apple M3 Pro", mult: 1.8, base: "senior" },
+        m3max: { name: "Apple M3 Max", mult: 2.2, base: "senior" },
+        m4: { name: "Apple M4", mult: 1.6, base: "junior" }
+    };
+
+    function selectCalcRam(ramSize) {
+        selectedRam = ramSize;
+        document.querySelectorAll('.calc-ram-btn').forEach(btn => {
+            btn.classList.remove('active', 'border-purple-500/40', 'bg-purple-500/10', 'text-white');
+            btn.classList.add('border-slate-800', 'bg-slate-900', 'text-slate-300');
+        });
+        const activeBtn = document.getElementById(`ram-${ramSize}`);
+        if (activeBtn) {
+            activeBtn.classList.remove('border-slate-800', 'bg-slate-900', 'text-slate-300');
+            activeBtn.classList.add('active', 'border-purple-500/40', 'bg-purple-500/10', 'text-white');
+        }
+        calculateEarnings();
+    }
+
+    // --- Host Earnings Calculation ---
+    function calculateEarnings() {
+        const chipKey = document.getElementById('calc-chip').value;
+        const hours = parseInt(document.getElementById('calc-hours').value);
+        document.getElementById('calc-hours-txt').innerText = `${hours} 시간`;
+
+        const chipData = chipMultipliers[chipKey];
+        
+        // RAM multiplier
+        let ramFactor = 1.0;
+        if (selectedRam === 8) ramFactor = 0.8;
+        if (selectedRam === 32) ramFactor = 1.4;
+        if (selectedRam === 64) ramFactor = 1.8;
+
+        // Class grade allocation rule
+        let isSenior = false;
+        if (chipData.base === 'senior' || (chipData.base === 'senior-capable' && selectedRam >= 32)) {
+            isSenior = true;
+        } else if (selectedRam >= 32 && ['m1pro', 'm2pro', 'm3pro'].includes(chipKey)) {
+            isSenior = true;
+        }
+
+        const baseRate = isSenior ? 60000 : 30000;
+        const totalEarnings = Math.round(baseRate * chipData.mult * ramFactor * (hours / 24));
+        
+        document.getElementById('calc-grade').innerText = isSenior ? '시니어 가상 기획팀장' : '주니어 가상 연구원';
+        document.getElementById('calc-grade').className = isSenior 
+            ? "px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20" 
+            : "px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20";
+            
+        document.getElementById('calc-result').innerText = `₩ ${totalEarnings.toLocaleString()}`;
+    }
+
+    // --- Onboarding Wizard (Guest Platform) Logic ---
+    let wizStep = 1;
+    const wizData = {
+        nodeClass: 'Junior',
         task: 'news',
         channel: 'Slack'
     };
 
-    // --- Chat Simulation Scenarios Database ---
-    const scenarios = {
-        news: {
-            title: "📰 테크 뉴스 브리팅 (#tech-briefing)",
-            desc: "매일 전 세계 해외 테크 미디어를 분석해 동향을 요약 보고합니다.",
-            flow: [
-                { sender: '최 매니저 (Research AI)', role: 'bot', text: '📢 박 팀장님, 오늘 오전 해외 주요 헤드라인입니다. Apple이 독립 전용 실리콘 기반 AI 인프라 확장을 공식화했습니다. 클라우드 비용을 최소화하려는 행보로 보입니다.', delay: 1000 },
-                { sender: '김 파트너 (Planning AI)', role: 'bot', text: '💡 아주 시의적절한 뉴스네요! 마침 우리 AgentDesk도 유휴 맥 미니 대여 인프라 기반인 만큼, 이 Apple 뉴스를 인용해 "클라우드 탈출과 고정비 AI 인프라"라는 대대적인 기획 프로모션을 추진해 볼 수 있겠습니다.', delay: 2500 },
-                { sender: '김 파트너 (Planning AI)', role: 'bot', text: '🙋‍♂️ 박 팀장님! 이번 출시일에 맞춰 [M4 도입 기념 20% 크레딧 보너스 이벤트] 공식 제안 기획안 작성을 즉시 진행할까요? 팀장님의 결정을 기다리겠습니다.', delay: 4000, isQuestion: true }
-            ],
-            options: [
-                { text: "👍 적극 동의합니다. 지금 기획서 초안 마련해 주세요.", next: "김 파트너: 알겠습니다! 바로 이벤트 기획 초안을 마련해 10분 내로 #task-report 채널에 초안을 공유하겠습니다." },
-                { text: "⏳ 아직은 이릅니다. 자료를 좀 더 수집 후 결정하죠.", next: "최 매니저: 알겠습니다. 후속 시장 반응 및 추가 외신 리포트 트래킹을 계속하여 보고해 드리겠습니다." }
-            ]
-        },
-        cs: {
-            title: "🎧 CS 감정 분류 및 대응팀 (#cs-intelligence)",
-            desc: "고객 불만을 자동으로 분류하여 적절한 회신 초안을 구성합니다.",
-            flow: [
-                { sender: '최 매니저 (Research AI)', role: 'bot', text: '🚨 알림: 금일 오전 접수된 고객 메일에서 [환불 문의 및 장비 미작동 오류] 컴간되었습니다. 감정 분석 결과: "매우 불만족(Angry)" 입니다.', delay: 1000 },
-                { sender: '김 파트너 (Planning AI)', role: 'bot', text: '📝 규정상 7일 이내 반품이므로 빠른 수락이 필요합니다. "불편을 드려 죄송하며, 지연 시간 보상을 포함한 즉각 환불 수용 절차 안내" 메일 답변 초안을 가상 에디터에 작성했습니다.', delay: 2500 },
-                { sender: '김 파트너 (Planning AI)', role: 'bot', text: '🙋‍♂️ 박 팀장님, 이 환불 대응 초안 메일을 즉시 고객에게 발송 승인할까요? 아니면 내용을 추가 보정할까요?', delay: 4000, isQuestion: true }
-            ],
-            options: [
-                { text: "✉️ 초안 내용이 좋네요. 바로 발송 진행하십시오.", next: "최 매니저: 확인했습니다. 고객분께 메일이 안전하게 자동 발송되었으며 해당 티켓을 [완료]로 이관합니다." },
-                { text: "🎁 사과의 뜻으로 5,000원 상당 보상 쿠폰을 동봉해서 재작성해 주세요.", next: "김 파트너: 피드백 반영했습니다. 5,000원 보충 쿠폰 코드 및 사용 가이드를 본문에 담아 재작성해 발송 완료했습니다." }
-            ]
-        },
-        competitor: {
-            title: "🎯 경쟁 신기능 추적팀 (#competitor-watch)",
-            desc: "경쟁사 업데이트를 감지하여 마케팅 요소를 조율합니다.",
-            flow: [
-                { sender: '최 매니저 (Research AI)', role: 'bot', text: '🔍 오늘 아침 경쟁사 "A社"가 에이전트 다자간 워크플로우 대시보드 신기능을 기습 출시한 것으로 조사되었습니다. API 호출을 기반으로 동기화된다고 합니다.', delay: 1000 },
-                { sender: '김 파트너 (Planning AI)', role: 'bot', text: '⚡ 기습 출시군요! 하지만 그들의 서비스는 호출당 API 수수료가 비싸다는 약점이 있습니다. 우리의 강점인 "DePIN 맥 미니 기반 월 고정 정액제"와 바로 비교되는 맞불 보도자료나 공식 마케팅 글을 배포하는 게 좋겠습니다.', delay: 2500 },
-                { sender: '김 파트너 (Planning AI)', role: 'bot', text: '🙋‍♂️ 박 팀장님, "월 고정 요금제로 비용 폭증 걱정 없는 가상 사내 협업"을 강하게 어필하는 긴급 블로그 대응 글을 바로 집필해 볼까요?', delay: 4000, isQuestion: true }
-            ],
-            options: [
-                { text: "✍️ 좋습니다. 우리만의 고정 요금 가성비를 부각해 써주세요.", next: "김 파트너: 영리한 소구 포인트입니다! 'API 토큰 종속성 탈출'을 헤드라인으로 하여 블로그 기안 작성을 마쳤습니다." },
-                { text: "📊 글 작성보단 경쟁사의 기능 사양을 정밀 해부하는 리포트가 우선입니다.", next: "최 매니저: 실리적인 결정입니다. 경쟁사 UI 레이아웃과 API 연동 한계 요소를 정리한 분석 리포트를 금일 내로 완성해 공유하겠습니다." }
-            ]
-        }
-    };
+    function renderWizStep() {
+        const container = document.getElementById('wizard-page-holder');
+        const prevBtn = document.getElementById('wiz-prev-btn');
+        const nextBtn = document.getElementById('wiz-next-btn');
 
-    // --- Tab Scrollspy via Intersection Observer ---
-    const scrollContainer = document.getElementById('main-scroll-container');
-    const sections = document.querySelectorAll('.section-snap');
-    const sidebarItems = document.querySelectorAll('.sidebar-item');
-
-    const observerOptions = {
-        root: scrollContainer,
-        threshold: 0.5
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.id.replace('tab-', '');
-                sidebarItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-                const activeBtn = document.getElementById(`btn-${id}`);
-                if (activeBtn) activeBtn.classList.add('active');
-                activeTab = id;
-
-                // Trigger Chart Load dynamically
-                if (id === 'analysis') {
-                    setTimeout(initChartV3, 100);
-                }
-            }
-        });
-    }, observerOptions);
-
-    sections.forEach(section => observer.observe(section));
-
-    // --- Programmatic Buffered Mouse Wheel Scrolling with Snapping ---
-    const mainScroll = document.getElementById('main-scroll-container');
-    const sectionsArray = Array.from(sections);
-    let currentSectionIndex = 0;
-    let wheelAccumulator = 0;
-    const WHEEL_BUFFER_LIMIT = 300; // 3~4 gentle wheel ticks to break threshold
-    let isScrollAnimating = false;
-
-    // Wheel listener for Desktop Snapping with Buffer (Excluded interactive elements to avoid click suppression)
-    mainScroll.addEventListener('wheel', function(e) {
-        // Allow native scroll/click inside scrollable UI elements and interactive elements
-        if (
-            e.target.closest('#chat-window') || 
-            e.target.closest('#step-content') ||
-            e.target.closest('button') ||
-            e.target.closest('a') ||
-            e.target.closest('.sidebar-item') ||
-            e.target.closest('[onclick]')
-        ) {
-            return;
-        }
-        
-        e.preventDefault(); // Lock default non-snapped continuous scroll
-        if (isScrollAnimating) return;
-
-        wheelAccumulator += e.deltaY;
-
-        if (Math.abs(wheelAccumulator) >= WHEEL_BUFFER_LIMIT) {
-            if (wheelAccumulator > 0) {
-                if (currentSectionIndex < sectionsArray.length - 1) {
-                    currentSectionIndex++;
-                    triggerProgrammaticScroll(currentSectionIndex);
-                }
-            } else {
-                if (currentSectionIndex > 0) {
-                    currentSectionIndex--;
-                    triggerProgrammaticScroll(currentSectionIndex);
-                }
-            }
-            wheelAccumulator = 0; // Clear buffer
-        }
-    }, { passive: false });
-
-    // Touch Swiping for Mobile Snapping (Prevents continuous half-scrolling)
-    let touchStartY = 0;
-    let touchEndY = 0;
-
-    mainScroll.addEventListener('touchstart', function(e) {
-        touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    mainScroll.addEventListener('touchend', function(e) {
-        // Ignore if swiping inside scrollable elements or clicking buttons
-        if (
-            e.target.closest('#chat-window') || 
-            e.target.closest('#step-content') ||
-            e.target.closest('button') ||
-            e.target.closest('a') ||
-            e.target.closest('.sidebar-item') ||
-            e.target.closest('[onclick]')
-        ) {
-            return;
-        }
-        touchEndY = e.changedTouches[0].screenY;
-        handleSwipe();
-    }, { passive: true });
-
-    mainScroll.addEventListener('touchmove', function(e) {
-        if (
-            e.target.closest('#chat-window') || 
-            e.target.closest('#step-content') ||
-            e.target.closest('button') ||
-            e.target.closest('a') ||
-            e.target.closest('.sidebar-item') ||
-            e.target.closest('[onclick]')
-        ) {
-            return;
-        }
-        e.preventDefault(); // Lock free-scroll dragging to guarantee snapping
-    }, { passive: false });
-
-    function handleSwipe() {
-        if (isScrollAnimating) return;
-        const swipeDistance = touchEndY - touchStartY;
-        const threshold = 50; // Minimum drag px to trigger snap
-
-        if (Math.abs(swipeDistance) >= threshold) {
-            if (swipeDistance < 0) {
-                if (currentSectionIndex < sectionsArray.length - 1) {
-                    currentSectionIndex++;
-                    triggerProgrammaticScroll(currentSectionIndex);
-                }
-            } else {
-                if (currentSectionIndex > 0) {
-                    currentSectionIndex--;
-                    triggerProgrammaticScroll(currentSectionIndex);
-                }
-            }
-        }
-    }
-
-    function triggerProgrammaticScroll(index) {
-        isScrollAnimating = true;
-        const targetSection = sectionsArray[index];
-        if (targetSection) {
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-            
-            // Sync Left Sidebar Item Active State
-            const id = targetSection.id.replace('tab-', '');
-            sidebarItems.forEach(item => item.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-${id}`);
-            if (activeBtn) activeBtn.classList.add('active');
-            activeTab = id;
-
-            // Load analysis chart if applicable
-            if (id === 'analysis') {
-                setTimeout(initChartV3, 100);
-            }
-        }
-        // Lock wheel during transition to prevent rapid snapping bypass
-        setTimeout(() => {
-            isScrollAnimating = false;
-        }, 800);
-    }
-
-    // --- Programmatic Smooth Scrolling via Sidebar Clicking ---
-    function scrollToSection(tabId) {
-        const targetSection = document.getElementById(`tab-${tabId}`);
-        if (targetSection) {
-            const index = sectionsArray.indexOf(targetSection);
-            if (index !== -1) {
-                currentSectionIndex = index;
-                triggerProgrammaticScroll(currentSectionIndex);
-            }
-        }
-    }
-
-    // --- Onboarding Logic ---
-    function renderOnboardingStep() {
-        const container = document.getElementById('step-content');
-        const nextBtn = document.getElementById('next-btn');
-        const prevBtn = document.getElementById('prev-btn');
-
-        // Update Stepper UI State
+        // Update step circle aesthetics
         for (let i = 1; i <= 3; i++) {
-            const circle = document.getElementById(`step-${i}-circle`);
-            circle.classList.remove('active', 'completed', 'text-gray-400');
-            if (i < currentOnboardingStep) {
-                circle.classList.add('completed');
-            } else if (i === currentOnboardingStep) {
-                circle.classList.add('active');
+            const circle = document.getElementById(`step-${i}-c`);
+            circle.className = "step-circle w-8 h-8 rounded-full border flex items-center justify-center font-bold text-xs transition-colors duration-300";
+            if (i === wizStep) {
+                circle.classList.add('border-blue-500', 'bg-blue-600', 'text-white');
+                circle.innerText = i;
+            } else if (i < wizStep) {
+                circle.classList.add('border-emerald-500', 'bg-emerald-600', 'text-white');
+                circle.innerText = "✓";
             } else {
-                circle.classList.add('text-gray-400');
+                circle.classList.add('border-slate-700', 'bg-slate-800', 'text-slate-400');
+                circle.innerText = i;
             }
         }
 
-        if (currentOnboardingStep > 1) {
+        // Stepper line animation
+        const progress = ((wizStep - 1) / 2) * 100;
+        document.getElementById('stepper-line').style.background = `linear-gradient(to right, #10b981 ${progress}%, #1e293b ${progress}%)`;
+
+        if (wizStep > 1) {
             prevBtn.classList.remove('hidden');
         } else {
             prevBtn.classList.add('hidden');
         }
 
-        // STEP 1: Node Selection (Recruitment Cards with corrected unescaped dollar signs)
-        if (currentOnboardingStep === 1) {
-            nextBtn.innerText = "다음 단계로 이동";
+        if (wizStep === 1) {
+            nextBtn.innerText = "다음 단계로";
             container.innerHTML = `
-                <div class="fade-in space-y-4">
-                    <h3 class="font-bold text-sm md:text-base text-slate-800 mb-4 text-center font-semibold">함께 일할 가상 사원 등급(직급) 선택</h3>
+                <div class="space-y-4 fade-in">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">함께 일할 AI 가상 사원 등급 선택</label>
                     
-                    <div id="card-node-junior" onclick="selectNode('Junior')" class="border-2 p-4 md:p-5 rounded-2xl cursor-pointer hover:shadow-md transition-all flex justify-between items-center ${onboardingData.node === 'Junior' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}">
-                        <div class="min-w-0 pr-2 font-sans">
+                    <div onclick="selectWizClass('Junior')" class="border p-4 rounded-2xl cursor-pointer hover:bg-slate-900/50 transition-all flex justify-between items-center ${wizData.nodeClass === 'Junior' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                        <div class="pr-2">
                             <div class="flex items-center space-x-2">
-                                <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">신입사원</span>
-                                <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate">주니어 가상 연구원 (Junior AI Researcher)</h4>
+                                <span class="bg-blue-500/10 text-blue-400 text-[9px] font-bold px-2 py-0.5 border border-blue-500/20 rounded">M1 Mac Mini</span>
+                                <h4 class="font-bold text-xs text-white">주니어 가상 연구원 (Junior AI Researcher)</h4>
                             </div>
-                            <p class="text-[10px] md:text-xs text-gray-500 mt-1.5 leading-relaxed">성실하고 정확도가 뛰어난 정보 수집가. 해외 미디어 모니터링, 데이터 조사, 일일 업무 파싱 전담 (M1 Mac Mini 전용 할당)</p>
+                            <p class="text-[10px] text-slate-500 mt-1">간단한 SLM(7B~8B) 구동, 일일 테크 파싱, 이메일 분류, 뉴스 모니터링 특화.</p>
                         </div>
-                        <div class="flex-shrink-0 text-right whitespace-nowrap pl-2">
-                            <span class="text-xs md:text-base font-bold text-blue-700">₩ 30,000<span class="text-[9px] md:text-xs font-normal text-gray-500">/월</span></span>
+                        <span class="text-xs font-bold text-blue-400 whitespace-nowrap pl-2">₩30,000/월</span>
+                    </div>
+
+                    <div onclick="selectWizClass('Senior')" class="border p-4 rounded-2xl cursor-pointer hover:bg-slate-900/50 transition-all flex justify-between items-center ${wizData.nodeClass === 'Senior' ? 'border-purple-500 bg-purple-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                        <div class="pr-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-purple-500/10 text-purple-400 text-[9px] font-bold px-2 py-0.5 border border-purple-500/20 rounded">M2 Pro/Max</span>
+                                <h4 class="font-bold text-xs text-white">시니어 가상 기획팀장 (Senior Strategic Planner)</h4>
+                            </div>
+                            <p class="text-[10px] text-slate-500 mt-1">대형 추론 모델(32B~) 구동, 다차원 기획 수립, 복잡한 코드 작성 및 조언 전담.</p>
+                        </div>
+                        <span class="text-xs font-bold text-purple-400 whitespace-nowrap pl-2">₩60,000/월</span>
+                    </div>
+                </div>
+            `;
+        } else if (wizStep === 2) {
+            nextBtn.innerText = "다음 단계로";
+            container.innerHTML = `
+                <div class="space-y-3 fade-in">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">상주 배치할 전담 비즈니스 미션 설정</label>
+                    
+                    <div onclick="selectWizTask('news')" class="p-3 border rounded-2xl cursor-pointer hover:bg-slate-900/40 transition-all flex items-start space-x-3 ${wizData.task === 'news' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                        <span class="text-lg mt-0.5">📰</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-white">글로벌 테크 뉴스 브리핑</h4>
+                            <p class="text-[10px] text-slate-500 mt-1">글로벌 미디어를 실시간 파싱하여 주요 기술 동향을 요약하고 사내망에 보고합니다.</p>
                         </div>
                     </div>
-                    
-                    <div id="card-node-senior" onclick="selectNode('Senior')" class="border p-4 md:p-5 rounded-2xl cursor-pointer hover:shadow-md transition-all flex justify-between items-center ${onboardingData.node === 'Senior' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}">
-                        <div class="min-w-0 pr-2 font-sans">
-                            <div class="flex items-center space-x-2">
-                                <span class="bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">팀장급</span>
-                                <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate">시니어 가상 기획팀장 (Senior Strategic Planner)</h4>
-                            </div>
-                            <p class="text-[10px] md:text-xs text-gray-500 mt-1.5 leading-relaxed">다차원 추론 및 종합적 기획력 보유. 전략적 기획서 마련, 고객 감정 분석 대응, 마케팅 초안 완성 전담 (M2 Pro Mac Mini 전용 할당)</p>
+
+                    <div onclick="selectWizTask('cs')" class="p-3 border rounded-2xl cursor-pointer hover:bg-slate-900/40 transition-all flex items-start space-x-3 ${wizData.task === 'cs' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                        <span class="text-lg mt-0.5">🎧</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-white">고객 CS 분류 및 감정 대응 초안 작성</h4>
+                            <p class="text-[10px] text-slate-500 mt-1">문의 사항의 뉘앙스를 분석하고 회신 이메일 초안 작성 후 승인 요청을 수행합니다.</p>
                         </div>
-                        <div class="flex-shrink-0 text-right whitespace-nowrap pl-2">
-                            <span class="text-xs md:text-base font-bold text-slate-800">₩ 60,000<span class="text-[9px] md:text-xs font-normal text-gray-500">/월</span></span>
+                    </div>
+
+                    <div onclick="selectWizTask('competitor')" class="p-3 border rounded-2xl cursor-pointer hover:bg-slate-900/40 transition-all flex items-start space-x-3 ${wizData.task === 'competitor' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                        <span class="text-lg mt-0.5">🎯</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-white">경쟁사 신기능 릴리즈 감시 및 기획안 대응</h4>
+                            <p class="text-[10px] text-slate-500 mt-1">경쟁사 마케팅 블로그 및 깃허브를 트래킹하여 맞춤 보도 보도자료 초안을 작성합니다.</p>
                         </div>
                     </div>
                 </div>
             `;
-        } 
-        // STEP 2: Task Assignment
-        else if (currentOnboardingStep === 2) {
-            nextBtn.innerText = "업무 설정 완료";
+        } else if (wizStep === 3) {
+            nextBtn.innerText = "직원 출근 등록 (결제 완료)";
             container.innerHTML = `
-                <div class="fade-in space-y-3">
-                    <h3 class="font-bold text-sm md:text-base text-slate-800 mb-2 text-center">AI 직원이 상주하며 처리할 현실적 임무 할당</h3>
-                    <div onclick="selectTask('news')" class="p-3 md:p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'news' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
-                        <div class="text-xl mt-1">📰</div>
-                        <div>
-                            <h4 class="font-bold text-xs md:text-sm text-slate-800">글로벌 테크 뉴스 데일리 브리핑</h4>
-                            <p class="text-[10px] md:text-[11px] text-gray-500 mt-1 leading-relaxed">외신 및 신규 기술 소식을 종합해 사내 기획팀을 위해 핵심 3줄로 가공하고 피드백을 요구합니다.</p>
-                        </div>
+                <div class="space-y-4 text-center py-4 fade-in">
+                    <span class="text-2xl block animate-bounce">🤖</span>
+                    <h4 class="font-bold text-sm text-white">최종 채용 요건을 확인하세요</h4>
+                    
+                    <div class="bg-slate-950/60 border border-slate-800 p-4 rounded-2xl text-left text-xs space-y-2.5 max-w-sm mx-auto">
+                        <div class="flex justify-between"><span class="text-slate-500">배포 등급</span><span class="font-bold text-slate-300" id="wiz-sum-class">주니어 가상 연구원 (₩30,000)</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">지정 임무</span><span class="font-bold text-slate-300 text-right truncate max-w-[180px]" id="wiz-sum-task">테크 뉴스 브리핑</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">연동 협업망</span><span class="font-bold text-slate-300" id="wiz-sum-channel">Slack / Discord 채널</span></div>
                     </div>
-                    <div onclick="selectTask('cs')" class="p-3 md:p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'cs' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
-                        <div class="text-xl mt-1">🎧</div>
-                        <div>
-                            <h4 class="font-bold text-xs md:text-sm text-slate-800">지능형 고객 문의 자동 분류 및 대응</h4>
-                            <p class="text-[10px] md:text-[11px] text-gray-500 mt-1 leading-relaxed">인입되는 메일의 고객 감정 온도를 진단하여 최선의 답장 초안을 마련 후 관리자 승인을 받습니다.</p>
-                        </div>
-                    </div>
-                    <div onclick="selectTask('competitor')" class="p-3 md:p-4 border rounded-2xl cursor-pointer hover:bg-slate-50 transition-all flex items-start space-x-3 ${onboardingData.task === 'competitor' ? 'border-blue-600 bg-blue-50/20' : 'border-gray-200'}">
-                        <div class="text-xl mt-1">🎯</div>
-                        <div>
-                            <h4 class="font-bold text-xs md:text-sm text-slate-800">경쟁 서비스 신기능 추적 리서치</h4>
-                            <p class="text-[10px] md:text-[11px] text-gray-500 mt-1 leading-relaxed">경쟁사의 신기능 릴리즈 뉴스를 즉시 포착하여 이에 맞서는 맞춤 대조 마케팅 초안 작성을 협의합니다.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        } 
-        // STEP 3: Workspace Channel Linking
-        else if (currentOnboardingStep === 3) {
-            nextBtn.innerText = "직원 출근 등록하기 (구독 시작)";
-            container.innerHTML = `
-                <div class="fade-in text-center py-2">
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">⚡</div>
-                    <h3 class="font-bold text-sm md:text-base text-slate-900 mb-1">업무 가상 공간 연동</h3>
-                    <p class="text-[10px] md:text-xs text-gray-500 mb-6">직원들이 원활히 협업할 메신저 채널을 정하세요.</p>
+
                     <div class="flex justify-center space-x-4">
-                        <button onclick="selectChannel('Slack')" class="p-3 md:p-4 border-2 rounded-2xl flex flex-col items-center w-24 md:w-28 transition-all ${onboardingData.channel === 'Slack' ? 'border-blue-600 bg-blue-50' : 'border-gray-200'}">
-                            <span class="text-lg md:text-xl mb-1">💬</span>
-                            <span class="text-[11px] md:text-xs font-bold">Slack</span>
+                        <button onclick="selectWizChannel('Slack')" class="px-4 py-2 border rounded-xl flex items-center space-x-2 text-xs font-semibold ${wizData.channel === 'Slack' ? 'border-blue-500 text-white bg-blue-500/10' : 'border-slate-800 text-slate-400'}" id="ch-sl-wiz">
+                            <span>💬</span> <span>Slack</span>
                         </button>
-                        <button onclick="selectChannel('Discord')" class="p-3 md:p-4 border rounded-2xl flex flex-col items-center w-24 md:w-28 transition-all ${onboardingData.channel === 'Discord' ? 'border-blue-600 bg-blue-50' : 'border-gray-200'}">
-                            <span class="text-lg md:text-xl mb-1">👾</span>
-                            <span class="text-[11px] md:text-xs font-bold">Discord</span>
+                        <button onclick="selectWizChannel('Discord')" class="px-4 py-2 border rounded-xl flex items-center space-x-2 text-xs font-semibold ${wizData.channel === 'Discord' ? 'border-blue-500 text-white bg-blue-500/10' : 'border-slate-800 text-slate-400'}" id="ch-ds-wiz">
+                            <span>👾</span> <span>Discord</span>
                         </button>
                     </div>
                 </div>
             `;
+            
+            // Fill summaries
+            setTimeout(() => {
+                document.getElementById('wiz-sum-class').innerText = wizData.nodeClass === 'Junior' ? '주니어 연구원 (₩30,000/월)' : '시니어 기획팀장 (₩60,000/월)';
+                let tName = "뉴스 데일리 브리핑";
+                if (wizData.task === 'cs') tName = "고객 CS 감정 분류";
+                if (wizData.task === 'competitor') tName = "경쟁사 신기능 트래킹";
+                document.getElementById('wiz-sum-task').innerText = tName;
+                document.getElementById('wiz-sum-channel').innerText = `${wizData.channel} 메신저 채널`;
+            }, 50);
         }
     }
 
-    // --- Onboarding Selection Helpers (Restored) ---
-    function selectNode(nodeType) {
-        onboardingData.node = nodeType;
-        renderOnboardingStep();
+    function selectWizClass(cl) {
+        wizData.nodeClass = cl;
+        renderWizStep();
     }
 
-    // --- Onboarding Selection Helpers (Restored) ---
-    function selectNode(nodeType) {
-        onboardingData.node = nodeType;
-        renderOnboardingStep();
+    // --- Interactive Task State Selection ---
+    function selectWizTask(t) {
+        wizData.task = t;
+        renderWizStep();
     }
 
-    function selectTask(taskType) {
-        onboardingData.task = taskType;
-        renderOnboardingStep();
+    function selectWizChannel(ch) {
+        wizData.channel = ch;
+        renderWizStep();
     }
 
-    function selectChannel(channelName) {
-        onboardingData.channel = channelName;
-        renderOnboardingStep();
-    }
-
-    // --- Navigation Flow Controller (Fixed transition block bug) ---
-    function nextOnboardingStep() {
-        if (currentOnboardingStep < 3) {
-            currentOnboardingStep++;
-            renderOnboardingStep();
+    function nextWiz() {
+        if (wizStep < 3) {
+            wizStep++;
+            renderWizStep();
         } else {
-            openSubscriptionModal();
+            // Open modal
+            document.getElementById('success-node-type').innerText = wizData.nodeClass === 'Junior' ? '주니어 연구원 (₩30,000/월)' : '시니어 기획팀장 (₩60,000/월)';
+            let tName = "글로벌 테크 브리핑";
+            if (wizData.task === 'cs') tName = "고객 CS 분류 및 대응";
+            if (wizData.task === 'competitor') tName = "경쟁사 트랙킹 대응";
+            document.getElementById('success-task-type').innerText = tName;
+            document.getElementById('success-channel-type').innerText = `${wizData.channel} Intranet Channel`;
+            
+            document.getElementById('subscription-success-modal').classList.remove('hidden');
         }
     }
 
-    function prevOnboardingStep() {
-        if (currentOnboardingStep > 1) {
-            currentOnboardingStep--;
-            renderOnboardingStep();
+    function prevWiz() {
+        if (wizStep > 1) {
+            wizStep--;
+            renderWizStep();
         }
     }
 
-    // --- Subscription Modal Flow ---
-    function openSubscriptionModal() {
-        document.getElementById('modal-node').innerText = onboardingData.node === 'Junior' ? '주니어 가상 연구원 (₩30,000/월)' : '시니어 가상 기획팀장 (₩60,000/월)';
+    function completeOnboardingFlow() {
+        document.getElementById('subscription-success-modal').classList.add('hidden');
         
-        let taskName = "글로벌 테크 브리핑";
-        if (onboardingData.task === 'cs') taskName = "고객 문의 자동 분석";
-        if (onboardingData.task === 'competitor') taskName = "경쟁사 트렌드 해킹";
-        document.getElementById('modal-task').innerText = taskName;
+        // Update simulation hardware badge based on hired model
+        const nameBadge = document.getElementById('sidebar-hardware-badge');
+        nameBadge.innerText = wizData.nodeClass === 'Junior' ? '주니어 (M1 Mac Mini)' : '시니어 (M2 Pro Mac)';
         
-        document.getElementById('modal-channel').innerText = `${onboardingData.channel} Intranet Channel`;
-        
-        const modal = document.getElementById('subscription-modal');
-        modal.classList.remove('hidden');
-        modal.querySelector('div').classList.add('scale-100');
-    }
+        // Scroll to intranet
+        scrollToTab('intranet');
 
-    function confirmOnboardingCompletion() {
-        const modal = document.getElementById('subscription-modal');
-        modal.classList.add('hidden');
-        
-        // Sync matching spec text on Sidebar UI
-        document.getElementById('matched-spec-text').innerText = onboardingData.node === 'Junior' ? '주니어 리서처 (M1, 16GB)' : '시니어 기획팀장 (M2 Pro, 32GB)';
-        
-        // Scroll to workflow section (Index 1)
-        currentSectionIndex = 1;
-        triggerProgrammaticScroll(currentSectionIndex);
-        
-        // Auto start simulation based on the newly customized task
+        // Start simulation immediately with appropriate task
         setTimeout(() => {
-            startSimulation(onboardingData.task);
+            triggerSimStart(wizData.task);
         }, 800);
     }
 
-    // --- Dynamic Chat Scroller Helper ---
-    function scrollChatToBottom() {
-        const chatWindow = document.getElementById('chat-window');
-        if (chatWindow) {
-            setTimeout(() => {
-                chatWindow.scrollTo({
-                    top: chatWindow.scrollHeight,
-                    behavior: 'smooth'
-                });
-            }, 100);
+    // --- Interactive Chat Simulation & Telemetry Coordination ---
+    const simScenarios = {
+        news: {
+            title: "📰 테크 뉴스 브리핑 (#tech-briefing)",
+            desc: "해외 주요 미디어 기사를 요약하여 사내에 전파하고 전략을 분기 협의합니다.",
+            flow: [
+                { sender: '최 매니저 (Research AI)', text: '📢 박 팀장님, 오늘 아침 해외 테크 뉴스 속보입니다. OpenAI가 온디바이스 SLM 구동 최적화를 공식화했습니다. 클라우드 비용 효율화를 극대화하려는 목적입니다.', delay: 1000, cpu: 75, gpu: 85, mem: 9.4, tok: 52, lat: 14 },
+                { sender: '김 파트너 (Planning AI)', text: '💡 대단히 흥미롭네요! 우리 AgentDesk 역시 유휴 자원을 활용하는 분산 DePIN 인프라인 만큼, 이 발표 흐름에 맞추어 "토큰 비용 제로 전략" 마케팅 기획을 추진해볼 수 있습니다.', delay: 3500, cpu: 85, gpu: 90, mem: 12.1, tok: 42, lat: 11 },
+                { sender: '김 파트너 (Planning AI)', text: '🙋‍♂️ 팀장님! 해당 마케팅 프로모션 공식 제안 보고안 작성을 즉시 개시할까요?', delay: 6000, cpu: 10, gpu: 5, mem: 11.8, tok: 0, lat: 12, isQuestion: true }
+            ],
+            options: [
+                { text: "👍 승인합니다. 기획서 초안 작성해 주십시오.", next: "김 파트너: 감사합니다! 바로 기획안 작성을 준비하여 10분 이내로 #task-report 채널에 초안을 올리겠습니다." },
+                { text: "⏳ 시장 분석이 더 필요합니다. 추가 뉴스를 더 모아주세요.", next: "최 매니저: 알겠습니다. OpenAI 기술 외에 구글, 메타의 유사 SLM 온디바이스 동향 자료를 추가 리포트하겠습니다." }
+            ]
+        },
+        cs: {
+            title: "🎧 CS 분류 및 이메일 대응팀 (#cs-intelligence)",
+            desc: "고객 불만사항을 분류하고 맞춤 사과 및 보상 이메일을 승인 요청합니다.",
+            flow: [
+                { sender: '최 매니저 (Research AI)', text: '🚨 [장비 결함 문의] 인입 메일 감지. 감정 진단 결과: "분노(Angry)", 대응 등급: "최우선 순위"', delay: 1000, cpu: 65, gpu: 70, mem: 9.2, tok: 55, lat: 15 },
+                { sender: '김 파트너 (Planning AI)', text: '📝 규정상 100% 즉시 환불 조치가 필요합니다. "불편 사과 및 무료 서비스 크레딧 50,000원권 동봉" 답변 메일 가상 임시 초안을 마련 완료하였습니다.', delay: 3500, cpu: 90, gpu: 95, mem: 12.4, tok: 46, lat: 12 },
+                { sender: '김 파트너 (Planning AI)', text: '🙋‍♂️ 박 팀장님, 작성된 이 사과 메일 초안을 고객에게 즉시 자동 승인 발송할까요?', delay: 6000, cpu: 8, gpu: 2, mem: 12.1, tok: 0, lat: 10, isQuestion: true }
+            ],
+            options: [
+                { text: "✉️ 초안 완벽합니다. 즉시 발송 승인합니다.", next: "최 매니저: 승인 확인. 고객에게 이메일 전송을 완료하고 해당 서비스 케이스는 [해결 완료] 처리하였습니다." },
+                { text: "✏️ 크레딧 동봉 제외하고 정중한 추가 교환 절차만 안내해 주세요.", next: "김 파트너: 피드백 반영. 보상금 제외 후 단순 무상 교환 수거 주소지 안내로 이메일 본문을 수정해 재발송하였습니다." }
+            ]
+        },
+        competitor: {
+            title: "🎯 경쟁 신기능 해킹 감시팀 (#competitor-watch)",
+            desc: "경쟁사 서비스 릴리즈 감지 시 마케팅 대응 요소를 협의합니다.",
+            flow: [
+                { sender: '최 매니저 (Research AI)', text: '🔍 아침 경쟁사 "A社" 공식 홈페이지 트래킹 결과, 멀티에이전트 공유 대시보드를 정식 공개하였습니다. 연산 비용이 API 호출 건당 부과되는 방식입니다.', delay: 1000, cpu: 70, gpu: 78, mem: 9.5, tok: 51, lat: 13 },
+                { sender: '김 파트너 (Planning AI)', text: '⚡ 호출 수수료 부담을 타겟팅하기 완벽한 타이밍입니다. 우리의 강점인 "월 3만원 고정 인프라"라는 대조 소구점을 강하게 부각한 반격성 블로그 포스팅 작성을 제안합니다.', delay: 3500, cpu: 88, gpu: 92, mem: 12.2, tok: 44, lat: 12 },
+                { sender: '김 파트너 (Planning AI)', text: '🙋‍♂️ 팀장님, "토큰 폭탄 걱정 없는 가비지 컬렉션 없는 고정가 분산 환경"을 내세우는 대응 글 집필을 시작할까요?', delay: 6000, cpu: 12, gpu: 4, mem: 12.0, tok: 0, lat: 11, isQuestion: true }
+            ],
+            options: [
+                { text: "✍️ 좋습니다. 가성비 장점을 적극 드러내 주십시오.", next: "김 파트너: 알겠습니다. '월정액 기반 탈중앙화 AI 사원' 테마로 핵심 포스트를 작성해 등록 준비하겠습니다." },
+                { text: "📊 글 집필 전에 경쟁사의 구체적인 API 요금제를 쪼개서 비교표로 먼저 보여주세요.", next: "최 매니저: 현실적인 지시입니다. API 연동 횟수 구간별 비용 시뮬레이션 표를 작성해 10분 내로 본 채널에 올리겠습니다." }
+            ]
         }
-    }
+    };
 
-    // --- Interactive Chat Simulation ---
-    let chatTimer = null;
-    function startSimulation(specificTask = null) {
-        const chosenTaskKey = specificTask || onboardingData.task || 'news';
-        const scenario = scenarios[chosenTaskKey];
-        const chatWindow = document.getElementById('chat-window');
-        const userPanel = document.getElementById('user-interaction-panel');
-        
-        // Reset state
-        if (chatTimer) clearTimeout(chatTimer);
-        userPanel.classList.add('hidden');
-        
-        // Set Header Titles
-        document.getElementById('active-scenario-title').innerText = scenario.title;
-        document.getElementById('active-scenario-desc').innerText = scenario.desc;
-        
-        chatWindow.innerHTML = `<div class="text-center py-2 text-[10px] text-gray-400 uppercase tracking-widest border-b mb-4">시뮬레이터 로딩 및 직원 배포 완료</div>`;
+    let simTimer = null;
+    let teleTimer = null;
+    let selectedScenario = 'news';
+
+    function triggerSimStart(forcedScenario = null) {
+        selectedScenario = forcedScenario || wizData.task || 'news';
+        const scenario = simScenarios[selectedScenario];
+        const chatWindow = document.getElementById('sim-chat-window');
+        const feedbackPanel = document.getElementById('sim-feedback-panel');
+
+        // Reset sim state
+        if (simTimer) clearTimeout(simTimer);
+        feedbackPanel.classList.add('hidden');
+        chatWindow.innerHTML = `<div class="text-center py-2 text-[10px] text-slate-600 uppercase tracking-widest border-b border-slate-900 mb-4">시뮬레이션 초기화 중...</div>`;
         scrollChatToBottom();
-        
-        // Loop through flow
-        scenario.flow.forEach((msg, idx) => {
-            chatTimer = setTimeout(() => {
-                // Remove existing temporary typing block if any
-                const prevTyping = document.getElementById('temp-typing');
-                if (prevTyping) prevTyping.remove();
+
+        // Update titles
+        document.getElementById('active-sim-title').innerText = scenario.title;
+        document.getElementById('active-sim-desc').innerText = scenario.desc;
+
+        // Toggle telemetry status
+        setTelemetryStatus('RUNNING', 'Host #0294', wizData.nodeClass === 'Junior' ? 'Apple M1 Mac Mini' : 'Apple M2 Pro Mac');
+
+        // Render chat items sequentially
+        scenario.flow.forEach((item, index) => {
+            simTimer = setTimeout(() => {
+                // Clear typing indicator
+                const typing = document.getElementById('sim-typing-loader');
+                if (typing) typing.remove();
 
                 // Append real bubble
                 const bubble = document.createElement('div');
-                bubble.className = `chat-bubble fade-in bot-message`;
+                bubble.className = "flex flex-col space-y-1 fade-in";
+                
+                const isPartner = item.sender.includes('김 파트너');
+                const avatarBg = isPartner ? 'from-purple-500 to-indigo-500' : 'from-blue-500 to-indigo-500';
+                const avatarIcon = isPartner ? '🧑‍💼' : '🕵️';
+
                 bubble.innerHTML = `
-                    <div class="flex items-center space-x-2 mb-1">
-                        <span class="text-xs font-bold text-blue-600">${msg.sender}</span>
-                        <span class="text-[9px] text-gray-400">대여 노드 구동 중</span>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr ${avatarBg} flex items-center justify-center text-sm shadow-md">${avatarIcon}</div>
+                        <div class="flex-1 min-w-0 bg-slate-900/60 border border-slate-800/80 rounded-2xl px-4 py-3.5">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-bold text-white">${item.sender}</span>
+                                <span class="text-[9px] text-slate-500 font-mono">P2P 터널링 연동 중</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-sans">${item.text}</p>
+                        </div>
                     </div>
-                    <p class="text-xs md:text-sm leading-relaxed text-slate-700">${msg.text}</p>
                 `;
                 chatWindow.appendChild(bubble);
                 scrollChatToBottom();
 
-                // Check if this message was a question requiring user intervention
-                if (msg.isQuestion) {
-                    showUserOptions(scenario.options);
-                } else if (idx < scenario.flow.length - 1) {
-                    // Inject temporary "Typing..." effect for the next speaker
-                    showTypingIndicator(scenario.flow[idx+1].sender);
+                // Update Telemetry load directly matched to CPU/GPU numbers of this execution step
+                animateTelemetry(item.cpu, item.gpu, item.mem, item.tok, item.lat);
+
+                if (item.isQuestion) {
+                    showSimOptions(scenario.options);
+                } else if (index < scenario.flow.length - 1) {
+                    // Show typing indicator for next sender
+                    const nextSender = scenario.flow[index+1].sender;
+                    showSimTyping(nextSender);
                 }
-            }, msg.delay);
+            }, item.delay);
         });
     }
 
-    function showTypingIndicator(senderName) {
-        const chatWindow = document.getElementById('chat-window');
-        const typingBlock = document.createElement('div');
-        typingBlock.id = 'temp-typing';
-        typingBlock.className = 'chat-bubble bot-message flex items-center space-x-2 py-3 px-4';
-        typingBlock.innerHTML = `
-            <span class="text-xs font-semibold text-slate-400 mr-2">${senderName}가 생각 중...</span>
-            <div class="typing-dots flex space-x-1">
-                <span></span><span></span><span></span>
+    function showSimTyping(senderName) {
+        const chatWindow = document.getElementById('sim-chat-window');
+        const typing = document.createElement('div');
+        typing.id = 'sim-typing-loader';
+        typing.className = 'flex items-center space-x-3 fade-in';
+        typing.innerHTML = `
+            <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">💬</div>
+            <div class="bg-slate-900/40 border border-slate-800/60 rounded-2xl px-4 py-3 flex items-center space-x-2">
+                <span class="text-[10px] text-slate-500 font-medium">${senderName} 생각 중</span>
+                <div class="typing-dots flex space-x-1"><span></span><span></span><span></span></div>
             </div>
         `;
-        chatWindow.appendChild(typingBlock);
+        chatWindow.appendChild(typing);
         scrollChatToBottom();
     }
 
-    function showUserOptions(options) {
-        const prevTyping = document.getElementById('temp-typing');
-        if (prevTyping) prevTyping.remove();
+    function showSimOptions(options) {
+        const typing = document.getElementById('sim-typing-loader');
+        if (typing) typing.remove();
 
-        const userPanel = document.getElementById('user-interaction-panel');
-        const optContainer = document.getElementById('interactive-options');
-        
-        optContainer.innerHTML = '';
-        userPanel.classList.remove('hidden');
+        const panel = document.getElementById('sim-feedback-panel');
+        const container = document.getElementById('sim-feedback-options');
+        container.innerHTML = '';
+        panel.classList.remove('hidden');
 
         options.forEach(opt => {
             const btn = document.createElement('button');
-            btn.className = "flex-1 p-3 bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 text-xs font-bold rounded-xl transition-all text-left shadow-sm";
+            btn.className = "flex-1 p-3 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-bold rounded-xl text-slate-300 transition-all text-left shadow-sm";
             btn.innerText = opt.text;
-            btn.onclick = () => handleUserSelection(opt);
-            optContainer.appendChild(btn);
+            btn.onclick = () => selectSimOption(opt);
+            container.appendChild(btn);
         });
         scrollChatToBottom();
     }
 
-    function handleUserSelection(option) {
-        const chatWindow = document.getElementById('chat-window');
-        const userPanel = document.getElementById('user-interaction-panel');
-        userPanel.classList.add('hidden');
+    function selectSimOption(option) {
+        document.getElementById('sim-feedback-panel').classList.add('hidden');
+        const chatWindow = document.getElementById('sim-chat-window');
 
-        // Append user response bubble
-        const userBubble = document.createElement('div');
-        userBubble.className = "chat-bubble user-message fade-in";
-        userBubble.innerHTML = `
-            <div class="flex items-center space-x-2 justify-end mb-1">
-                <span class="text-xs font-bold text-slate-800">박 팀장 (나)</span>
+        // User message bubble
+        const bubble = document.createElement('div');
+        bubble.className = "flex flex-col space-y-1 fade-in items-end";
+        bubble.innerHTML = `
+            <div class="flex items-start space-x-3 justify-end max-w-lg ml-auto">
+                <div class="bg-blue-600/10 border border-blue-500/20 rounded-2xl px-4 py-3.5 text-right">
+                    <div class="text-[9px] text-blue-400 font-bold mb-1">박 팀장 (나)</div>
+                    <p class="text-xs md:text-sm text-white leading-relaxed font-sans">${option.text}</p>
+                </div>
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-sm font-bold shadow-md">👨‍💻</div>
             </div>
-            <p class="text-xs md:text-sm leading-relaxed text-slate-800">${option.text}</p>
         `;
-        chatWindow.appendChild(userBubble);
+        chatWindow.appendChild(bubble);
         scrollChatToBottom();
 
-        // Simulate AI answering back to the user decision
-        showTypingIndicator("사내 메신저 가동");
-        setTimeout(() => {
-            const prevTyping = document.getElementById('temp-typing');
-            if (prevTyping) prevTyping.remove();
+        // Simulate thinking telemetry
+        animateTelemetry(92, 98, 12.8, 0, 11);
+        showSimTyping('가상 노드 연산 중');
 
+        setTimeout(() => {
+            const typing = document.getElementById('sim-typing-loader');
+            if (typing) typing.remove();
+
+            // Final success message from node execution
             const finalBubble = document.createElement('div');
-            finalBubble.className = "chat-bubble bot-message fade-in border-emerald-200 bg-emerald-50/20";
+            finalBubble.className = "flex flex-col space-y-1 fade-in";
             finalBubble.innerHTML = `
-                <div class="flex items-center space-x-2 mb-1">
-                    <span class="text-xs font-bold text-emerald-600">업무 실행 결과</span>
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-sm">✓</div>
+                    <div class="flex-1 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl px-4 py-3.5">
+                        <div class="text-[9px] text-emerald-400 font-bold mb-1">실행 결과 보고</div>
+                        <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-sans">${option.next}</p>
+                        <span class="text-[9px] text-emerald-500 font-mono mt-2 block">✓ 대여 맥 미니 연산 완료 - 다음 스케줄 주기 대기 중</span>
+                    </div>
                 </div>
-                <p class="text-xs md:text-sm leading-relaxed text-slate-700">${option.next}</p>
-                <div class="text-[10px] text-emerald-500 mt-2 font-medium">✓ 가상 맥 미니 서버 연산 종결 - 대기모드 진입</div>
             `;
             chatWindow.appendChild(finalBubble);
             scrollChatToBottom();
+
+            // Drop telemetry to idle
+            animateTelemetry(3, 0, 8.2, 0, 13);
+            setTelemetryStatus('IDLE', 'Host #0294', wizData.nodeClass === 'Junior' ? 'Apple M1 Mac Mini' : 'Apple M2 Pro Mac');
         }, 1500);
     }
 
-    // --- Chart initialization ---
-    function initChartV3() {
-        const ctx = document.getElementById('costChartV3').getContext('2d');
-        if (window.myChart) window.myChart.destroy();
-        window.myChart = new Chart(ctx, {
+    function scrollChatToBottom() {
+        const win = document.getElementById('sim-chat-window');
+        if (win) {
+            setTimeout(() => {
+                win.scrollTo({ top: win.scrollHeight, behavior: 'smooth' });
+            }, 100);
+        }
+    }
+
+    // Telemetry widget rendering support
+    function setTelemetryStatus(status, hostId, chipSpec) {
+        const badge = document.getElementById('tele-status-badge');
+        badge.innerText = status;
+        if (status === 'RUNNING') {
+            badge.className = "px-2 py-0.5 bg-blue-500/10 border border-blue-500/20 rounded text-[9px] font-semibold text-blue-400";
+        } else {
+            badge.className = "px-2 py-0.5 bg-slate-900 border border-slate-800 rounded text-[9px] font-semibold text-slate-500";
+        }
+
+        document.getElementById('tele-phys-host').innerText = hostId;
+        document.getElementById('tele-phys-chip').innerText = chipSpec;
+    }
+
+    function animateTelemetry(cpu, gpu, mem, tokens, latency) {
+        document.getElementById('tele-cpu-txt').innerText = `${cpu}%`;
+        document.getElementById('tele-cpu-bar').style.width = `${cpu}%`;
+        
+        document.getElementById('tele-gpu-txt').innerText = `${gpu}%`;
+        document.getElementById('tele-gpu-bar').style.width = `${gpu}%`;
+
+        const maxMem = wizData.nodeClass === 'Junior' ? 16.0 : 32.0;
+        document.getElementById('tele-ram-txt').innerText = `${mem.toFixed(1)} GB / ${maxMem.toFixed(1)} GB`;
+        document.getElementById('tele-ram-bar').style.width = `${(mem / maxMem) * 100}%`;
+
+        document.getElementById('tele-token-speed').innerText = tokens > 0 ? `${tokens} t/s` : '0 t/s';
+        document.getElementById('tele-latency').innerText = latency > 0 ? `${latency} ms` : '-- ms';
+    }
+
+    // --- Economic ChartJS integration ---
+    function initCostChart() {
+        const ctx = document.getElementById('costComparisonChart').getContext('2d');
+        
+        // Gradient fill for bars
+        const gradAgentDesk = ctx.createLinearGradient(0, 0, 0, 200);
+        gradAgentDesk.addColorStop(0, '#3b82f6');
+        gradAgentDesk.addColorStop(1, '#8b5cf6');
+
+        const gradCloud = ctx.createLinearGradient(0, 0, 0, 200);
+        gradCloud.addColorStop(0, '#475569');
+        gradCloud.addColorStop(1, '#1e293b');
+
+        if (window.comparisonChart) window.comparisonChart.destroy();
+        
+        window.comparisonChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['상용 클라우드 API', '자체 구축 인프라', 'AgentDesk 고정제'],
+                labels: ['상용 클라우드 API', '자체 IDC 서버', 'AgentDesk DePIN'],
                 datasets: [{
-                    label: '월간 예상 지출비용 (KRW)',
+                    label: '월 고정 인프라비 (KRW)',
                     data: [1850000, 680000, 30000],
-                    backgroundColor: ['#E2E8F0', '#94A3B8', '#1D4ED8'],
+                    backgroundColor: [gradCloud, '#334155', gradAgentDesk],
                     borderRadius: 12,
                     barThickness: 36
                 }]
@@ -865,12 +1421,30 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false }
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                        titleColor: '#fff',
+                        bodyColor: '#cbd5e1',
+                        borderColor: 'rgba(255,255,255,0.08)',
+                        borderWidth: 1,
+                        padding: 12,
+                        cornerRadius: 8,
+                        titleFont: { family: 'Outfit, Noto Sans KR' },
+                        bodyFont: { family: 'Outfit, Noto Sans KR' }
+                    }
                 },
                 scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b', font: { family: 'Outfit, Noto Sans KR', size: 10 } }
+                    },
                     y: {
+                        grid: { color: 'rgba(255, 255, 255, 0.04)' },
                         ticks: {
-                            callback: function(value) { return '₩' + value.toLocaleString(); }
+                            color: '#64748b',
+                            font: { family: 'Outfit, Noto Sans KR', size: 9 },
+                            callback: function(value) { return '₩' + (value/10000).toLocaleString() + '만'; }
                         }
                     }
                 }
@@ -878,9 +1452,22 @@
         });
     }
 
-    // Init Page State on load
-    window.onload = () => { 
-        renderOnboardingStep(); 
+    // --- Onload initialization ---
+    window.onload = () => {
+        calculateEarnings();
+        renderWizStep();
+        initCostChart();
+
+        // Increment stats over time mildly for realism
+        setInterval(() => {
+            const activeNodeSpan = document.getElementById('stat-active-nodes');
+            const coreSpan = document.getElementById('stat-cores');
+            
+            let nodes = parseInt(activeNodeSpan.innerText.replace(/,/g, ''));
+            nodes += Math.floor(Math.random() * 3) - 1; // +/- 1 node variation
+            activeNodeSpan.innerText = nodes.toLocaleString();
+            coreSpan.innerText = (nodes * 8).toLocaleString(); // 8 cores per node on average
+        }, 8000);
     };
 </script>
 </body>
