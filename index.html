@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentDesk - DePIN 고정가 AI 에이전트 인프라 마켓플레이스</title>
+    <title>AgentDesk - 원클릭 맥미니 로컬 AI 에이전트 & 유휴 자원 공유 마켓플레이스</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -163,7 +163,7 @@
         <div class="flex flex-col">
             <span class="text-lg font-bold tracking-tight text-white flex items-center">
                 AgentDesk
-                <span class="ml-2 px-2 py-0.5 text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md">DePIN MVP v2.0</span>
+                <span class="ml-2 px-2 py-0.5 text-[10px] font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md">DePIN Pro v3.0</span>
             </span>
         </div>
     </div>
@@ -171,8 +171,8 @@
     <!-- Navigation Links -->
     <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
         <button onclick="scrollToTab('hero')" class="nav-link active py-2 hover:text-white transition-all" id="nav-hero">서비스 홈</button>
-        <button onclick="scrollToTab('depin')" class="nav-link py-2 hover:text-white transition-all" id="nav-depin">DePIN 노드 & 수익 계산</button>
-        <button onclick="scrollToTab('onboarding')" class="nav-link py-2 hover:text-white transition-all" id="nav-onboarding">직원 채용 마법사</button>
+        <button onclick="scrollToTab('depin')" class="nav-link py-2 hover:text-white transition-all" id="nav-depin">유휴 자원 공유 & 계산기</button>
+        <button onclick="scrollToTab('onboarding')" class="nav-link py-2 hover:text-white transition-all" id="nav-onboarding">에이전트 구축 Wizard</button>
         <button onclick="scrollToTab('intranet')" class="nav-link py-2 hover:text-white transition-all" id="nav-intranet">실시간 협업 시뮬레이터</button>
         <button onclick="scrollToTab('inquiry')" class="nav-link py-2 hover:text-white transition-all" id="nav-inquiry">도입 문의 & FAQ</button>
     </nav>
@@ -183,7 +183,7 @@
             <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full pulse-glow-node"></span>
             <span class="text-xs text-slate-300 font-medium">DePIN Network Online</span>
         </div>
-        <button onclick="scrollToTab('onboarding')" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-lg shadow-blue-600/25">신규 에이전트 채용</button>
+        <button onclick="scrollToTab('onboarding')" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-lg shadow-blue-600/25">원클릭 AI 무료 구축</button>
     </div>
 </header>
 
@@ -198,21 +198,21 @@
         <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
             <!-- Left: Catchy Copy -->
             <div class="lg:col-span-7 text-center lg:text-left space-y-6">
-                <span class="px-3.5 py-1.5 text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full tracking-widest uppercase">Decentralized AI Infrastructure</span>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
-                    놀고 있는 고사양 맥을<br>
-                    <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">24시간 AI 직원의 사무실로.</span>
+                <span class="px-3.5 py-1.5 text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full tracking-widest uppercase">One-Click Mac Mini AI Agent</span>
+                <h1 class="text-3xl md:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-white leading-tight break-keep">
+                    집에서 노는 맥미니,<br>
+                    <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">원클릭으로 무료 AI 비서 구축.</span>
                 </h1>
-                <p class="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl">
-                    상용 AI API의 비용 폭증과 고성능 하드웨어 유휴 문제를 DePIN(탈중앙화 물리 인프라) 개념으로 완전히 해결합니다. 
-                    개인 Host의 Apple Silicon 자원을 묶어, Guest에게 고정 월 요금제로 안전하게 격리된 가상 사원 런타임을 제공합니다.
+                <p class="text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl break-keep">
+                    오픈클로나 Docker 설정이 너무 복잡하셨나요? 프로그램 설치 한번으로 맥미니에 내 전용 무료 AI 에이전트를 구축하세요. 
+                    사용하지 않는 유휴 시간에는 자원을 안전하게 공유해 대여 수익을 얻고, 맥미니가 없는 유저는 이 유휴 자원을 저렴하게 대여받아 씁니다.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
-                    <button onclick="scrollToTab('onboarding')" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/10 hover:shadow-blue-500/25 transition-all text-sm">
-                        가상 AI 직원 고용하기 (Guest)
+                    <button onclick="scrollToTab('onboarding'); selectWizPath('local');" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/10 hover:shadow-blue-500/25 transition-all text-sm">
+                        내 맥미니에 원클릭 설치 (.dmg)
                     </button>
-                    <button onclick="scrollToTab('depin')" class="w-full sm:w-auto px-8 py-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold rounded-2xl transition-all text-sm">
-                        내 맥 대여하고 수익 얻기 (Host)
+                    <button onclick="scrollToTab('onboarding'); selectWizPath('rent');" class="w-full sm:w-auto px-8 py-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold rounded-2xl transition-all text-sm">
+                        맥미니 자원 대여해서 쓰기 (Guest)
                     </button>
                 </div>
             </div>
@@ -220,32 +220,32 @@
             <!-- Right: Real-time Stats Grid Dashboard -->
             <div class="lg:col-span-5 grid grid-cols-2 gap-4">
                 <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 0s;">
-                    <div class="text-slate-500 text-xs font-semibold mb-2">활성 분산 노드</div>
+                    <div class="text-slate-500 text-xs font-semibold mb-2">공유 중인 유휴 노드</div>
                     <div class="flex items-baseline space-x-1.5">
                         <span class="text-3xl font-black text-white" id="stat-active-nodes">1,482</span>
                         <span class="text-xs font-bold text-emerald-400 flex items-center">
                             <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1 inline-block animate-ping"></span> Live
                         </span>
                     </div>
-                    <div class="text-[10px] text-slate-500 mt-2">M1/M2/M3 Mac Mini & Mac Studio</div>
+                    <div class="text-[10px] text-slate-500 mt-2">M1/M2/M3/M4 Mac Mini 자원</div>
                 </div>
 
                 <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 0.5s;">
-                    <div class="text-slate-500 text-xs font-semibold mb-2">전체 연산 코어</div>
+                    <div class="text-slate-500 text-xs font-semibold mb-2">네트워크 공유 코어</div>
                     <div class="text-3xl font-black text-white" id="stat-cores">11,856</div>
-                    <div class="text-[10px] text-slate-500 mt-2">Apple GPU 가속 통합 자원</div>
+                    <div class="text-[10px] text-slate-500 mt-2">안전 격리 대기 중인 연산 자원</div>
                 </div>
 
                 <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 1s;">
-                    <div class="text-slate-500 text-xs font-semibold mb-2">평균 네트워크 대역폭</div>
+                    <div class="text-slate-500 text-xs font-semibold mb-2">보안 P2P 채널 대역폭</div>
                     <div class="text-3xl font-black text-blue-400">4.8 <span class="text-xs text-slate-500 font-medium">Gbps</span></div>
-                    <div class="text-[10px] text-slate-500 mt-2">Tailscale P2P 보안 메시 네크워크</div>
+                    <div class="text-[10px] text-slate-500 mt-2">WireGuard 기반 암호화 통신</div>
                 </div>
 
                 <div class="glass-panel p-6 rounded-3xl animate-float" style="animation-delay: 1.5s;">
-                    <div class="text-slate-500 text-xs font-semibold mb-2">평균 비용 절감율</div>
-                    <div class="text-3xl font-black text-purple-400">89.2%</div>
-                    <div class="text-[10px] text-slate-500 mt-2">상용 API 무제한 호출 대비</div>
+                    <div class="text-slate-500 text-xs font-semibold mb-2">로컬 무료 에이전트 비용</div>
+                    <div class="text-3xl font-black text-purple-400">₩ 0</div>
+                    <div class="text-[10px] text-slate-500 mt-2">자체 자원 사용 시 평생 무료</div>
                 </div>
             </div>
         </div>
@@ -262,9 +262,9 @@
         <div class="max-w-6xl mx-auto w-full space-y-8 z-10">
             
             <div class="text-center md:text-left">
-                <span class="px-3 py-1 text-[10px] font-bold text-purple-400 bg-purple-500/10 border border-purple-500/20 rounded-full tracking-widest uppercase">Host Economic System</span>
-                <h2 class="text-2xl md:text-3xl font-black text-white mt-3">글로벌 DePIN 맵 & 호스트 수익 모델</h2>
-                <p class="text-slate-500 text-xs md:text-sm mt-1">맥의 자원을 빌려주고 실시간 크레딧을 채굴하세요. 사양이 고성능일수록 고등급 가상 직원이 매칭됩니다.</p>
+                <span class="px-3 py-1 text-[10px] font-bold text-purple-400 bg-purple-500/10 border border-purple-500/20 rounded-full tracking-widest uppercase">Sharing Economy & Calculator</span>
+                <h2 class="text-2xl md:text-3xl font-black text-white mt-3">유휴 자원 공유 & 실시간 대여 수익 계산기</h2>
+                <p class="text-slate-500 text-xs md:text-sm mt-1">맥미니에 무료로 구축하고, 안 쓰는 유휴 시간엔 자원을 공유해 수익을 채굴하세요. 기기가 없는 게스트는 이 자원을 대여받아 사용합니다.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -276,7 +276,7 @@
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                             </span>
-                            <span class="text-xs font-bold text-slate-300">실시간 글로벌 노드 분포</span>
+                            <span class="text-xs font-bold text-slate-300">실시간 글로벌 공유 노드 분포</span>
                         </div>
                         <span class="text-[10px] text-slate-500 font-mono" id="map-hover-hint">노드 위에 마우스를 올리세요</span>
                     </div>
@@ -287,28 +287,20 @@
                             <!-- Grid lines -->
                             <path d="M0 100h1000M0 200h1000M0 300h1000M0 400h1000 M100 0v500M200 0v500M300 0v500M400 0v500M500 0v500M600 0v500M700 0v500M800 0v500M900 0v500" stroke-width="0.5" stroke="rgba(255,255,255,0.03)" />
                             
-                            <!-- Stylized Continent Outlines (Abstracted map paths) -->
-                            <!-- Asia & Korea/Japan area -->
+                            <!-- Continent Outlines -->
                             <path d="M720 120 c20-10, 40,5, 60,0 c30-10, 50-30, 80-20 c15 5, 20,20, 20,40 c0 30-10,50-30,70 c-10 10-25 15-40 20 c-20 5-40-5-50-20 c-10-15-20-40-40-90 Z" fill="rgba(30,41,59,0.15)" stroke="rgba(255,255,255,0.05)" />
                             <path d="M780 200 c10 10, 30,30, 20,50 c-10 10-30 0-40-10 c-20-20-10-30 20-40 Z" fill="rgba(30,41,59,0.15)" stroke="rgba(255,255,255,0.05)" />
-                            <!-- America -->
                             <path d="M120 80 c40-10, 80-20, 120-10 c30 5, 60,20, 70,40 c10 20-10,40-20,60 c-20 40-50,60-60,90 c-10 30-20,60-10,90 c10 20, 30,30, 40,50 c5 15-10,30-30,30 c-30 0-50-30-70-50 c-20-20-35-50-40-80 c-5-30 5-60-5-90 c-10-30-30-50-25-80 c5-20, 10-40, 30-50 Z" fill="rgba(30,41,59,0.15)" stroke="rgba(255,255,255,0.05)" />
                             
                             <!-- Pulsing Nodes -->
-                            <!-- Seoul -->
                             <circle cx="760" cy="160" r="7" class="fill-blue-500/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('seoul')" onmouseover="triggerNodeHover('seoul')" onmouseout="clearNodeHover()" />
-                            <!-- Tokyo -->
                             <circle cx="790" cy="165" r="7" class="fill-purple-500/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('tokyo')" onmouseover="triggerNodeHover('tokyo')" onmouseout="clearNodeHover()" />
-                            <!-- Silicon Valley -->
                             <circle cx="210" cy="150" r="7" class="fill-emerald-500/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('sv')" onmouseover="triggerNodeHover('sv')" onmouseout="clearNodeHover()" />
-                            <!-- Singapore -->
                             <circle cx="710" cy="270" r="7" class="fill-blue-400/80 stroke-white cursor-pointer pulse-glow-node" onclick="showNodeTooltip('singapore')" onmouseover="triggerNodeHover('singapore')" onmouseout="clearNodeHover()" />
                         </svg>
 
                         <!-- Dynamic Map Tooltip Overlay -->
-                        <div id="map-tooltip" class="absolute bg-slate-900/95 border border-slate-800 text-xs rounded-xl p-3.5 shadow-2xl backdrop-blur-md hidden max-w-[240px]">
-                            <!-- Content injected via JS -->
-                        </div>
+                        <div id="map-tooltip" class="absolute bg-slate-900/95 border border-slate-800 text-xs rounded-xl p-3.5 shadow-2xl backdrop-blur-md hidden max-w-[240px]"></div>
                     </div>
                 </div>
 
@@ -316,7 +308,7 @@
                 <div class="lg:col-span-5 glass-panel p-6 rounded-3xl flex flex-col justify-between glass-panel-glow-purple">
                     <div class="border-b border-slate-800 pb-3 mb-4">
                         <h4 class="text-sm font-bold text-purple-400 flex items-center">
-                            💰 호스트 예상 월 수익 모의 계산기
+                            💰 유휴 맥미니 공유 및 대여 예상 수익 계산기
                         </h4>
                     </div>
 
@@ -326,18 +318,18 @@
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">1. Apple Silicon 칩셋 선택</label>
                             <select id="calc-chip" onchange="calculateEarnings()" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-purple-500">
-                                <option value="m1" selected>Apple M1</option>
+                                <option value="m1" selected>Apple M1 / M1 Mac Mini</option>
+                                <option value="m2">Apple M2 / M2 Mac Mini</option>
+                                <option value="m3">Apple M3 iMac & Mac Mini</option>
+                                <option value="m4">Apple M4 / M4 Mac Mini</option>
                                 <option value="m1pro">Apple M1 Pro</option>
                                 <option value="m1max">Apple M1 Max</option>
                                 <option value="m1ultra">Apple M1 Ultra</option>
-                                <option value="m2">Apple M2</option>
                                 <option value="m2pro">Apple M2 Pro</option>
                                 <option value="m2max">Apple M2 Max</option>
                                 <option value="m2ultra">Apple M2 Ultra</option>
-                                <option value="m3">Apple M3</option>
                                 <option value="m3pro">Apple M3 Pro</option>
                                 <option value="m3max">Apple M3 Max</option>
-                                <option value="m4">Apple M4</option>
                             </select>
                         </div>
 
@@ -352,17 +344,15 @@
                             </div>
                         </div>
 
-                        <!-- Hours active Slider -->
+                        <!-- Hours active Slider (Leased Hours) -->
                         <div>
                             <div class="flex justify-between items-center mb-1">
-                                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500">3. 하루 대여 가동시간</label>
-                                <span class="text-xs font-mono font-bold text-purple-400" id="calc-hours-txt">24 시간</span>
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500">3. 하루 유휴 자원 공유 시간</label>
+                                <span class="text-xs font-mono font-bold text-purple-400" id="calc-hours-txt">16 시간</span>
                             </div>
-                            <input type="range" min="1" max="24" value="24" id="calc-hours" oninput="calculateEarnings()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                            <input type="range" min="1" max="24" value="16" id="calc-hours" oninput="calculateEarnings()" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500">
                             <div class="flex justify-between text-[9px] text-slate-600 mt-1">
-                                <span>1시간</span>
-                                <span>12시간</span>
-                                <span>24시간</span>
+                                <span>내가 안 쓰는 남는 시간을 네트워크에 격리 공유합니다.</span>
                             </div>
                         </div>
                     </div>
@@ -370,20 +360,20 @@
                     <!-- Calculator Output Card -->
                     <div class="bg-slate-950/60 border border-slate-800/80 rounded-2xl p-4 mt-4 space-y-3">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="text-slate-400 font-medium">노드 매칭 등급</span>
+                            <span class="text-slate-400 font-medium">유휴 대여 매칭 등급</span>
                             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20" id="calc-grade">주니어 연구원</span>
                         </div>
                         <div class="flex justify-between items-center border-t border-slate-900 pt-3">
-                            <span class="text-xs text-slate-400 font-medium">예상 월간 수입</span>
+                            <span class="text-xs text-slate-400 font-medium">예상 월간 수입 (크레딧)</span>
                             <div class="text-right">
-                                <span class="text-xl font-black text-purple-400 text-glow-purple" id="calc-result">₩ 30,000</span>
-                                <span class="text-[10px] text-slate-500 block">또는 동등 크레딧 적립</span>
+                                <span class="text-xl font-black text-purple-400 text-glow-purple" id="calc-result">₩ 20,000</span>
+                                <span class="text-[10px] text-slate-500 block">현금 출금 또는 게스트 대여비로 사용 가능</span>
                             </div>
                         </div>
                     </div>
 
-                    <button class="w-full mt-4 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-purple-500/10 hover:shadow-purple-500/25">
-                        공급자용 클라이언트 다운로드 (.dmg)
+                    <button onclick="scrollToTab('onboarding'); selectWizPath('local');" class="w-full mt-4 py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-purple-500/10 hover:shadow-purple-500/25">
+                        원클릭 클라이언트 다운로드 (.dmg)
                     </button>
                 </div>
             </div>
@@ -393,12 +383,12 @@
     <!-- SECTION 3: ONBOARDING WIZARD & ECONOMIC CHART -->
     <section id="sec-onboarding" class="snap-section p-6 md:p-12">
         <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10">
-            <!-- Left: High-Fidelity Onboarding Wizard (Guest Platform) -->
+            <!-- Left: Onboarding Wizard -->
             <div class="lg:col-span-6 flex flex-col justify-center">
                 <div class="mb-4 text-center lg:text-left">
-                    <span class="px-3 py-1 text-[10px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full tracking-widest uppercase">Guest Hiring Onboarding</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-white mt-3">업무 지시서 온보딩 마법사</h2>
-                    <p class="text-slate-500 text-xs mt-1">몇 번의 클릭으로 맥 미니 노드를 배포받고 업무 시나리오를 구성하세요.</p>
+                    <span class="px-3 py-1 text-[10px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded-full tracking-widest uppercase">Agent Setup & Leasing</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white mt-3">에이전트 구축 & 대여 마법사</h2>
+                    <p class="text-slate-500 text-xs mt-1">맥미니에 무료 구축 또는 타인의 유휴 기기 대여 중 원하는 시나리오를 선택하세요.</p>
                 </div>
 
                 <!-- Glassmorphic Stepper Card -->
@@ -408,7 +398,7 @@
                         <div class="absolute top-4 left-10 right-10 h-0.5 bg-slate-800 -z-10" id="stepper-line"></div>
                         <div class="flex flex-col items-center w-20">
                             <div id="step-1-c" class="step-circle active w-8 h-8 rounded-full border border-blue-500 bg-blue-600 flex items-center justify-center font-bold text-xs text-white transition-colors duration-300">1</div>
-                            <span class="text-[9px] font-bold text-slate-400 mt-1 whitespace-nowrap">1. 노드 선택</span>
+                            <span class="text-[9px] font-bold text-slate-400 mt-1 whitespace-nowrap">1. 모드 선택</span>
                         </div>
                         <div class="flex flex-col items-center w-20">
                             <div id="step-2-c" class="step-circle w-8 h-8 rounded-full border border-slate-700 bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-400 transition-colors duration-300">2</div>
@@ -444,14 +434,14 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="glass-panel p-5 rounded-2xl border border-slate-800/80">
-                        <span class="text-xl">🔐</span>
-                        <h5 class="text-xs font-bold text-white mt-2 mb-1">제로 놀리지 데이터 격리</h5>
-                        <p class="text-[10px] text-slate-500 leading-relaxed">APFS 암호화 스파스디스크 가상 마운트 및 메모리 접근 보호 조치를 통해 호스트 소유자가 원격 게스트 비즈니스 데이터를 탈취하는 것을 차단합니다.</p>
+                        <span class="text-xl">⚡</span>
+                        <h5 class="text-xs font-bold text-white mt-2 mb-1">원클릭 노드 패키징</h5>
+                        <p class="text-[10px] text-slate-500 leading-relaxed">Docker, Open-WebUI 등 명령어가 가득한 인프라 셋업이 불필요합니다. 원클릭 더블클릭 설치로 로컬 LLM 구동 기반의 AI 런타임 환경이 완전 자동 세팅됩니다.</p>
                     </div>
                     <div class="glass-panel p-5 rounded-2xl border border-slate-800/80">
-                        <span class="text-xl">🔄</span>
-                        <h5 class="text-xs font-bold text-white mt-2 mb-1">하트비트 Failover 보장</h5>
-                        <p class="text-[10px] text-slate-500 leading-relaxed">특정 호스트 컴퓨터가 꺼지거나 회선이 끊어지면, 대기 노드가 15초 내에 컨테이너와 컨텍스트 백업본을 이관받아 업무를 연속 재개합니다.</p>
+                        <span class="text-xl">🔐</span>
+                        <h5 class="text-xs font-bold text-white mt-2 mb-1">안전 격리 P2P 공유</h5>
+                        <p class="text-[10px] text-slate-500 leading-relaxed">자원을 빌려줄 때 Guest가 내 기기 파일에 접근할 수 없습니다. APFS 격리 디스크 및 암호화 가상 샌드박스로 Host 데이터 보안을 철저하게 방어합니다.</p>
                     </div>
                 </div>
             </div>
@@ -466,7 +456,7 @@
                 <!-- Channel Header Bar -->
                 <div class="h-14 border-b border-slate-800/80 bg-slate-950/80 px-6 flex items-center justify-between flex-shrink-0">
                     <div class="flex flex-col min-w-0 mr-4">
-                        <span class="font-bold text-white text-xs md:text-sm truncate" id="active-sim-title"># general (대기 중)</span>
+                        <span class="font-bold text-white text-xs md:text-sm truncate" id="active-sim-title"># local-workspace (대기 중)</span>
                         <span class="text-[10px] text-slate-500 truncate" id="active-sim-desc">임무를 설정하고 출근시키면 시뮬레이션이 활성화됩니다.</span>
                     </div>
                     <button onclick="triggerSimStart()" class="flex-shrink-0 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg text-[10px] md:text-xs font-bold transition-all shadow-md">
@@ -489,19 +479,18 @@
                                     <div class="space-y-1">
                                         <div class="bg-blue-600/10 border border-blue-500/20 text-blue-400 text-xs px-2.5 py-1.5 rounded-lg font-medium cursor-pointer" id="ch-general"># general</div>
                                         <div class="text-xs px-2.5 py-1.5 hover:bg-white/5 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer" id="ch-report"># task-report</div>
-                                        <div class="text-xs px-2.5 py-1.5 hover:bg-white/5 rounded-lg text-slate-500 hover:text-slate-300 cursor-pointer" id="ch-archive"># archive</div>
                                     </div>
                                 </div>
                                 <div>
-                                    <h5 class="text-[9px] font-bold uppercase tracking-wider text-slate-600 px-2 mb-2">배포 에이전트</h5>
+                                    <h5 class="text-[9px] font-bold uppercase tracking-wider text-slate-600 px-2 mb-2">구동 에이전트</h5>
                                     <div class="space-y-1.5 px-2">
                                         <div class="flex items-center space-x-2 text-[11px] text-slate-400">
                                             <span class="w-1.5 h-1.5 bg-blue-400 rounded-full"></span>
-                                            <span>최 매니저 (Res)</span>
+                                            <span>로컬 AI (뉴스)</span>
                                         </div>
                                         <div class="flex items-center space-x-2 text-[11px] text-slate-400">
                                             <span class="w-1.5 h-1.5 bg-purple-400 rounded-full"></span>
-                                            <span>김 파트너 (Plan)</span>
+                                            <span>대여 AI (CS대응)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -509,7 +498,7 @@
                         </div>
                         <div class="text-[9px] text-slate-600 p-2 border-t border-slate-900">
                             매칭 노드 하드웨어:<br>
-                            <span id="sidebar-hardware-badge" class="text-blue-500 font-semibold">주니어 (M1 Mac Mini)</span>
+                            <span id="sidebar-hardware-badge" class="text-blue-500 font-semibold">로컬: M1 Mac Mini (무료)</span>
                         </div>
                     </div>
 
@@ -518,17 +507,15 @@
                         <div id="sim-chat-window" class="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col space-y-4">
                             <div class="text-center py-6 text-[10px] text-slate-600 uppercase tracking-widest border-b border-slate-900 mb-4">시뮬레이터 대기 모드</div>
                             <p class="text-center text-xs text-slate-500 py-12 px-6">
-                                [AI 직원 온보딩] 탭에서 신규 직원을 배포하거나,<br>
-                                상단의 <strong>[업무 시뮬레이션 가동]</strong> 버튼을 누르면 실시간 대화 교류 및 하드웨어 텔레메트리 연동이 활성화됩니다.
+                                [에이전트 구축 & 대여 마법사] 탭에서 설정을 완료하거나,<br>
+                                상단의 <strong>[업무 시뮬레이션 가동]</strong> 버튼을 누르면 실시간 시나리오 대화 및 텔레메트리 연동이 활성화됩니다.
                             </p>
                         </div>
 
                         <!-- Interactive User Prompt Feedback Panel -->
                         <div id="sim-feedback-panel" class="p-4 border-t border-slate-800/80 bg-slate-950/50 flex-col space-y-2 hidden">
                             <span class="text-[10px] font-bold text-blue-400 block">💡 관리팀장으로서 피드백을 결정해주세요:</span>
-                            <div id="sim-feedback-options" class="flex flex-col sm:flex-row gap-2">
-                                <!-- Option buttons will be dynamically injected -->
-                            </div>
+                            <div id="sim-feedback-options" class="flex flex-col sm:flex-row gap-2"></div>
                         </div>
                     </div>
                 </div>
@@ -538,7 +525,7 @@
             <div class="lg:col-span-4 glass-panel rounded-[24px] border border-slate-800 p-6 flex flex-col justify-between h-[520px]">
                 <div class="border-b border-slate-800 pb-3">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center justify-between">
-                        <span>📡 원격 노드 텔레메트리</span>
+                        <span>📡 내 원격/로컬 노드 텔레메트리</span>
                         <span id="tele-status-badge" class="px-2 py-0.5 bg-slate-900 border border-slate-800 rounded text-[9px] font-semibold text-slate-500">IDLE</span>
                     </h4>
                 </div>
@@ -581,7 +568,7 @@
                     <!-- Telemetry Details Grid -->
                     <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-900">
                         <div class="bg-slate-950/40 border border-slate-900 p-3 rounded-xl">
-                            <span class="text-[9px] text-slate-600 block uppercase font-bold">Token Output</span>
+                            <span class="text-[9px] text-slate-600 block uppercase font-bold">Execution Speed</span>
                             <span class="text-xs font-mono font-bold text-slate-300" id="tele-token-speed">0 t/s</span>
                         </div>
                         <div class="bg-slate-950/40 border border-slate-900 p-3 rounded-xl">
@@ -593,11 +580,11 @@
 
                 <!-- Hardware Spec Summary Card -->
                 <div class="bg-slate-950 border border-slate-800/80 rounded-2xl p-4 mt-2">
-                    <div class="text-[10px] text-slate-500 uppercase font-bold mb-2">원격 인프라 물리 정보</div>
+                    <div class="text-[10px] text-slate-500 uppercase font-bold mb-2">에이전트 인프라 물리 정보</div>
                     <div class="space-y-1.5 text-xs">
-                        <div class="flex justify-between"><span class="text-slate-500">호스트 장비</span><span class="text-slate-300 font-mono" id="tele-phys-host">Host #0294</span></div>
-                        <div class="flex justify-between"><span class="text-slate-500">Apple Silicon</span><span class="text-slate-300 font-mono" id="tele-phys-chip">Apple M1 Mac Mini</span></div>
-                        <div class="flex justify-between"><span class="text-slate-500">대여 상태</span><span class="text-emerald-400 font-bold" id="tele-phys-status">격리 구동 중</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">지정 장비</span><span class="text-slate-300 font-mono" id="tele-phys-host">Local Machine</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">하드웨어</span><span class="text-slate-300 font-mono" id="tele-phys-chip">Apple M1 Mac Mini</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">작동 상태</span><span class="text-emerald-400 font-bold" id="tele-phys-status">로컬 안전 구동</span></div>
                     </div>
                 </div>
             </div>
@@ -608,7 +595,6 @@
     <section id="sec-inquiry" class="snap-section p-6 md:p-12 border-t border-slate-900 bg-slate-950/40 flex flex-col justify-between">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.04),transparent_40%)] pointer-events-none"></div>
         
-        <!-- Interactive Service Stats & Partners for Realism -->
         <div class="max-w-6xl mx-auto w-full mb-4 hidden md:block">
             <div class="flex items-center justify-between border-y border-slate-900 py-3 bg-slate-900/10 rounded-2xl px-6">
                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Early Adopting Partners</span>
@@ -623,12 +609,12 @@
         </div>
 
         <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
-            <!-- Left Side: FAQ (Interactive Accordion) & DePIN Status Widget -->
+            <!-- Left Side: FAQ (Interactive Accordion) -->
             <div class="lg:col-span-6 space-y-6">
                 <div>
                     <span class="px-3 py-1 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full tracking-widest uppercase">Frequently Asked Questions</span>
                     <h2 class="text-2xl md:text-3xl font-black text-white mt-3">자주 묻는 질문 (FAQ)</h2>
-                    <p class="text-slate-500 text-xs mt-1">자원 공급과 기업용 고정가 도입에 대해 궁금한 점을 해결해 드립니다.</p>
+                    <p class="text-slate-500 text-xs mt-1">맥미니 무료 에이전트 구축과 유휴 자원 공유에 관해 궁금한 점들을 정리했습니다.</p>
                 </div>
 
                 <!-- FAQ Accordion Container -->
@@ -636,164 +622,145 @@
                     <!-- Q1 -->
                     <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
                         <button onclick="toggleFaq(1)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
-                            <span>Q. 공급자(Host)로 참여할 때 제 맥을 일상 작업에 계속 사용할 수 있나요?</span>
+                            <span>Q. 오픈클로나 Docker 같은 구축법은 너무 어려운데 어떻게 설치하나요?</span>
                             <span id="faq-icon-1" class="text-[9px] text-slate-500 transition-transform">▼</span>
                         </button>
                         <div id="faq-body-1" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
-                            네, 물론입니다. AgentDesk 호스트 클라이언트는 가상화 환경(Docker) 및 Ollama 백그라운드 프로세스의 CPU 코어 및 메모리 점유율을 최대 50% 수준으로 자동 제한하는 <strong class="text-white font-bold">자원 캡핑(Resource Capping) 기술</strong>이 기본 내장되어 있습니다. 일상적인 사무 작업, 웹 서핑은 물론 가벼운 그래픽 작업까지 맥의 성능 저하 없이 부수입을 동시에 채굴하실 수 있습니다.
+                            AgentDesk는 독자적인 원클릭 데스크톱 클라이언트(.dmg)를 제공합니다. 복잡한 명령어를 칠 필요 없이 일반 맥 앱을 설치하듯 다운로드 후 실행하면, 내장된 로컬 모델과 환경 설정이 자동으로 완료되어 나만의 로컬 AI 비서가 즉각 구동됩니다.
                         </div>
                     </div>
 
                     <!-- Q2 -->
                     <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
                         <button onclick="toggleFaq(2)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
-                            <span>Q. 기업용 기밀 데이터나 개인의 프롬프트 정보가 호스트에게 유출되진 않나요?</span>
+                            <span>Q. 유휴 자원을 공유(대여)해주면 내 기밀이나 업무 데이터가 노출되나요?</span>
                             <span id="faq-icon-2" class="text-[9px] text-slate-500 transition-transform">▼</span>
                         </button>
                         <div id="faq-body-2" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
-                            AgentDesk는 <strong class="text-white font-bold">제로 놀리지 격리 가상화(Zero-Knowledge Isolation)</strong> 시스템을 채택하고 있습니다. 
-                            호스트 로컬 디스크에 게스트의 데이터가 평문 저장되지 않도록 APFS 가상 암호화 이미지 디스크를 마운트하여 컨테이너 볼륨을 적재하며, 복호화 키는 메모리(RAM) 상에만 실시간 보안 터널을 통해 전달됩니다. 또한 커널 분리 샌드박스 기술(gVisor)을 통해 호스트 단에서의 비정상적인 메모리 덤프나 파일 탈취를 차단합니다.
+                            절대 노출되지 않습니다. 게스트가 대여하여 사용하는 공간은 Apple APFS 암호화 디스크 및 엄격한 샌드박스로 안전하게 격리되어 실행됩니다. 호스트의 사용자 계정 파일 및 소유자 개인 정보에는 물리적으로 아예 접근할 수 없도록 이중 방화벽 구조로 보안이 철저히 차단되어 있습니다.
                         </div>
                     </div>
 
                     <!-- Q3 -->
                     <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
                         <button onclick="toggleFaq(3)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
-                            <span>Q. Tailscale P2P VPN 방식이 왜 전통적인 포트포워딩보다 안전한가요?</span>
+                            <span>Q. 기기가 없는 유저(Guest)의 자원 대여 비용 구조는 어떻게 되나요?</span>
                             <span id="faq-icon-3" class="text-[9px] text-slate-500 transition-transform">▼</span>
                         </button>
                         <div id="faq-body-3" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
-                            기존 포트포워딩은 외부 포트를 공유기 방화벽 외부로 열어두어 해커들의 IP 스캔 공격에 무방비 노출됩니다. 반면 Tailscale P2P는 WireGuard 기반의 양방향 종단간 암호화 터널을 사용하여 외부 포트를 개방하지 않고 중앙의 신뢰 토큰 교환을 거쳐 오직 매칭된 게스트-호스트 프로세스끼리만 다이렉트 가상 네트워크망을 형성합니다. 외부로부터의 무단 접근이 100% 차단됩니다.
+                            자원이 없는 게스트는 다른 호스트들이 공유한 유휴 자원을 대여받아 에이전트를 구동합니다. 비용 구조는 기존과 동일하게 <strong class="text-white">주니어 노드(M1) 기준 월 고정 30,000원</strong>, <strong class="text-white">시니어 노드(M2 Pro/Max) 기준 월 고정 60,000원</strong>입니다. API 호출 횟수에 따른 토큰 폭탄 걱정 없이 마음껏 전용 에이전트를 활용할 수 있습니다.
                         </div>
                     </div>
-                </div>
 
-                <!-- Live Network Operational Status -->
-                <div class="bg-slate-900/40 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <!-- Q4 -->
+                    <div class="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden transition-all">
+                        <button onclick="toggleFaq(4)" class="w-full px-5 py-4 text-left flex justify-between items-center text-xs font-bold text-slate-200 hover:text-white transition-all">
+                            <span>Q. 하루 종일 맥미니를 공유 상태로 켜두면 전기세나 기기 수명에 무리가 가나요?</span>
+                            <span id="faq-icon-4" class="text-[9px] text-slate-500 transition-transform">▼</span>
+                        </button>
+                        <div id="faq-body-4" class="hidden px-5 pb-4 text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-3">
+                            맥미니는 일반 서버 데스크톱 대비 월등하게 전력 소비가 적은 친환경 아키텍처로 설계되었습니다 (평균 15W~39W 전원 소모). 한 달 내내 풀가동을 하더라도 전기세는 커피 한 잔 값 수준에 불과합니다. 또한 자원 점유 제한(Resource Capping) 기술을 통해 칩의 온도와 마모도를 적절히 제한하므로 기기 수명에 미치는 부하는 극히 낮습니다.
                         </div>
-                        <span class="text-xs text-slate-300 font-semibold">인프라 실시간 Uptime: <span class="text-emerald-400 font-mono">99.98%</span></span>
                     </div>
-                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest bg-slate-950 px-2.5 py-1 border border-slate-900 rounded-lg">Operational SLA</span>
                 </div>
             </div>
 
-            <!-- Right Side: Interactive Enterprise Inquiry Form -->
-            <div class="lg:col-span-6 glass-panel p-6 rounded-[28px] glass-panel-glow-blue w-full">
-                <div class="border-b border-slate-800 pb-3 mb-4">
-                    <h4 class="text-sm font-bold text-blue-400 flex items-center">
-                        📧 엔터프라이즈 도입 및 대여 파트너십 문의
-                    </h4>
+            <!-- Right Side: Submit Inquiry Form (Lead Capture) -->
+            <div class="lg:col-span-6 glass-panel p-8 rounded-[32px] border border-slate-800 w-full relative">
+                <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/5 to-purple-600/5 rounded-[32px] pointer-events-none"></div>
+                <div class="relative z-10">
+                    <h3 class="text-lg font-black text-white mb-2">🏢 기업 전용 도입 검토 & 노드 매칭 문의</h3>
+                    <p class="text-slate-400 text-xs mb-6">맥미니가 없거나 단체 도입이 필요한 경우 맞춤형 분산 노드 오케스트레이션 설계 리포트를 보내드립니다.</p>
+                    
+                    <form id="inquiry-form" onsubmit="submitInquiry(event)" class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">이름</label>
+                                <input type="text" id="inq-name" required placeholder="홍길동" class="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">이메일</label>
+                                <input type="email" id="inq-email" required placeholder="company@agent.desk" class="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">도입 검토 규모 (대여 대수)</label>
+                            <select id="inq-scale" class="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-300 focus:outline-none focus:border-blue-500">
+                                <option value="single">개인용 (자체 맥미니 로컬 무료 설치 문의)</option>
+                                <option value="small" selected>소규모 빌링 (1~5대 대여 검토)</option>
+                                <option value="mid">중규모 빌링 (6~20대 대여 검토)</option>
+                                <option value="enterprise">엔터프라이즈 오케스트레이션 (20대 초과 대여)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">추가 요청 및 구축 요구사항</label>
+                            <textarea id="inq-message" rows="3" placeholder="예: '사내 보안 인트라넷 Slack과 연동을 위한 대여용 주니어 M1 3대 배포 견적을 요청합니다.'" class="w-full bg-slate-900/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                        </div>
+
+                        <div class="flex items-center space-x-2 pb-2">
+                            <input type="checkbox" id="inq-agree" required class="w-3.5 h-3.5 rounded bg-slate-950 border-slate-800 text-blue-500 focus:ring-0">
+                            <label for="inq-agree" class="text-[10px] text-slate-500">SLA 가용성 분석을 위한 개인정보 수집 및 이메일 회신 동의 (필수)</label>
+                        </div>
+
+                        <button type="submit" id="inq-submit-btn" class="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-2xl text-xs transition-all shadow-lg shadow-blue-500/10 hover:shadow-blue-500/25">
+                            노드 매칭 타당성 분석 보고서 신청
+                        </button>
+                    </form>
                 </div>
-
-                <form id="inquiry-form" onsubmit="submitInquiry(event)" class="space-y-4 text-left">
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">1. 이름 / 직책</label>
-                            <input type="text" id="inq-name" required placeholder="홍길동 팀장" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">2. 소속 기업 / 단체</label>
-                            <input type="text" id="inq-org" placeholder="에이전트스타트업" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">3. 이메일 주소</label>
-                        <input type="email" id="inq-email" required placeholder="contact@company.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
-                    </div>
-
-                    <div>
-                        <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">4. 예상 필요 가상 사원 규모</label>
-                        <select id="inq-scale" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-300 focus:outline-none focus:border-blue-500">
-                            <option value="single">주니어 연구원 1~3대 소규모 도입</option>
-                            <option value="mid">시니어 기획팀장 포함 5~10대 팀빌딩</option>
-                            <option value="enterprise">30대 이상 대규모 에이전트 인프라 오케스트레이션</option>
-                            <option value="host">20대 이상 맥 미니 자원 호스트 공급 문의</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">5. 도입 희망 요건 및 문의내용</label>
-                        <textarea id="inq-message" rows="3" placeholder="예: 특정 오픈소스 LLM(DeepSeek R1 등) 커스텀 서빙 및 슬랙 웹훅 다자 연동이 필요한 상황입니다. 텔레메트리 대시보드 API 연동 건도 함께 문의합니다." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 resize-none"></textarea>
-                    </div>
-
-                    <button type="submit" id="inq-submit-btn" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl text-xs transition-all shadow-lg shadow-blue-500/10 hover:shadow-blue-500/25">
-                        도입 제안서 분석 및 제출하기
-                    </button>
-                </form>
             </div>
         </div>
 
-        <!-- FOOTER: Virtual Company Info -->
-        <footer class="w-full border-t border-slate-900 bg-slate-950/90 pt-6 pb-2 text-slate-500 z-10 text-[10px] md:text-xs">
-            <div class="max-w-6xl mx-auto w-full px-4 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                <!-- Company Info -->
-                <div class="md:col-span-8 space-y-1 text-left font-sans">
-                    <div class="flex items-center space-x-2">
-                        <span class="font-bold text-slate-400">에이전트데스크 네트워크 (AgentDesk Networks)</span>
-                        <span class="text-slate-700">|</span>
-                        <span>대표이사: 정성문</span>
-                        <span class="text-slate-700">|</span>
-                        <span>이메일: support@agentdesk.io</span>
-                    </div>
-                    <p class="text-slate-600 mt-1">© 2026 AgentDesk Networks. All rights reserved. 본 서비스는 가상의 DePIN MVP 데모 프로젝트입니다.</p>
-                </div>
-                <!-- Network Stats -->
-                <div class="md:col-span-4 text-left md:text-right font-mono text-[9px] text-slate-600">
-                    STATUS: SECURE P2P MESH NETWORKS RUNNING
-                </div>
+        <!-- Sticky Mini Footer inside snap container -->
+        <footer class="max-w-6xl mx-auto w-full pt-12 pb-2 flex flex-col md:flex-row items-center justify-between text-[10px] text-slate-600 border-t border-slate-900 mt-auto">
+            <span>© 2026 AgentDesk. Powered by Apple Silicon DePIN.</span>
+            <div class="flex space-x-4 mt-2 md:mt-0">
+                <a href="#" class="hover:text-slate-400">이용약관</a>
+                <a href="#" class="hover:text-slate-400">개인정보처리방침</a>
+                <a href="#" class="hover:text-slate-400">호스트 약관</a>
+                <a href="#" class="hover:text-slate-400">깃허브 레포지토리</a>
             </div>
         </footer>
     </section>
+
 </main>
 
-<!-- SUBSCRIPTION SUCCESS MODAL (Onboarding Completed) -->
-<div id="subscription-success-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 hidden px-4 backdrop-blur-sm">
-    <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-8 shadow-2xl transform scale-95 transition-transform duration-300 glass-panel">
-        <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">🎉</div>
-        <h3 class="text-xl font-bold text-center text-white mb-2">가상 사원 출근 완료!</h3>
-        <p class="text-xs text-slate-400 text-center mb-6">고용하신 AI 직원이 분산 DePIN 네트워크 상의 최적 노드 할당 및 배포를 성공적으로 완료했습니다.</p>
+<!-- SUCCESS MODAL FOR SUBSCRIBING -->
+<div id="subscription-success-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden p-6">
+    <div class="bg-slate-950 border border-slate-800 rounded-[32px] p-8 max-w-md w-full text-center space-y-6 shadow-2xl">
+        <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto shadow-lg shadow-emerald-500/10 animate-bounce">✓</div>
         
-        <div class="bg-slate-950/60 border border-slate-800/60 p-4 rounded-2xl space-y-3 text-xs text-slate-400 mb-8 font-sans">
-            <div class="flex justify-between border-b border-slate-900 pb-2"><span class="text-slate-500">채용 직무</span><span class="font-bold text-white" id="success-node-type">주니어 연구원 (₩30,000/월)</span></div>
-            <div class="flex justify-between border-b border-slate-900 pb-2"><span class="text-slate-500">지정 임무</span><span class="font-bold text-white text-right max-w-[200px]" id="success-task-type">뉴스 모니터링 브리핑</span></div>
-            <div class="flex justify-between"><span class="text-slate-500">연동 업무망</span><span class="font-bold text-white" id="success-channel-type">Slack Intranet</span></div>
+        <div class="space-y-2">
+            <h4 class="font-bold text-white text-lg">에이전트 인프라 매칭 & 출근 등록 완료!</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                축하합니다! 설정하신 AI 에이전트 인프라 환경이 성공적으로 활성화되었습니다. 메신저 통신 보안 터널이 아래와 같이 구축되었습니다.
+            </p>
         </div>
 
-        <button onclick="completeOnboardingFlow()" class="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-bold shadow-lg transition-all text-xs">
-            사내 협업 메신저 확인하기
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl text-left text-xs space-y-2 font-mono">
+            <div class="flex justify-between"><span class="text-slate-500">배포 방식</span><span class="text-white font-bold" id="success-node-type">주니어 대여 (M1)</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">업무 미션</span><span class="text-white font-bold" id="success-task-type">뉴스 데일리 브리핑</span></div>
+            <div class="flex justify-between"><span class="text-slate-500">연동 보안망</span><span class="text-emerald-400 font-bold" id="success-channel-type">Slack Intranet</span></div>
+        </div>
+
+        <button onclick="completeOnboardingFlow()" class="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl text-xs transition-all shadow-lg">
+            시뮬레이터로 이동하여 업무 시작
         </button>
     </div>
 </div>
 
 <script>
-    // --- Global Tab & Scrolling State ---
-    let activeTabId = 'hero';
+    // --- Scroll Navigation Highlight Logic ---
     const wrapper = document.getElementById('snap-scroll-wrapper');
-    const sections = ['hero', 'depin', 'onboarding', 'intranet', 'inquiry'];
+    let activeTabId = 'hero';
 
-    // Update active navbar item on scrollspy
     wrapper.addEventListener('scroll', () => {
-        // Parallax Background Scrolling Effect
-        const scrollTop = wrapper.scrollTop;
-        const maxScroll = wrapper.scrollHeight - wrapper.clientHeight;
-        if (maxScroll > 0) {
-            const percent = scrollTop / maxScroll;
-            const offset = - (percent * 20); // moves up by up to 20% of viewport height
-            const bg = document.getElementById('parallax-bg');
-            if (bg) bg.style.transform = `translateY(${offset}vh)`;
-        }
-
-        const wrapperRect = wrapper.getBoundingClientRect();
-        if (wrapperRect.height === 0) return;
-        
-        let minDistance = Infinity;
+        const sections = ['hero', 'depin', 'onboarding', 'intranet', 'inquiry'];
         let activeSectionId = 'hero';
-        
+        let minDistance = Infinity;
+        const wrapperRect = wrapper.getBoundingClientRect();
+
         sections.forEach(id => {
             const sec = document.getElementById(`sec-${id}`);
             if (sec) {
@@ -878,10 +845,10 @@
 
     // --- DePIN Live Map Tooltips Data & Hover Logic ---
     const mapNodes = {
-        seoul: { title: "Seoul Node #201", spec: "M2 Ultra (128GB RAM)", load: "CPU Load: 12%", state: "ACTIVE / SUBSCRIBED", color: "text-blue-400" },
-        tokyo: { title: "Tokyo Node #089", spec: "M1 Mac Mini (16GB RAM)", load: "CPU Load: 5%", state: "ACTIVE / SUBSCRIBED", color: "text-purple-400" },
-        sv: { title: "Silicon Valley Node #114", spec: "M2 Pro (32GB RAM)", load: "CPU Load: 2%", state: "STANDBY / ACTIVE", color: "text-emerald-400" },
-        singapore: { title: "Singapore Node #302", spec: "M3 Max (64GB RAM)", load: "CPU Load: 65%", state: "ACTIVE / SUBSCRIBED", color: "text-blue-300" }
+        seoul: { title: "Seoul Node #201", spec: "M2 Ultra (128GB RAM)", load: "유휴 상태 / 대여 중", state: "공유 모드 가동", color: "text-blue-400" },
+        tokyo: { title: "Tokyo Node #089", spec: "M1 Mac Mini (16GB RAM)", load: "유휴 자원 100% 공유", state: "공유 모드 가동", color: "text-purple-400" },
+        sv: { title: "Silicon Valley Node #114", spec: "M2 Pro (32GB RAM)", load: "소유자 로컬 사용 중 (공유 대기)", state: "비공유 로컬 모드", color: "text-emerald-400" },
+        singapore: { title: "Singapore Node #302", spec: "M3 Max (64GB RAM)", load: "유휴 상태 / 대여 중", state: "공유 모드 가동", color: "text-blue-300" }
     };
 
     function triggerNodeHover(nodeId) {
@@ -919,7 +886,6 @@
     }
 
     function showNodeTooltip(nodeId) {
-        // Fallback for click events on map circles
         triggerNodeHover(nodeId);
     }
 
@@ -927,17 +893,17 @@
     let selectedRam = 16;
     const chipMultipliers = {
         m1: { name: "Apple M1", mult: 1.0, base: "junior" },
+        m2: { name: "Apple M2", mult: 1.2, base: "junior" },
+        m3: { name: "Apple M3", mult: 1.4, base: "junior" },
+        m4: { name: "Apple M4", mult: 1.6, base: "junior" },
         m1pro: { name: "Apple M1 Pro", mult: 1.3, base: "senior-capable" },
         m1max: { name: "Apple M1 Max", mult: 1.5, base: "senior" },
         m1ultra: { name: "Apple M1 Ultra", mult: 2.0, base: "senior" },
-        m2: { name: "Apple M2", mult: 1.2, base: "junior" },
         m2pro: { name: "Apple M2 Pro", mult: 1.5, base: "senior" },
         m2max: { name: "Apple M2 Max", mult: 1.8, base: "senior" },
         m2ultra: { name: "Apple M2 Ultra", mult: 2.4, base: "senior" },
-        m3: { name: "Apple M3", mult: 1.4, base: "junior" },
         m3pro: { name: "Apple M3 Pro", mult: 1.8, base: "senior" },
-        m3max: { name: "Apple M3 Max", mult: 2.2, base: "senior" },
-        m4: { name: "Apple M4", mult: 1.6, base: "junior" }
+        m3max: { name: "Apple M3 Max", mult: 2.2, base: "senior" }
     };
 
     function selectCalcRam(ramSize) {
@@ -955,6 +921,7 @@
     }
 
     // --- Host Earnings Calculation ---
+    // Earnings = Base Rate (30k for Junior, 60k for Senior) * Chip mult * RAM mult * (Idle hours / 24)
     function calculateEarnings() {
         const chipKey = document.getElementById('calc-chip').value;
         const hours = parseInt(document.getElementById('calc-hours').value);
@@ -979,7 +946,7 @@
         const baseRate = isSenior ? 60000 : 30000;
         const totalEarnings = Math.round(baseRate * chipData.mult * ramFactor * (hours / 24));
         
-        document.getElementById('calc-grade').innerText = isSenior ? '시니어 가상 기획팀장' : '주니어 가상 연구원';
+        document.getElementById('calc-grade').innerText = isSenior ? '시니어 대여 노드' : '주니어 대여 노드';
         document.getElementById('calc-grade').className = isSenior 
             ? "px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20" 
             : "px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20";
@@ -987,13 +954,20 @@
         document.getElementById('calc-result').innerText = `₩ ${totalEarnings.toLocaleString()}`;
     }
 
-    // --- Onboarding Wizard (Guest Platform) Logic ---
+    // --- Onboarding Wizard Logic ---
     let wizStep = 1;
     const wizData = {
+        path: 'local', // 'local' = My Mac Mini Setup, 'rent' = Lease resource (Guest)
         nodeClass: 'Junior',
         task: 'news',
         channel: 'Slack'
     };
+
+    function selectWizPath(pathType) {
+        wizData.path = pathType;
+        wizStep = 1;
+        renderWizStep();
+    }
 
     function renderWizStep() {
         const container = document.getElementById('wizard-page-holder');
@@ -1030,71 +1004,76 @@
             nextBtn.innerText = "다음 단계로";
             container.innerHTML = `
                 <div class="space-y-4 fade-in">
-                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">함께 일할 AI 가상 사원 등급 선택</label>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">원하는 AI 구동 방식을 선택하세요</label>
                     
-                    <div onclick="selectWizClass('Junior')" class="border p-4 rounded-2xl cursor-pointer hover:bg-slate-900/50 transition-all flex justify-between items-center ${wizData.nodeClass === 'Junior' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                    <div onclick="setPathMode('local')" class="border p-4 rounded-2xl cursor-pointer hover:bg-slate-900/50 transition-all flex justify-between items-center ${wizData.path === 'local' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
                         <div class="pr-2">
                             <div class="flex items-center space-x-2">
-                                <span class="bg-blue-500/10 text-blue-400 text-[9px] font-bold px-2 py-0.5 border border-blue-500/20 rounded">M1 Mac Mini</span>
-                                <h4 class="font-bold text-xs text-white">주니어 가상 연구원 (Junior AI Researcher)</h4>
+                                <span class="bg-blue-500/10 text-blue-400 text-[9px] font-bold px-2 py-0.5 border border-blue-500/20 rounded">내 맥미니 활용</span>
+                                <h4 class="font-bold text-xs text-white">내 기기에 원클릭 에이전트 구축하기</h4>
                             </div>
-                            <p class="text-[10px] text-slate-500 mt-1">간단한 SLM(7B~8B) 구동, 일일 테크 파싱, 이메일 분류, 뉴스 모니터링 특화.</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Docker 설정이나 어려운 명령어 없이 원클릭 앱(.dmg)으로 개인화된 AI 에이전트를 내 로컬에 즉각 무료 구축합니다.</p>
                         </div>
-                        <span class="text-xs font-bold text-blue-400 whitespace-nowrap pl-2">₩30,000/월</span>
+                        <span class="text-xs font-bold text-blue-400 whitespace-nowrap pl-2">₩0 (무료)</span>
                     </div>
 
-                    <div onclick="selectWizClass('Senior')" class="border p-4 rounded-2xl cursor-pointer hover:bg-slate-900/50 transition-all flex justify-between items-center ${wizData.nodeClass === 'Senior' ? 'border-purple-500 bg-purple-500/5' : 'border-slate-800 bg-slate-950/40'}">
+                    <div onclick="setPathMode('rent')" class="border p-4 rounded-2xl cursor-pointer hover:bg-slate-900/50 transition-all flex justify-between items-center ${wizData.path === 'rent' ? 'border-purple-500 bg-purple-500/5' : 'border-slate-800 bg-slate-950/40'}">
                         <div class="pr-2">
                             <div class="flex items-center space-x-2">
-                                <span class="bg-purple-500/10 text-purple-400 text-[9px] font-bold px-2 py-0.5 border border-purple-500/20 rounded">M2 Pro/Max</span>
-                                <h4 class="font-bold text-xs text-white">시니어 가상 기획팀장 (Senior Strategic Planner)</h4>
+                                <span class="bg-purple-500/10 text-purple-400 text-[9px] font-bold px-2 py-0.5 border border-purple-500/20 rounded">맥미니 미보유자용</span>
+                                <h4 class="font-bold text-xs text-white">유휴 맥미니 자원 대여하여 구동하기</h4>
                             </div>
-                            <p class="text-[10px] text-slate-500 mt-1">대형 추론 모델(32B~) 구동, 다차원 기획 수립, 복잡한 코드 작성 및 조언 전담.</p>
+                            <p class="text-[10px] text-slate-500 mt-1">기기가 없더라도, 네트워크 상의 다른 유휴 맥미니 자원을 기존과 동일한 고정 금액으로 안전하게 대여하여 사용합니다.</p>
                         </div>
-                        <span class="text-xs font-bold text-purple-400 whitespace-nowrap pl-2">₩60,000/월</span>
+                        <span class="text-xs font-bold text-purple-400 whitespace-nowrap pl-2">월 ₩30,000~</span>
                     </div>
                 </div>
             `;
         } else if (wizStep === 2) {
             nextBtn.innerText = "다음 단계로";
+            let subtitle = wizData.path === 'local' ? "로컬 에이전트에게 지시할 주요 업무 미션" : "대여한 원격 노드에 배포할 업무 미션";
             container.innerHTML = `
                 <div class="space-y-3 fade-in">
-                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">상주 배치할 전담 비즈니스 미션 설정</label>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">${subtitle}</label>
                     
                     <div onclick="selectWizTask('news')" class="p-3 border rounded-2xl cursor-pointer hover:bg-slate-900/40 transition-all flex items-start space-x-3 ${wizData.task === 'news' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
                         <span class="text-lg mt-0.5">📰</span>
                         <div>
                             <h4 class="font-bold text-xs text-white">글로벌 테크 뉴스 브리핑</h4>
-                            <p class="text-[10px] text-slate-500 mt-1">글로벌 미디어를 실시간 파싱하여 주요 기술 동향을 요약하고 사내망에 보고합니다.</p>
+                            <p class="text-[10px] text-slate-500 mt-1">해외 신뢰도 높은 미디어를 실시간 파싱하여 주요 기술 동향을 요약하고 보고합니다.</p>
                         </div>
                     </div>
 
                     <div onclick="selectWizTask('cs')" class="p-3 border rounded-2xl cursor-pointer hover:bg-slate-900/40 transition-all flex items-start space-x-3 ${wizData.task === 'cs' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
                         <span class="text-lg mt-0.5">🎧</span>
                         <div>
-                            <h4 class="font-bold text-xs text-white">고객 CS 분류 및 감정 대응 초안 작성</h4>
-                            <p class="text-[10px] text-slate-500 mt-1">문의 사항의 뉘앙스를 분석하고 회신 이메일 초안 작성 후 승인 요청을 수행합니다.</p>
+                            <h4 class="font-bold text-xs text-white">고객 CS 분류 및 대응 메일 초안 작성</h4>
+                            <p class="text-[10px] text-slate-500 mt-1">문의 사항의 감정을 진단하고 이메일 답변 초안 작성 후 승인 요청을 수행합니다.</p>
                         </div>
                     </div>
 
                     <div onclick="selectWizTask('competitor')" class="p-3 border rounded-2xl cursor-pointer hover:bg-slate-900/40 transition-all flex items-start space-x-3 ${wizData.task === 'competitor' ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 bg-slate-950/40'}">
                         <span class="text-lg mt-0.5">🎯</span>
                         <div>
-                            <h4 class="font-bold text-xs text-white">경쟁사 신기능 릴리즈 감시 및 기획안 대응</h4>
-                            <p class="text-[10px] text-slate-500 mt-1">경쟁사 마케팅 블로그 및 깃허브를 트래킹하여 맞춤 보도 보도자료 초안을 작성합니다.</p>
+                            <h4 class="font-bold text-xs text-white">경쟁사 신기능 트래킹 및 마케팅 전략 포스팅</h4>
+                            <p class="text-[10px] text-slate-500 mt-1">경쟁사 기술 블로그와 마케팅 정보를 트래킹하여 맞춤형 반격 기획안 초안을 작성합니다.</p>
                         </div>
                     </div>
                 </div>
             `;
         } else if (wizStep === 3) {
-            nextBtn.innerText = "직원 출근 등록 (결제 완료)";
+            let actionBtnText = wizData.path === 'local' ? "원클릭 셋업 파일 다운로드 & 구동" : "대여 노드 결제 및 에이전트 가동";
+            nextBtn.innerText = actionBtnText;
+            
+            let classText = wizData.path === 'local' ? '내 로컬 맥미니 자원 (평생 무료)' : '주니어 대여 노드 M1 (월 ₩30,000)';
+            
             container.innerHTML = `
                 <div class="space-y-4 text-center py-4 fade-in">
                     <span class="text-2xl block animate-bounce">🤖</span>
-                    <h4 class="font-bold text-sm text-white">최종 채용 요건을 확인하세요</h4>
+                    <h4 class="font-bold text-sm text-white">최종 구축 요건을 확인하세요</h4>
                     
                     <div class="bg-slate-950/60 border border-slate-800 p-4 rounded-2xl text-left text-xs space-y-2.5 max-w-sm mx-auto">
-                        <div class="flex justify-between"><span class="text-slate-500">배포 등급</span><span class="font-bold text-slate-300" id="wiz-sum-class">주니어 가상 연구원 (₩30,000)</span></div>
+                        <div class="flex justify-between"><span class="text-slate-500">구축/대여 방식</span><span class="font-bold text-slate-300" id="wiz-sum-class">${classText}</span></div>
                         <div class="flex justify-between"><span class="text-slate-500">지정 임무</span><span class="font-bold text-slate-300 text-right truncate max-w-[180px]" id="wiz-sum-task">테크 뉴스 브리핑</span></div>
                         <div class="flex justify-between"><span class="text-slate-500">연동 협업망</span><span class="font-bold text-slate-300" id="wiz-sum-channel">Slack / Discord 채널</span></div>
                     </div>
@@ -1112,7 +1091,8 @@
             
             // Fill summaries
             setTimeout(() => {
-                document.getElementById('wiz-sum-class').innerText = wizData.nodeClass === 'Junior' ? '주니어 연구원 (₩30,000/월)' : '시니어 기획팀장 (₩60,000/월)';
+                let classLabel = wizData.path === 'local' ? '내 로컬 맥미니 자원 (평생 무료)' : '주니어 대여 노드 (월 ₩30,000)';
+                document.getElementById('wiz-sum-class').innerText = classLabel;
                 let tName = "뉴스 데일리 브리핑";
                 if (wizData.task === 'cs') tName = "고객 CS 감정 분류";
                 if (wizData.task === 'competitor') tName = "경쟁사 신기능 트래킹";
@@ -1122,12 +1102,11 @@
         }
     }
 
-    function selectWizClass(cl) {
-        wizData.nodeClass = cl;
+    function setPathMode(mode) {
+        wizData.path = mode;
         renderWizStep();
     }
 
-    // --- Interactive Task State Selection ---
     function selectWizTask(t) {
         wizData.task = t;
         renderWizStep();
@@ -1144,7 +1123,8 @@
             renderWizStep();
         } else {
             // Open modal
-            document.getElementById('success-node-type').innerText = wizData.nodeClass === 'Junior' ? '주니어 연구원 (₩30,000/월)' : '시니어 기획팀장 (₩60,000/월)';
+            let classLabel = wizData.path === 'local' ? '로컬 맥미니 자원 (평생 무료)' : '주니어 대여 노드 (월 ₩30,000)';
+            document.getElementById('success-node-type').innerText = classLabel;
             let tName = "글로벌 테크 브리핑";
             if (wizData.task === 'cs') tName = "고객 CS 분류 및 대응";
             if (wizData.task === 'competitor') tName = "경쟁사 트랙킹 대응";
@@ -1165,9 +1145,9 @@
     function completeOnboardingFlow() {
         document.getElementById('subscription-success-modal').classList.add('hidden');
         
-        // Update simulation hardware badge based on hired model
+        // Update simulation hardware badge based on selected path
         const nameBadge = document.getElementById('sidebar-hardware-badge');
-        nameBadge.innerText = wizData.nodeClass === 'Junior' ? '주니어 (M1 Mac Mini)' : '시니어 (M2 Pro Mac)';
+        nameBadge.innerText = wizData.path === 'local' ? '로컬: M1 Mac Mini (무료)' : '대여: M2 Pro Mac (월 6만원)';
         
         // Scroll to intranet
         scrollToTab('intranet');
@@ -1181,48 +1161,47 @@
     // --- Interactive Chat Simulation & Telemetry Coordination ---
     const simScenarios = {
         news: {
-            title: "📰 테크 뉴스 브리핑 (#tech-briefing)",
-            desc: "해외 주요 미디어 기사를 요약하여 사내에 전파하고 전략을 분기 협의합니다.",
+            title: "📰 로컬/대여 테크 뉴스 브리핑 (#tech-briefing)",
+            desc: "로컬 맥미니 오프라인 구동 및 유휴 자원 공유 시 자동 게스트 업무 위임 전환 시나리오입니다.",
             flow: [
-                { sender: '최 매니저 (Research AI)', text: '📢 박 팀장님, 오늘 아침 해외 테크 뉴스 속보입니다. OpenAI가 온디바이스 SLM 구동 최적화를 공식화했습니다. 클라우드 비용 효율화를 극대화하려는 목적입니다.', delay: 1000, cpu: 75, gpu: 85, mem: 9.4, tok: 52, lat: 14 },
-                { sender: '김 파트너 (Planning AI)', text: '💡 대단히 흥미롭네요! 우리 AgentDesk 역시 유휴 자원을 활용하는 분산 DePIN 인프라인 만큼, 이 발표 흐름에 맞추어 "토큰 비용 제로 전략" 마케팅 기획을 추진해볼 수 있습니다.', delay: 3500, cpu: 85, gpu: 90, mem: 12.1, tok: 42, lat: 11 },
-                { sender: '김 파트너 (Planning AI)', text: '🙋‍♂️ 팀장님! 해당 마케팅 프로모션 공식 제안 보고안 작성을 즉시 개시할까요?', delay: 6000, cpu: 10, gpu: 5, mem: 11.8, tok: 0, lat: 12, isQuestion: true }
+                { sender: '최 매니저 (Local AI)', text: '📢 박 팀장님, 오늘 아침 테크 브리핑 정보입니다. OpenAI가 기밀 정보 보호가 강조된 로컬 전용 초경량 SLM 개발 도구를 정식 릴리즈했습니다.', delay: 1000, cpu: 45, gpu: 50, mem: 7.2, tok: 35, lat: 10 },
+                { sender: '최 매니저 (Local AI)', text: '🔒 본 맥미니는 현재 로컬 모드로 작동 중이므로, 위의 뉴스 분석을 진행하더라도 외부 서버로 프롬프트와 사내 문서가 절대 유출되지 않습니다.', delay: 3500, cpu: 55, gpu: 60, mem: 7.8, tok: 28, lat: 8 },
+                { sender: '최 매니저 (Local AI)', text: '🙋‍♂️ 팀장님, 오늘 저녁 퇴근 시간대에 이 맥미니의 유휴 자원을 DePIN 네트워크에 자원 공유 모드로 활성화해둘까요? (현재 대기 시 예상 크레딧 적립 가능)', delay: 6000, cpu: 10, gpu: 5, mem: 6.2, tok: 0, lat: 8, isQuestion: true }
             ],
             options: [
-                { text: "👍 승인합니다. 기획서 초안 작성해 주십시오.", next: "김 파트너: 감사합니다! 바로 기획안 작성을 준비하여 10분 이내로 #task-report 채널에 초안을 올리겠습니다." },
-                { text: "⏳ 시장 분석이 더 필요합니다. 추가 뉴스를 더 모아주세요.", next: "최 매니저: 알겠습니다. OpenAI 기술 외에 구글, 메타의 유사 SLM 온디바이스 동향 자료를 추가 리포트하겠습니다." }
+                { text: "👍 좋습니다. 퇴근 후에 유휴 자원 공유 모드로 자동 전환해 줘.", next: "최 매니저: 알겠습니다. 퇴근 시간(20:00) 이후에 팀장님의 맥미니 자원은 샌드박스로 안전하게 묶여 Guest 대여 노드로 자동 활성화됩니다. 적립 크레딧은 실시간 회계에 반영됩니다." },
+                { text: "⏳ 아직 로컬 학습 작업이 남아 있으니, 오늘은 로컬 전용 모드로 유지하겠습니다.", next: "최 매니저: 확인했습니다. 외부 자원 공유를 차단하고, 밤사이 로컬 딥러닝 미세조정(Fine-Tuning) 스케줄러 작업을 로컬 단독으로 실행하겠습니다." }
             ]
         },
         cs: {
             title: "🎧 CS 분류 및 이메일 대응팀 (#cs-intelligence)",
-            desc: "고객 불만사항을 분류하고 맞춤 사과 및 보상 이메일을 승인 요청합니다.",
+            desc: "외부 게스트로서 대여 노드(서울 노드 M2 Pro)의 자원을 활용하여 이메일 분류 및 답변을 작성하는 시나리오입니다.",
             flow: [
-                { sender: '최 매니저 (Research AI)', text: '🚨 [장비 결함 문의] 인입 메일 감지. 감정 진단 결과: "분노(Angry)", 대응 등급: "최우선 순위"', delay: 1000, cpu: 65, gpu: 70, mem: 9.2, tok: 55, lat: 15 },
-                { sender: '김 파트너 (Planning AI)', text: '📝 규정상 100% 즉시 환불 조치가 필요합니다. "불편 사과 및 무료 서비스 크레딧 50,000원권 동봉" 답변 메일 가상 임시 초안을 마련 완료하였습니다.', delay: 3500, cpu: 90, gpu: 95, mem: 12.4, tok: 46, lat: 12 },
-                { sender: '김 파트너 (Planning AI)', text: '🙋‍♂️ 박 팀장님, 작성된 이 사과 메일 초안을 고객에게 즉시 자동 승인 발송할까요?', delay: 6000, cpu: 8, gpu: 2, mem: 12.1, tok: 0, lat: 10, isQuestion: true }
+                { sender: '대여 AI (Seoul Node #201)', text: '🚨 [결함 문의 메일 접수] 게스트 계정에 할당된 원격 보안 샌드박스에서 메일을 분석했습니다. 분석 결과: 고객 감정 "매우 화남", 긴급 처리가 필요합니다.', delay: 1000, cpu: 75, gpu: 80, mem: 10.2, tok: 48, lat: 14 },
+                { sender: '대여 AI (Seoul Node #201)', text: '📝 보상 가이드에 맞춰 "정중한 무료 교환 및 ₩30,000 상당의 크레딧 사과 동봉" 이메일 본문 답변 초안을 구성 완료하였습니다. 승인 여부를 체크합니다.', delay: 3500, cpu: 85, gpu: 90, mem: 11.5, tok: 42, lat: 12 },
+                { sender: '대여 AI (Seoul Node #201)', text: '🙋‍♂️ 박 팀장님, 원격 대여 샌드박스에서 대기 중인 본 사과 이메일 회신 답변을 고객에게 즉시 대리 발송할까요?', delay: 6000, cpu: 12, gpu: 4, mem: 9.8, tok: 0, lat: 11, isQuestion: true }
             ],
             options: [
-                { text: "✉️ 초안 완벽합니다. 즉시 발송 승인합니다.", next: "최 매니저: 승인 확인. 고객에게 이메일 전송을 완료하고 해당 서비스 케이스는 [해결 완료] 처리하였습니다." },
-                { text: "✏️ 크레딧 동봉 제외하고 정중한 추가 교환 절차만 안내해 주세요.", next: "김 파트너: 피드백 반영. 보상금 제외 후 단순 무상 교환 수거 주소지 안내로 이메일 본문을 수정해 재발송하였습니다." }
+                { text: "✉️ 초안 좋습니다. 즉시 발송 대리 승인합니다.", next: "대여 AI: 대리 승인을 확인했습니다. P2P 보안 암호화 통로를 통해 고객 이메일로 답변 발송을 마쳤으며 해당 건은 완료 처리되었습니다." },
+                { text: "✏️ 크레딧 동봉은 제외하고, 무상 수거 절차에 관한 문구만 강조해서 수정 발송해 주세요.", next: "대여 AI: 피드백을 적용하여 본문에서 크레딧 정보를 지우고, 무상 회수 택배 접수 안내로 내용을 업데이트하여 수정 발송하였습니다." }
             ]
         },
         competitor: {
-            title: "🎯 경쟁 신기능 해킹 감시팀 (#competitor-watch)",
-            desc: "경쟁사 서비스 릴리즈 감지 시 마케팅 대응 요소를 협의합니다.",
+            title: "🎯 경쟁 신기능 트래킹 및 마케팅 전략 (#competitor-watch)",
+            desc: "경쟁사 기술 동향 모니터링 후, 로컬/대여 복합 노드를 가동해 마케팅 포스팅 초안을 작성합니다.",
             flow: [
-                { sender: '최 매니저 (Research AI)', text: '🔍 아침 경쟁사 "A社" 공식 홈페이지 트래킹 결과, 멀티에이전트 공유 대시보드를 정식 공개하였습니다. 연산 비용이 API 호출 건당 부과되는 방식입니다.', delay: 1000, cpu: 70, gpu: 78, mem: 9.5, tok: 51, lat: 13 },
-                { sender: '김 파트너 (Planning AI)', text: '⚡ 호출 수수료 부담을 타겟팅하기 완벽한 타이밍입니다. 우리의 강점인 "월 3만원 고정 인프라"라는 대조 소구점을 강하게 부각한 반격성 블로그 포스팅 작성을 제안합니다.', delay: 3500, cpu: 88, gpu: 92, mem: 12.2, tok: 44, lat: 12 },
-                { sender: '김 파트너 (Planning AI)', text: '🙋‍♂️ 팀장님, "토큰 폭탄 걱정 없는 가비지 컬렉션 없는 고정가 분산 환경"을 내세우는 대응 글 집필을 시작할까요?', delay: 6000, cpu: 12, gpu: 4, mem: 12.0, tok: 0, lat: 11, isQuestion: true }
+                { sender: '최 매니저 (Local AI)', text: '🔍 경쟁사 "A社"가 API 기반의 대량 에이전트 관리 패널을 릴리즈했습니다. API 호출량에 비례해 토큰 사용료가 부과되는 방식입니다.', delay: 1000, cpu: 50, gpu: 55, mem: 7.5, tok: 38, lat: 9 },
+                { sender: '최 매니저 (Local AI)', text: '💡 자사 서비스의 가장 강력한 소구점인 "맥미니 원클릭 로컬 무료 AI (₩0)" 및 "기기가 없는 게스트의 자원 공유 대여제(월 3만원 고정가)"를 대조 대외 홍보할 수 있는 최적의 타이밍입니다.', delay: 3500, cpu: 65, gpu: 70, mem: 8.4, tok: 32, lat: 8 },
+                { sender: '최 매니저 (Local AI)', text: '🙋‍♂️ 팀장님, "월정액 기반의 자원 공유형 DePIN 에이전트 vs 토큰 폭탄 API 과금형 에이전트" 대조 마케팅 블로그 초안 포스팅을 작성할까요?', delay: 6000, cpu: 8, gpu: 2, mem: 6.8, tok: 0, lat: 8, isQuestion: true }
             ],
             options: [
-                { text: "✍️ 좋습니다. 가성비 장점을 적극 드러내 주십시오.", next: "김 파트너: 알겠습니다. '월정액 기반 탈중앙화 AI 사원' 테마로 핵심 포스트를 작성해 등록 준비하겠습니다." },
-                { text: "📊 글 집필 전에 경쟁사의 구체적인 API 요금제를 쪼개서 비교표로 먼저 보여주세요.", next: "최 매니저: 현실적인 지시입니다. API 연동 횟수 구간별 비용 시뮬레이션 표를 작성해 10분 내로 본 채널에 올리겠습니다." }
+                { text: "✍️ 예, 핵심 비교 지표를 강조해서 강력한 기획 초안을 집필해주세요.", next: "최 매니저: 알겠습니다. 가속 연산 비용 89% 절감 비교 분석표를 포함해 블로그 전략 기획서 초안을 집필하여 10분 내로 #task-report 채널에 올리겠습니다." },
+                { text: "📊 글 작성 전에 경쟁사의 토큰 요금제 통계 자료를 먼저 수집해 보여주세요.", next: "최 매니저: 알겠습니다. 경쟁사 API 구간별 실제 월평균 청구 비용 추정치를 담은 도표 데이터를 먼저 작성해 보고하겠습니다." }
             ]
         }
     };
 
     let simTimer = null;
-    let teleTimer = null;
     let selectedScenario = 'news';
 
     function triggerSimStart(forcedScenario = null) {
@@ -1242,7 +1221,12 @@
         document.getElementById('active-sim-desc').innerText = scenario.desc;
 
         // Toggle telemetry status
-        setTelemetryStatus('RUNNING', 'Host #0294', wizData.nodeClass === 'Junior' ? 'Apple M1 Mac Mini' : 'Apple M2 Pro Mac');
+        let isLocal = wizData.path === 'local';
+        let hostLabel = isLocal ? 'Local Machine' : 'Seoul Node #201';
+        let chipLabel = isLocal ? 'Apple M1 Mac Mini' : 'Apple M2 Pro Mac';
+        let statusLabel = isLocal ? '로컬 오프라인 구동' : '대여 샌드박스 구동';
+        
+        setTelemetryStatus('RUNNING', hostLabel, chipLabel, statusLabel);
 
         // Render chat items sequentially
         scenario.flow.forEach((item, index) => {
@@ -1255,9 +1239,11 @@
                 const bubble = document.createElement('div');
                 bubble.className = "flex flex-col space-y-1 fade-in";
                 
-                const isPartner = item.sender.includes('김 파트너');
+                const isPartner = item.sender.includes('대여 AI') || item.sender.includes('Planning AI');
                 const avatarBg = isPartner ? 'from-purple-500 to-indigo-500' : 'from-blue-500 to-indigo-500';
-                const avatarIcon = isPartner ? '🧑‍💼' : '🕵️';
+                const avatarIcon = isPartner ? '🧑‍💼' : '🤖';
+
+                let connectionType = isLocal ? '로컬 오프라인 전용망' : 'P2P P2P 터널 암호화';
 
                 bubble.innerHTML = `
                     <div class="flex items-start space-x-3">
@@ -1265,7 +1251,7 @@
                         <div class="flex-1 min-w-0 bg-slate-900/60 border border-slate-800/80 rounded-2xl px-4 py-3.5">
                             <div class="flex items-center justify-between mb-1">
                                 <span class="text-xs font-bold text-white">${item.sender}</span>
-                                <span class="text-[9px] text-slate-500 font-mono">P2P 터널링 연동 중</span>
+                                <span class="text-[9px] text-slate-500 font-mono">${connectionType}</span>
                             </div>
                             <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-sans">${item.text}</p>
                         </div>
@@ -1274,13 +1260,12 @@
                 chatWindow.appendChild(bubble);
                 scrollChatToBottom();
 
-                // Update Telemetry load directly matched to CPU/GPU numbers of this execution step
+                // Update Telemetry load
                 animateTelemetry(item.cpu, item.gpu, item.mem, item.tok, item.lat);
 
                 if (item.isQuestion) {
                     showSimOptions(scenario.options);
                 } else if (index < scenario.flow.length - 1) {
-                    // Show typing indicator for next sender
                     const nextSender = scenario.flow[index+1].sender;
                     showSimTyping(nextSender);
                 }
@@ -1296,7 +1281,7 @@
         typing.innerHTML = `
             <div class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xs">💬</div>
             <div class="bg-slate-900/40 border border-slate-800/60 rounded-2xl px-4 py-3 flex items-center space-x-2">
-                <span class="text-[10px] text-slate-500 font-medium">${senderName} 생각 중</span>
+                <span class="text-[10px] text-slate-500 font-medium">${senderName} 연산 중</span>
                 <div class="typing-dots flex space-x-1"><span></span><span></span><span></span></div>
             </div>
         `;
@@ -1343,8 +1328,8 @@
         scrollChatToBottom();
 
         // Simulate thinking telemetry
-        animateTelemetry(92, 98, 12.8, 0, 11);
-        showSimTyping('가상 노드 연산 중');
+        animateTelemetry(90, 95, 12.0, 0, 10);
+        showSimTyping('에이전트 판단 피드백 연산 중');
 
         setTimeout(() => {
             const typing = document.getElementById('sim-typing-loader');
@@ -1353,13 +1338,18 @@
             // Final success message from node execution
             const finalBubble = document.createElement('div');
             finalBubble.className = "flex flex-col space-y-1 fade-in";
+            
+            let statusText = wizData.path === 'local' 
+                ? '✓ 로컬 맥미니 연산 완료 - 로컬 메모리 캐시 최적화' 
+                : '✓ 원격 대여 샌드박스 연산 완료 - P2P 백업 데이터 보장';
+                
             finalBubble.innerHTML = `
                 <div class="flex items-start space-x-3">
                     <div class="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-sm">✓</div>
                     <div class="flex-1 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl px-4 py-3.5">
                         <div class="text-[9px] text-emerald-400 font-bold mb-1">실행 결과 보고</div>
                         <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-sans">${option.next}</p>
-                        <span class="text-[9px] text-emerald-500 font-mono mt-2 block">✓ 대여 맥 미니 연산 완료 - 다음 스케줄 주기 대기 중</span>
+                        <span class="text-[9px] text-emerald-500 font-mono mt-2 block">${statusText}</span>
                     </div>
                 </div>
             `;
@@ -1367,8 +1357,15 @@
             scrollChatToBottom();
 
             // Drop telemetry to idle
-            animateTelemetry(3, 0, 8.2, 0, 13);
-            setTelemetryStatus('IDLE', 'Host #0294', wizData.nodeClass === 'Junior' ? 'Apple M1 Mac Mini' : 'Apple M2 Pro Mac');
+            animateTelemetry(3, 0, 6.2, 0, 8);
+            
+            let isLocal = wizData.path === 'local';
+            setTelemetryStatus(
+                'IDLE', 
+                isLocal ? 'Local Machine' : 'Seoul Node #201', 
+                isLocal ? 'Apple M1 Mac Mini' : 'Apple M2 Pro Mac',
+                isLocal ? '로컬 대기 중' : '대여 대기 중'
+            );
         }, 1500);
     }
 
@@ -1381,8 +1378,7 @@
         }
     }
 
-    // Telemetry widget rendering support
-    function setTelemetryStatus(status, hostId, chipSpec) {
+    function setTelemetryStatus(status, hostId, chipSpec, statusText) {
         const badge = document.getElementById('tele-status-badge');
         badge.innerText = status;
         if (status === 'RUNNING') {
@@ -1393,6 +1389,7 @@
 
         document.getElementById('tele-phys-host').innerText = hostId;
         document.getElementById('tele-phys-chip').innerText = chipSpec;
+        document.getElementById('tele-phys-status').innerText = statusText;
     }
 
     function animateTelemetry(cpu, gpu, mem, tokens, latency) {
@@ -1402,7 +1399,8 @@
         document.getElementById('tele-gpu-txt').innerText = `${gpu}%`;
         document.getElementById('tele-gpu-bar').style.width = `${gpu}%`;
 
-        const maxMem = wizData.nodeClass === 'Junior' ? 16.0 : 32.0;
+        let isLocal = wizData.path === 'local';
+        const maxMem = isLocal ? 16.0 : 32.0;
         document.getElementById('tele-ram-txt').innerText = `${mem.toFixed(1)} GB / ${maxMem.toFixed(1)} GB`;
         document.getElementById('tele-ram-bar').style.width = `${(mem / maxMem) * 100}%`;
 
@@ -1410,11 +1408,10 @@
         document.getElementById('tele-latency').innerText = latency > 0 ? `${latency} ms` : '-- ms';
     }
 
-    // --- Economic ChartJS integration ---
+    // --- Cost Chart Integration ---
     function initCostChart() {
         const ctx = document.getElementById('costComparisonChart').getContext('2d');
         
-        // Gradient fill for bars
         const gradAgentDesk = ctx.createLinearGradient(0, 0, 0, 200);
         gradAgentDesk.addColorStop(0, '#3b82f6');
         gradAgentDesk.addColorStop(1, '#8b5cf6');
@@ -1428,13 +1425,13 @@
         window.comparisonChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['상용 클라우드 API', '자체 IDC 서버', 'AgentDesk DePIN'],
+                labels: ['상용 클라우드 API', '자체 구축서버(IDC)', '맥미니 로컬 구축 (자사)', '유휴 맥미니 대여 (자사)'],
                 datasets: [{
-                    label: '월 고정 인프라비 (KRW)',
-                    data: [1850000, 680000, 30000],
-                    backgroundColor: [gradCloud, '#334155', gradAgentDesk],
+                    label: '월 인프라비 (KRW)',
+                    data: [1850000, 680000, 0, 30000],
+                    backgroundColor: [gradCloud, '#334155', '#10b981', gradAgentDesk],
                     borderRadius: 12,
-                    barThickness: 36
+                    barThickness: 30
                 }]
             },
             options: {
@@ -1457,7 +1454,7 @@
                 scales: {
                     x: {
                         grid: { display: false },
-                        ticks: { color: '#64748b', font: { family: 'Outfit, Noto Sans KR', size: 10 } }
+                        ticks: { color: '#64748b', font: { family: 'Outfit, Noto Sans KR', size: 9 } }
                     },
                     y: {
                         grid: { color: 'rgba(255, 255, 255, 0.04)' },
