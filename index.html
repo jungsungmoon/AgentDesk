@@ -145,6 +145,16 @@
     </style>
 </head>
 <body class="h-screen flex flex-col overflow-hidden">
+<!-- Parallax Background Layer -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div id="parallax-bg" class="absolute inset-0 bg-cover bg-center opacity-35 transition-transform duration-100 ease-out" 
+         style="background-image: url('Gemini_Generated_Image_7xnwkn7xnwkn7xnw.png'); height: 135%; width: 100%; top: 0; left: 0; transform: translateY(0);"></div>
+    <!-- Vignette overlay for focus and premium look -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_10%,rgba(3,7,18,0.95)_90%)]"></div>
+    <!-- Dark glass-like linear overlay to keep text extremely readable -->
+    <div class="absolute inset-0 bg-slate-950/65 mix-blend-multiply"></div>
+</div>
+
 
 <!-- HEADER (Sticky Glassmorphic) -->
 <header class="h-18 border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-md flex items-center justify-between px-6 md:px-12 sticky top-0 z-50">
@@ -768,6 +778,16 @@
 
     // Update active navbar item on scrollspy
     wrapper.addEventListener('scroll', () => {
+        // Parallax Background Scrolling Effect
+        const scrollTop = wrapper.scrollTop;
+        const maxScroll = wrapper.scrollHeight - wrapper.clientHeight;
+        if (maxScroll > 0) {
+            const percent = scrollTop / maxScroll;
+            const offset = - (percent * 20); // moves up by up to 20% of viewport height
+            const bg = document.getElementById('parallax-bg');
+            if (bg) bg.style.transform = `translateY(${offset}vh)`;
+        }
+
         const wrapperRect = wrapper.getBoundingClientRect();
         if (wrapperRect.height === 0) return;
         
